@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -349,7 +350,7 @@ const PortfolioPage = () => {
                       <CardTitle className="flex items-center">
                         <Code className="mr-2 h-5 w-5 text-blue-600" />
                         Technical Skills
-                      CardTitle>
+                      </CardTitle>
                       <CardDescription>
                         Rate your proficiency in various technical skills
                       </CardDescription>
@@ -382,7 +383,7 @@ const PortfolioPage = () => {
                       <CardTitle className="flex items-center">
                         <Languages className="mr-2 h-5 w-5 text-blue-600" />
                         Languages
-                      CardTitle>
+                      </CardTitle>
                     </CardHeader>
                     <CardContent>
                       <div className="space-y-4">
@@ -422,7 +423,7 @@ const PortfolioPage = () => {
                       <CardTitle className="flex items-center">
                         <Award className="mr-2 h-5 w-5 text-blue-600" />
                         Achievements & Awards
-                      CardTitle>
+                      </CardTitle>
                     </CardHeader>
                     <CardContent>
                       <div className="space-y-4">
@@ -477,7 +478,7 @@ const PortfolioPage = () => {
               <CardTitle className="flex items-center">
                 <Eye className="mr-2 h-5 w-5 text-blue-600" />
                 Profile Visibility
-              CardTitle>
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-gray-700 mb-4">
@@ -505,7 +506,7 @@ const PortfolioPage = () => {
               <CardTitle className="flex items-center">
                 <Download className="mr-2 h-5 w-5 text-purple-600" />
                 Export Options
-              CardTitle>
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <p className="text-gray-700 mb-4">

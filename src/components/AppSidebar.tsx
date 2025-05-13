@@ -2,9 +2,9 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { 
-  Home, BookOpen, Brain, Gamepad, 
-  Trophy, UserPlus, Calendar, MessageCircle, 
-  Award, Search, FileEdit 
+  Home, BookOpen, Gamepad, Trophy, 
+  Users, Calendar, MessageCircle, 
+  Award, Search, FileEdit, Brain 
 } from "lucide-react";
 import {
   Sidebar,
@@ -24,14 +24,14 @@ import Logo from "./Logo";
 export function AppSidebar() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
 
-  // Main menu items
+  // Main menu items with correct paths to the new pages
   const menuItems = [
     { title: "Home", icon: Home, url: "/" },
     { title: "Personalized Roadmaps", icon: BookOpen, url: "/roadmap" },
     { title: "Career Quiz", icon: Brain, url: "/quiz" },
     { title: "Learn by Playing", icon: Gamepad, url: "/games" },
     { title: "Skill Challenges", icon: Trophy, url: "/challenges" },
-    { title: "Mentors", icon: UserPlus, url: "/mentors" },
+    { title: "Mentors", icon: Users, url: "/mentors" },
     { title: "My Planner", icon: Calendar, url: "/planner" },
     { title: "Community", icon: MessageCircle, url: "/community" },
     { title: "Leaderboard", icon: Award, url: "/leaderboard" },

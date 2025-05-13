@@ -15,6 +15,12 @@ import CommunityPage from "./pages/CommunityPage";
 import NotFound from "./pages/NotFound";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import AppSidebar from "./components/AppSidebar";
+import GamesPage from "./pages/GamesPage";
+import ChallengesPage from "./pages/ChallengesPage";
+import PlannerPage from "./pages/PlannerPage";
+import LeaderboardPage from "./pages/LeaderboardPage";
+import CareersPage from "./pages/CareersPage";
+import PortfolioPage from "./pages/PortfolioPage";
 
 const queryClient = new QueryClient();
 
@@ -36,9 +42,15 @@ const App = () => {
                   <Route path="roadmap" element={<RoadmapPage />} />
                   <Route path="roadmap/:careerPath" element={<RoadmapPage />} />
                   <Route path="quiz" element={<QuizPage />} />
+                  <Route path="games" element={<GamesPage />} />
+                  <Route path="challenges" element={<ChallengesPage />} />
                   <Route path="login" element={<LoginPage />} />
                   <Route path="mentors" element={<MentorsPage />} />
+                  <Route path="planner" element={<PlannerPage />} />
                   <Route path="community" element={<CommunityPage />} />
+                  <Route path="leaderboard" element={<LeaderboardPage />} />
+                  <Route path="careers" element={<CareersPage />} />
+                  <Route path="portfolio" element={<PortfolioPage />} />
                   <Route path="*" element={<NotFound />} />
                 </Route>
               </Routes>

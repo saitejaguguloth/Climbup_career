@@ -26,10 +26,10 @@ const App = () => {
       <TooltipProvider>
         <Toaster />
         <Sonner />
-        <SidebarProvider defaultOpen={false} open={sidebarOpen} onOpenChange={setSidebarOpen}>
-          <div className="min-h-screen flex w-full">
-            <AppSidebar />
-            <BrowserRouter>
+        <BrowserRouter>
+          <SidebarProvider defaultOpen={false} open={sidebarOpen} onOpenChange={setSidebarOpen}>
+            <div className="min-h-screen flex w-full">
+              <AppSidebar />
               <Routes>
                 <Route path="/" element={<Layout />}>
                   <Route index element={<HomePage />} />
@@ -42,9 +42,9 @@ const App = () => {
                   <Route path="*" element={<NotFound />} />
                 </Route>
               </Routes>
-            </BrowserRouter>
-          </div>
-        </SidebarProvider>
+            </div>
+          </SidebarProvider>
+        </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>
   );

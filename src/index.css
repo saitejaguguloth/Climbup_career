@@ -96,18 +96,32 @@
 
 @layer components {
   .gradient-text {
-    @apply bg-gradient-to-r from-climbup-blue to-climbup-purple bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent;
   }
   
   .gradient-card {
-    @apply bg-gradient-to-br from-climbup-soft-blue to-climbup-soft-purple rounded-2xl transition-all hover:shadow-lg;
+    @apply bg-gradient-to-br from-blue-100 to-violet-100 rounded-2xl transition-all hover:shadow-lg;
   }
   
   .gradient-button {
-    @apply bg-gradient-to-r from-climbup-blue to-climbup-purple text-white font-medium py-2 px-6 rounded-full transition-all hover:shadow-md hover:brightness-110;
+    @apply bg-gradient-to-r from-blue-600 to-violet-600 text-white font-medium py-2 px-6 rounded-full transition-all hover:from-blue-700 hover:to-violet-700 hover:shadow-md;
   }
   
   .secondary-button {
     @apply bg-white text-gray-800 border border-gray-200 font-medium py-2 px-6 rounded-full transition-all hover:shadow-md hover:border-gray-300;
+  }
+}
+
+@layer utilities {
+  .animation-delay-2000 {
+    animation-delay: 2s;
+  }
+  
+  .animation-delay-3000 {
+    animation-delay: 3s;
+  }
+  
+  .animation-delay-4000 {
+    animation-delay: 4s;
   }
 }

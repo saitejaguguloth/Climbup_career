@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Flashcard, Gamepad, Trophy, PuzzlePiece, Brain, Code } from "lucide-react";
+import { BookOpen, Gamepad, Trophy, Brain, Code, PenTool } from "lucide-react";
 
 const GamesPage = () => {
   const [activeTab, setActiveTab] = useState("flashcards");
@@ -173,7 +173,7 @@ const GamesPage = () => {
           <div className="flex justify-center mb-8">
             <TabsList className="grid grid-cols-2 md:grid-cols-4 gap-2">
               <TabsTrigger value="flashcards" className="flex items-center gap-2">
-                <Flashcard className="w-4 h-4" />
+                <BookOpen className="w-4 h-4" />
                 <span>Flashcard Battles</span>
               </TabsTrigger>
               <TabsTrigger value="simulations" className="flex items-center gap-2">
@@ -185,7 +185,7 @@ const GamesPage = () => {
                 <span>Career Path Builder</span>
               </TabsTrigger>
               <TabsTrigger value="skillGames" className="flex items-center gap-2">
-                <PuzzlePiece className="w-4 h-4" />
+                <PenTool className="w-4 h-4" />
                 <span>Skill Games</span>
               </TabsTrigger>
             </TabsList>
@@ -194,7 +194,7 @@ const GamesPage = () => {
           <TabsContent value="flashcards" className="mt-2">
             <div className="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-md">
               <div className="flex items-center gap-3 mb-4">
-                <Flashcard className="w-6 h-6 text-blue-600" />
+                <BookOpen className="w-6 h-6 text-blue-600" />
                 <h2 className="text-2xl font-bold">Flashcard Battles</h2>
               </div>
               <p className="text-gray-600 mb-4">
@@ -233,7 +233,7 @@ const GamesPage = () => {
           <TabsContent value="skillGames">
             <div className="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-md">
               <div className="flex items-center gap-3 mb-4">
-                <PuzzlePiece className="w-6 h-6 text-emerald-600" />
+                <PenTool className="w-6 h-6 text-emerald-600" />
                 <h2 className="text-2xl font-bold">Skill Games</h2>
               </div>
               <p className="text-gray-600 mb-4">

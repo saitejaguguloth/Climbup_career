@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Award, Trophy, Star, Fire, Medal, TrendingUp, Users, Clock } from "lucide-react";
+import { Award, Trophy, Star, Medal, TrendingUp, Users, Clock, Flame, Calendar } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const LeaderboardPage = () => {
@@ -120,7 +120,7 @@ const LeaderboardPage = () => {
           <Card className="bg-white/90 backdrop-blur flex-1">
             <CardHeader className="pb-2">
               <CardTitle className="flex items-center text-lg">
-                <Fire className="mr-2 h-5 w-5 text-orange-500" />
+                <Flame className="mr-2 h-5 w-5 text-orange-500" />
                 Your Streak
               </CardTitle>
             </CardHeader>
@@ -129,7 +129,7 @@ const LeaderboardPage = () => {
               <div className="text-sm text-gray-500 mt-1">Keep learning daily to increase your streak!</div>
               <div className="mt-2">
                 <Button size="sm" className="bg-gradient-to-r from-orange-500 to-red-500">
-                  <Fire className="mr-2 h-4 w-4" /> Continue Streak
+                  <Flame className="mr-2 h-4 w-4" /> Continue Streak
                 </Button>
               </div>
             </CardContent>
@@ -227,7 +227,7 @@ const LeaderboardPage = () => {
                   <div className="text-gray-500 text-sm">{user.college}</div>
                   <div className="mt-2 text-lg font-semibold">{user.score} points</div>
                   <div className="mt-1 flex items-center justify-center text-sm">
-                    <Fire className="mr-1 h-4 w-4 text-orange-500" />
+                    <Flame className="mr-1 h-4 w-4 text-orange-500" />
                     <span>{user.streak} day streak</span>
                   </div>
                 </CardContent>
@@ -257,7 +257,7 @@ const LeaderboardPage = () => {
                       <div className="text-xs text-gray-500">points</div>
                     </div>
                     <Badge variant="outline" className="flex items-center whitespace-nowrap">
-                      <Fire className="mr-1 h-3 w-3 text-orange-500" />
+                      <Flame className="mr-1 h-3 w-3 text-orange-500" />
                       {user.streak} days
                     </Badge>
                   </div>

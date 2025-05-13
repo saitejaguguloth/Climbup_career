@@ -1,15 +1,68 @@
 
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Menu, X } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Menu, X, User, LogOut } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { toast } from "@/hooks/use-toast";
 import Logo from "./Logo";
+
+interface User {
+  firstName?: string;
+  lastName?: string;
+  email: string;
+  userType: string;
+}
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Check if user is authenticated on component mount
+    const authStatus = localStorage.getItem("isAuthenticated");
+    if (authStatus === "true") {
+      setIsAuthenticated(true);
+      const userData = localStorage.getItem("user");
+      if (userData) {
+        setUser(JSON.parse(userData));
+      }
+    }
+  }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleLogout = () => {
+    localStorage.removeItem("isAuthenticated");
+    localStorage.removeItem("user");
+    setIsAuthenticated(false);
+    setUser(null);
+    toast({
+      title: "Logged out",
+      description: "You have been successfully logged out"
+    });
+    navigate("/", { replace: true });
+  };
+
+  // Get initials for avatar
+  const getUserInitials = () => {
+    if (user?.firstName && user?.lastName) {
+      return `${user.firstName[0]}${user.lastName[0]}`.toUpperCase();
+    } else if (user?.email) {
+      return user.email[0].toUpperCase();
+    }
+    return "U";
   };
 
   return (
@@ -39,12 +92,43 @@ const Navbar = () => {
         </div>
 
         <div className="hidden md:flex items-center space-x-4">
-          <Button variant="ghost" asChild>
-            <Link to="/login">Login</Link>
-          </Button>
-          <Button className="gradient-button" asChild>
-            <Link to="/login?signup=true">Sign Up</Link>
-          </Button>
+          {isAuthenticated ? (
+            <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="outline" className="rounded-full h-10 w-10 p-0 border-2 border-indigo-100">
+                  <span className="font-medium text-indigo-700">{getUserInitials()}</span>
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end" className="w-56">
+                <DropdownMenuLabel>
+                  <div className="flex flex-col">
+                    <span>{user?.firstName} {user?.lastName}</span>
+                    <span className="text-xs text-gray-500 font-normal">{user?.email}</span>
+                  </div>
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem asChild>
+                  <Link to="/profile" className="cursor-pointer">
+                    <User className="mr-2 h-4 w-4" />
+                    <span>Profile</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
+                  <LogOut className="mr-2 h-4 w-4" />
+                  <span>Logout</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          ) : (
+            <>
+              <Button variant="ghost" asChild>
+                <Link to="/login">Login</Link>
+              </Button>
+              <Button className="gradient-button" asChild>
+                <Link to="/login?signup=true">Sign Up</Link>
+              </Button>
+            </>
+          )}
         </div>
 
         {/* Mobile Navigation Toggle */}
@@ -93,22 +177,56 @@ const Navbar = () => {
               Community
             </Link>
             <div className="pt-2 flex flex-col space-y-2">
-              <Button variant="outline" asChild>
-                <Link 
-                  to="/login"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Login
-                </Link>
-              </Button>
-              <Button className="gradient-button w-full" asChild>
-                <Link 
-                  to="/login?signup=true"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  Sign Up
-                </Link>
-              </Button>
+              {isAuthenticated ? (
+                <>
+                  <div className="flex items-center space-x-2 py-2">
+                    <div className="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center">
+                      <span className="font-medium text-indigo-700">{getUserInitials()}</span>
+                    </div>
+                    <div className="flex flex-col">
+                      <span className="font-medium">{user?.firstName} {user?.lastName}</span>
+                      <span className="text-xs text-gray-500">{user?.email}</span>
+                    </div>
+                  </div>
+                  <Button 
+                    variant="outline" 
+                    asChild 
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <Link to="/profile">My Profile</Link>
+                  </Button>
+                  <Button 
+                    className="w-full" 
+                    variant="outline" 
+                    onClick={() => {
+                      handleLogout();
+                      setIsMenuOpen(false);
+                    }}
+                  >
+                    <LogOut className="mr-2 h-4 w-4" />
+                    Logout
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button variant="outline" asChild>
+                    <Link 
+                      to="/login"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Login
+                    </Link>
+                  </Button>
+                  <Button className="gradient-button w-full" asChild>
+                    <Link 
+                      to="/login?signup=true"
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Sign Up
+                    </Link>
+                  </Button>
+                </>
+              )}
             </div>
           </div>
         </div>

@@ -353,7 +353,7 @@ const CareersPage = () => {
                 <div className="space-y-4">
                   {filteredJobs.length > 0 ? (
                     filteredJobs.map((job) => (
-                      <Card key={job.id} className="overflow-hidden hover:shadow-md transition-all duration-300">
+                      <Card key={job.id.toString()} className="overflow-hidden hover:shadow-md transition-all duration-300">
                         <CardHeader className="pb-2">
                           <div className="flex justify-between">
                             <div className="flex gap-4">
@@ -474,7 +474,7 @@ const CareersPage = () => {
                   {jobs
                     .filter(job => savedJobs.includes(job.id))
                     .map(job => (
-                      <Card key={job.id} className="overflow-hidden hover:shadow-md transition-all duration-300">
+                      <Card key={job.id.toString()} className="overflow-hidden hover:shadow-md transition-all duration-300">
                         <CardHeader className="pb-2">
                           <div className="flex justify-between">
                             <div className="flex gap-4">

@@ -30,8 +30,6 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <Toaster />
-        <Sonner />
         <BrowserRouter>
           <SidebarProvider defaultOpen={false} open={sidebarOpen} onOpenChange={setSidebarOpen}>
             <div className="min-h-screen flex w-full">
@@ -56,6 +54,8 @@ const App = () => {
               </Routes>
             </div>
           </SidebarProvider>
+          <Toaster />
+          <Sonner />
         </BrowserRouter>
       </TooltipProvider>
     </QueryClientProvider>

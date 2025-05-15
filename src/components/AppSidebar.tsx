@@ -9,17 +9,13 @@ import {
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
-  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarTrigger,
 } from "@/components/ui/sidebar";
-import Logo from "./Logo";
 
 export function AppSidebar() {
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
@@ -41,10 +37,6 @@ export function AppSidebar() {
 
   return (
     <Sidebar variant="floating" collapsible="icon">
-      <SidebarHeader className="flex items-center p-4">
-        <Logo />
-      </SidebarHeader>
-      
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>Navigation</SidebarGroupLabel>
@@ -64,12 +56,6 @@ export function AppSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
-      
-      <SidebarFooter className="p-4">
-        <div className="text-xs text-gray-500">
-          © 2025 ClimbUp
-        </div>
-      </SidebarFooter>
     </Sidebar>
   );
 }

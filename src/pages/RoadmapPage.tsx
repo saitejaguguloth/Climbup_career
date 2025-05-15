@@ -1,16 +1,37 @@
 
 import { useState, useEffect } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Check } from "lucide-react";
+import { ArrowRight, Check, Download, Share, Save, Pencil, MessageCircle, BookOpen, User } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { toast } from "@/hooks/use-toast";
+import { downloadRoadmapAsPDF, saveRoadmap, shareRoadmap, isStepDone, markStepAsDone } from "@/utils/roadmapUtils";
+import ShareDialog from "@/components/ShareDialog";
+import GroupChat from "@/components/GroupChat";
+import LearningDialog from "@/components/LearningDialog";
 
 const RoadmapPage = () => {
+  const navigate = useNavigate();
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedEducation, setSelectedEducation] = useState("");
   const [selectedGoal, setSelectedGoal] = useState("");
   const [careerOptions, setCareerOptions] = useState<string[]>([]);
   const [progress, setProgress] = useState(0);
+  const [shareDialogOpen, setShareDialogOpen] = useState(false);
+  const [groupChatOpen, setGroupChatOpen] = useState(false);
+  const [learningDialogOpen, setLearningDialogOpen] = useState(false);
+  const [currentCourse, setCurrentCourse] = useState<any>(null);
+  const [completedSteps, setCompletedSteps] = useState<Record<string, boolean>>({});
+  const [foundationProgress, setFoundationProgress] = useState(0);
+  const [intermediateProgress, setIntermediateProgress] = useState(0);
+  const [advancedProgress, setAdvancedProgress] = useState(0);
+
+  // Current user data (would come from authentication in a real app)
+  const currentUser = {
+    name: "You",
+    initials: "YO",
+  };
 
   const educationLevels = [
     "10th Grade",
@@ -85,6 +106,56 @@ const RoadmapPage = () => {
     "UI/UX Designer"
   ];
 
+  // Sample course data for learning dialog
+  const sampleCourse = {
+    title: "Introduction to Computer Science",
+    description: "A comprehensive introduction to computer science principles, algorithms, and programming fundamentals. Perfect for beginners starting their journey in software engineering.",
+    duration: "6 weeks",
+    level: "Beginner",
+    instructor: "Dr. Rajesh Kumar",
+    resources: {
+      videos: [
+        { 
+          title: "Introduction to Programming", 
+          url: "https://www.youtube.com/watch?v=zOjov-2OZ0E", 
+          duration: "45 min" 
+        },
+        { 
+          title: "Data Structures Basics", 
+          url: "https://www.youtube.com/watch?v=zOjov-2OZ0E", 
+          duration: "55 min" 
+        },
+        { 
+          title: "Algorithms and Complexity", 
+          url: "https://www.youtube.com/watch?v=zOjov-2OZ0E", 
+          duration: "60 min" 
+        }
+      ],
+      readings: [
+        { 
+          title: "Programming Fundamentals PDF", 
+          url: "https://example.com/fundamentals.pdf", 
+          type: "PDF Document" 
+        },
+        { 
+          title: "Introduction to Computer Science", 
+          url: "https://example.com/cs101", 
+          type: "Web Resource" 
+        }
+      ],
+      exercises: [
+        {
+          title: "Basic Programming Exercises",
+          description: "Complete 5 basic programming exercises to test your understanding of variables, loops, and conditionals."
+        },
+        {
+          title: "Algorithm Implementation",
+          description: "Implement a simple sorting algorithm and analyze its time complexity."
+        }
+      ]
+    }
+  };
+
   useEffect(() => {
     if (selectedEducation) {
       setCareerOptions(careerOptionsByEducation[selectedEducation] || defaultCareerOptions);
@@ -97,6 +168,36 @@ const RoadmapPage = () => {
       setProgress(66);
     } else if (currentStep === 3) {
       setProgress(100);
+      
+      // Load completed steps from localStorage
+      try {
+        const savedSteps = JSON.parse(localStorage.getItem('completedRoadmapSteps') || '{}');
+        setCompletedSteps(savedSteps);
+        
+        // Calculate progress for each stage
+        let foundationDone = 0;
+        let foundationTotal = 2; // Number of foundation items
+        let intermediateDone = 0;
+        let intermediateTotal = 2; // Number of intermediate items
+        let advancedDone = 0;
+        let advancedTotal = 2; // Number of advanced items
+        
+        Object.keys(savedSteps).forEach(key => {
+          if (savedSteps[key] && key.includes('foundation')) {
+            foundationDone++;
+          } else if (savedSteps[key] && key.includes('intermediate')) {
+            intermediateDone++;
+          } else if (savedSteps[key] && key.includes('advanced')) {
+            advancedDone++;
+          }
+        });
+        
+        setFoundationProgress((foundationDone / foundationTotal) * 100);
+        setIntermediateProgress((intermediateDone / intermediateTotal) * 100);
+        setAdvancedProgress((advancedDone / advancedTotal) * 100);
+      } catch (error) {
+        console.error("Error loading completed steps:", error);
+      }
     }
   }, [selectedEducation, currentStep]);
 
@@ -106,6 +207,164 @@ const RoadmapPage = () => {
     } else if (currentStep === 2 && selectedGoal) {
       setCurrentStep(3);
     }
+  };
+
+  const handleMarkAsDone = (stepId: string) => {
+    const isDone = !completedSteps[stepId];
+    const newCompletedSteps = { ...completedSteps, [stepId]: isDone };
+    setCompletedSteps(newCompletedSteps);
+    markStepAsDone(stepId, isDone);
+    
+    // Update progress
+    if (stepId.includes('foundation')) {
+      setFoundationProgress(prev => isDone ? prev + 50 : prev - 50);
+    } else if (stepId.includes('intermediate')) {
+      setIntermediateProgress(prev => isDone ? prev + 50 : prev - 50);
+    } else if (stepId.includes('advanced')) {
+      setAdvancedProgress(prev => isDone ? prev + 50 : prev - 50);
+    }
+    
+    toast({
+      title: isDone ? "Step completed!" : "Step marked as incomplete",
+      description: isDone ? "Great job! Keep going to complete your roadmap." : "You can complete this step later."
+    });
+  };
+
+  const handleSaveRoadmap = () => {
+    const roadmapData = {
+      education: selectedEducation,
+      careerGoal: selectedGoal,
+      stages: [
+        {
+          name: "Foundation Stage",
+          courses: [
+            {
+              title: "Introduction to Computer Science",
+              links: [
+                { type: "YouTube", url: "https://www.youtube.com/watch?v=zOjov-2OZ0E" },
+                { type: "Free Course", url: "https://example.com/cs101" }
+              ]
+            },
+            {
+              title: "Data Structures & Algorithms",
+              links: [
+                { type: "YouTube", url: "https://www.youtube.com/watch?v=zOjov-2OZ0E" },
+                { type: "Premium", url: "https://example.com/dsa" }
+              ]
+            }
+          ],
+          skills: ["Problem Solving", "Basic Programming"],
+          projects: ["Personal portfolio website", "Simple applications"]
+        },
+        {
+          name: "Intermediate Stage",
+          courses: [
+            {
+              title: "Advanced Programming",
+              links: [
+                { type: "YouTube", url: "https://www.youtube.com/watch?v=zOjov-2OZ0E" }
+              ]
+            },
+            {
+              title: "Web Development",
+              links: [
+                { type: "YouTube", url: "https://www.youtube.com/watch?v=zOjov-2OZ0E" }
+              ]
+            }
+          ],
+          skills: ["Frontend Development", "Backend Development"],
+          projects: ["E-commerce website", "Social media app"]
+        },
+        {
+          name: "Advanced Stage",
+          courses: [
+            {
+              title: "System Design",
+              links: [
+                { type: "YouTube", url: "https://www.youtube.com/watch?v=zOjov-2OZ0E" }
+              ]
+            },
+            {
+              title: "DevOps",
+              links: [
+                { type: "YouTube", url: "https://www.youtube.com/watch?v=zOjov-2OZ0E" }
+              ]
+            }
+          ],
+          skills: ["Cloud Computing", "CI/CD"],
+          projects: ["Enterprise application", "Cloud-native app"]
+        }
+      ],
+      timeline: {
+        foundation: "2 months",
+        intermediate: "4 months",
+        advanced: "3 months",
+        total: "9 months"
+      }
+    };
+
+    const success = saveRoadmap(roadmapData);
+    if (success) {
+      toast({
+        title: "Roadmap saved!",
+        description: "Your roadmap has been saved to your device."
+      });
+    } else {
+      toast({
+        title: "Error saving roadmap",
+        description: "There was an error saving your roadmap. Please try again.",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const handleDownloadPDF = async () => {
+    toast({
+      title: "Preparing PDF...",
+      description: "Your roadmap PDF is being generated..."
+    });
+    
+    const success = await downloadRoadmapAsPDF('roadmap-content', `${selectedGoal.replace(/\s+/g, '-')}-roadmap`);
+    if (success) {
+      toast({
+        title: "Download complete!",
+        description: "Your roadmap has been downloaded as a PDF."
+      });
+    } else {
+      toast({
+        title: "Error downloading PDF",
+        description: "There was an error generating your PDF. Please try again.",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const handleShareRoadmap = () => {
+    setShareDialogOpen(true);
+  };
+
+  const handleJoinGroup = () => {
+    setGroupChatOpen(true);
+  };
+
+  const handleStartLearning = (course: any) => {
+    setCurrentCourse(sampleCourse);
+    setLearningDialogOpen(true);
+  };
+
+  const handleViewAllRoadmaps = () => {
+    // Navigate to a page that shows all available roadmaps
+    toast({
+      title: "View All Roadmaps",
+      description: "This would navigate to a page showing all available roadmaps."
+    });
+  };
+
+  const handleCustomize = () => {
+    toast({
+      title: "Customize Roadmap",
+      description: "This would open a roadmap customization interface."
+    });
   };
 
   return (
@@ -249,23 +508,23 @@ const RoadmapPage = () => {
                         <div>
                           <div className="flex justify-between text-sm mb-1">
                             <span>Foundation Stage</span>
-                            <span>0%</span>
+                            <span>{foundationProgress}%</span>
                           </div>
-                          <Progress value={0} className="h-2" />
+                          <Progress value={foundationProgress} className="h-2" />
                         </div>
                         <div>
                           <div className="flex justify-between text-sm mb-1">
                             <span>Intermediate Stage</span>
-                            <span>0%</span>
+                            <span>{intermediateProgress}%</span>
                           </div>
-                          <Progress value={0} className="h-2" />
+                          <Progress value={intermediateProgress} className="h-2" />
                         </div>
                         <div>
                           <div className="flex justify-between text-sm mb-1">
                             <span>Advanced Stage</span>
-                            <span>0%</span>
+                            <span>{advancedProgress}%</span>
                           </div>
-                          <Progress value={0} className="h-2" />
+                          <Progress value={advancedProgress} className="h-2" />
                         </div>
                       </div>
                     </div>
@@ -294,7 +553,11 @@ const RoadmapPage = () => {
                     
                     <div className="mb-6">
                       <h3 className="font-bold mb-3">Join Community</h3>
-                      <Button className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white">
+                      <Button 
+                        className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white"
+                        onClick={handleJoinGroup}
+                      >
+                        <MessageCircle className="mr-2 h-4 w-4" />
                         Join {selectedGoal} Group
                       </Button>
                     </div>
@@ -314,16 +577,16 @@ const RoadmapPage = () => {
                 
                 {/* Main content */}
                 <div className="lg:col-span-2">
-                  <div className="bg-white/80 backdrop-blur-md rounded-2xl shadow-xl p-6 border border-white/50">
+                  <div id="roadmap-content" className="bg-white/80 backdrop-blur-md rounded-2xl shadow-xl p-6 border border-white/50">
                     <div className="flex justify-between items-center mb-6">
                       <h2 className="text-2xl font-bold">{selectedGoal} Roadmap</h2>
                       <div className="flex space-x-2">
-                        <Button variant="outline" size="sm">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        <Button variant="outline" size="sm" onClick={handleDownloadPDF}>
+                          <Download className="mr-1 h-4 w-4" />
                           PDF
                         </Button>
-                        <Button variant="outline" size="sm">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                        <Button variant="outline" size="sm" onClick={handleShareRoadmap}>
+                          <Share className="mr-1 h-4 w-4" />
                           Share
                         </Button>
                       </div>
@@ -338,9 +601,14 @@ const RoadmapPage = () => {
                         <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex-1">
                           <div className="flex justify-between items-center mb-4">
                             <h3 className="font-bold text-xl text-gray-900">Foundation Stage</h3>
-                            <Button variant="outline" size="sm" className="text-xs">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>
-                              Mark as Done
+                            <Button 
+                              variant={completedSteps['foundation-stage'] ? "default" : "outline"} 
+                              size="sm" 
+                              className={completedSteps['foundation-stage'] ? "bg-green-600" : "text-xs"}
+                              onClick={() => handleMarkAsDone('foundation-stage')}
+                            >
+                              <Check className="mr-1 h-4 w-4" />
+                              {completedSteps['foundation-stage'] ? "Completed" : "Mark as Done"}
                             </Button>
                           </div>
                           <p className="text-gray-700 mb-4">Build core knowledge and skills needed for your journey</p>
@@ -348,23 +616,38 @@ const RoadmapPage = () => {
                           <div className="space-y-6">
                             <div>
                               <h4 className="font-semibold text-blue-700 mb-2 flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5z"></path><path d="M8 7h6"></path><path d="M8 11h8"></path><path d="M8 15h5"></path></svg>
+                                <BookOpen className="mr-2 h-4 w-4" />
                                 Courses
                               </h4>
                               <ul className="space-y-3">
                                 <li className="flex flex-col">
                                   <div className="flex items-center justify-between">
                                     <span className="text-gray-800">Introduction to Computer Science</span>
-                                    <Button size="sm" variant="ghost" className="h-7 text-xs text-blue-600 hover:text-blue-800 hover:bg-blue-50">
+                                    <Button 
+                                      size="sm" 
+                                      variant="ghost" 
+                                      className="h-7 text-xs text-blue-600 hover:text-blue-800 hover:bg-blue-50"
+                                      onClick={() => handleStartLearning("intro-cs")}
+                                    >
                                       Start Learning
                                     </Button>
                                   </div>
                                   <div className="flex flex-wrap gap-2 mt-1">
-                                    <a href="#" className="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded flex items-center">
+                                    <a 
+                                      href="https://www.youtube.com/watch?v=zOjov-2OZ0E" 
+                                      target="_blank" 
+                                      rel="noopener noreferrer" 
+                                      className="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded flex items-center"
+                                    >
                                       <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"></path><path d="m10 15 5-3-5-3z"></path></svg>
                                       YouTube
                                     </a>
-                                    <a href="#" className="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded flex items-center">
+                                    <a 
+                                      href="https://example.com/cs101" 
+                                      target="_blank" 
+                                      rel="noopener noreferrer" 
+                                      className="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded flex items-center"
+                                    >
                                       <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1"><rect width="20" height="14" x="2" y="7" rx="2"/><path d="M16 2v5"/><path d="M8 2v5"/><path d="M12 13h.01"/><path d="M17 13h.01"/><path d="M7 13h.01"/><path d="M12 17h.01"/><path d="M17 17h.01"/><path d="M7 17h.01"/></svg>
                                       Free Course
                                     </a>
@@ -373,16 +656,31 @@ const RoadmapPage = () => {
                                 <li className="flex flex-col">
                                   <div className="flex items-center justify-between">
                                     <span className="text-gray-800">Data Structures & Algorithms</span>
-                                    <Button size="sm" variant="ghost" className="h-7 text-xs text-blue-600 hover:text-blue-800 hover:bg-blue-50">
+                                    <Button 
+                                      size="sm" 
+                                      variant="ghost" 
+                                      className="h-7 text-xs text-blue-600 hover:text-blue-800 hover:bg-blue-50"
+                                      onClick={() => handleStartLearning("dsa")}
+                                    >
                                       Start Learning
                                     </Button>
                                   </div>
                                   <div className="flex flex-wrap gap-2 mt-1">
-                                    <a href="#" className="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded flex items-center">
+                                    <a 
+                                      href="https://www.youtube.com/watch?v=zOjov-2OZ0E" 
+                                      target="_blank" 
+                                      rel="noopener noreferrer" 
+                                      className="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded flex items-center"
+                                    >
                                       <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"></path><path d="m10 15 5-3-5-3z"></path></svg>
                                       YouTube
                                     </a>
-                                    <a href="#" className="text-xs bg-violet-50 text-violet-700 px-2 py-1 rounded flex items-center">
+                                    <a 
+                                      href="https://example.com/dsa" 
+                                      target="_blank" 
+                                      rel="noopener noreferrer" 
+                                      className="text-xs bg-violet-50 text-violet-700 px-2 py-1 rounded flex items-center"
+                                    >
                                       <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1"><circle cx="12" cy="12" r="10"></circle><path d="M6 12h12"></path><path d="M12 6v12"></path></svg>
                                       Premium
                                     </a>
@@ -422,12 +720,22 @@ const RoadmapPage = () => {
                             </div>
                             
                             <div className="flex space-x-2 mt-4 pt-4 border-t border-gray-100">
-                              <Button size="sm" variant="outline" className="text-xs flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><path d="M8 10h.01"></path><path d="M12 10h.01"></path><path d="M16 10h.01"></path></svg>
+                              <Button 
+                                size="sm" 
+                                variant="outline" 
+                                className="text-xs flex items-center"
+                                onClick={() => setGroupChatOpen(true)}
+                              >
+                                <User className="mr-1 h-4 w-4" />
                                 Ask a Mentor
                               </Button>
-                              <Button size="sm" variant="outline" className="text-xs flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1"><path d="m15 18-6-6 6-6"></path></svg>
+                              <Button 
+                                size="sm" 
+                                variant="outline" 
+                                className="text-xs flex items-center"
+                                onClick={() => setGroupChatOpen(true)}
+                              >
+                                <MessageCircle className="mr-1 h-4 w-4" />
                                 Discuss
                               </Button>
                             </div>
@@ -443,9 +751,14 @@ const RoadmapPage = () => {
                         <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex-1">
                           <div className="flex justify-between items-center mb-4">
                             <h3 className="font-bold text-xl text-gray-900">Intermediate Stage</h3>
-                            <Button variant="outline" size="sm" className="text-xs">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>
-                              Mark as Done
+                            <Button 
+                              variant={completedSteps['intermediate-stage'] ? "default" : "outline"} 
+                              size="sm" 
+                              className={completedSteps['intermediate-stage'] ? "bg-green-600" : "text-xs"}
+                              onClick={() => handleMarkAsDone('intermediate-stage')}
+                            >
+                              <Check className="mr-1 h-4 w-4" />
+                              {completedSteps['intermediate-stage'] ? "Completed" : "Mark as Done"}
                             </Button>
                           </div>
                           <p className="text-gray-700 mb-4">Deepen knowledge and begin to specialize in your field</p>
@@ -454,14 +767,19 @@ const RoadmapPage = () => {
                           <div className="space-y-6">
                             <div>
                               <h4 className="font-semibold text-blue-700 mb-2 flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5z"></path><path d="M8 7h6"></path><path d="M8 11h8"></path><path d="M8 15h5"></path></svg>
+                                <BookOpen className="mr-2 h-4 w-4" />
                                 Courses
                               </h4>
                               <ul className="space-y-3">
                                 <li className="flex flex-col">
                                   <div className="flex items-center justify-between">
                                     <span className="text-gray-800">Advanced Programming</span>
-                                    <Button size="sm" variant="ghost" className="h-7 text-xs text-blue-600 hover:text-blue-800 hover:bg-blue-50">
+                                    <Button 
+                                      size="sm" 
+                                      variant="ghost" 
+                                      className="h-7 text-xs text-blue-600 hover:text-blue-800 hover:bg-blue-50"
+                                      onClick={() => handleStartLearning("adv-programming")}
+                                    >
                                       Start Learning
                                     </Button>
                                   </div>
@@ -469,7 +787,12 @@ const RoadmapPage = () => {
                                 <li className="flex flex-col">
                                   <div className="flex items-center justify-between">
                                     <span className="text-gray-800">Web Development</span>
-                                    <Button size="sm" variant="ghost" className="h-7 text-xs text-blue-600 hover:text-blue-800 hover:bg-blue-50">
+                                    <Button 
+                                      size="sm" 
+                                      variant="ghost" 
+                                      className="h-7 text-xs text-blue-600 hover:text-blue-800 hover:bg-blue-50"
+                                      onClick={() => handleStartLearning("web-dev")}
+                                    >
                                       Start Learning
                                     </Button>
                                   </div>
@@ -479,12 +802,22 @@ const RoadmapPage = () => {
                             
                             {/* Add more sections similar to the first stage */}
                             <div className="flex space-x-2 mt-4 pt-4 border-t border-gray-100">
-                              <Button size="sm" variant="outline" className="text-xs flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><path d="M8 10h.01"></path><path d="M12 10h.01"></path><path d="M16 10h.01"></path></svg>
+                              <Button 
+                                size="sm" 
+                                variant="outline" 
+                                className="text-xs flex items-center"
+                                onClick={() => setGroupChatOpen(true)}
+                              >
+                                <User className="mr-1 h-4 w-4" />
                                 Ask a Mentor
                               </Button>
-                              <Button size="sm" variant="outline" className="text-xs flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1"><path d="m15 18-6-6 6-6"></path></svg>
+                              <Button 
+                                size="sm" 
+                                variant="outline" 
+                                className="text-xs flex items-center"
+                                onClick={() => setGroupChatOpen(true)}
+                              >
+                                <MessageCircle className="mr-1 h-4 w-4" />
                                 Discuss
                               </Button>
                             </div>
@@ -499,9 +832,14 @@ const RoadmapPage = () => {
                         <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex-1">
                           <div className="flex justify-between items-center mb-4">
                             <h3 className="font-bold text-xl text-gray-900">Advanced Stage</h3>
-                            <Button variant="outline" size="sm" className="text-xs">
-                              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1"><circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path></svg>
-                              Mark as Done
+                            <Button 
+                              variant={completedSteps['advanced-stage'] ? "default" : "outline"} 
+                              size="sm" 
+                              className={completedSteps['advanced-stage'] ? "bg-green-600" : "text-xs"}
+                              onClick={() => handleMarkAsDone('advanced-stage')}
+                            >
+                              <Check className="mr-1 h-4 w-4" />
+                              {completedSteps['advanced-stage'] ? "Completed" : "Mark as Done"}
                             </Button>
                           </div>
                           <p className="text-gray-700 mb-4">Master skills and prepare for industry</p>
@@ -510,14 +848,19 @@ const RoadmapPage = () => {
                           <div className="space-y-6">
                             <div>
                               <h4 className="font-semibold text-blue-700 mb-2 flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5z"></path><path d="M8 7h6"></path><path d="M8 11h8"></path><path d="M8 15h5"></path></svg>
+                                <BookOpen className="mr-2 h-4 w-4" />
                                 Courses
                               </h4>
                               <ul className="space-y-3">
                                 <li className="flex flex-col">
                                   <div className="flex items-center justify-between">
                                     <span className="text-gray-800">System Design</span>
-                                    <Button size="sm" variant="ghost" className="h-7 text-xs text-blue-600 hover:text-blue-800 hover:bg-blue-50">
+                                    <Button 
+                                      size="sm" 
+                                      variant="ghost" 
+                                      className="h-7 text-xs text-blue-600 hover:text-blue-800 hover:bg-blue-50"
+                                      onClick={() => handleStartLearning("system-design")}
+                                    >
                                       Start Learning
                                     </Button>
                                   </div>
@@ -525,7 +868,12 @@ const RoadmapPage = () => {
                                 <li className="flex flex-col">
                                   <div className="flex items-center justify-between">
                                     <span className="text-gray-800">DevOps</span>
-                                    <Button size="sm" variant="ghost" className="h-7 text-xs text-blue-600 hover:text-blue-800 hover:bg-blue-50">
+                                    <Button 
+                                      size="sm" 
+                                      variant="ghost" 
+                                      className="h-7 text-xs text-blue-600 hover:text-blue-800 hover:bg-blue-50"
+                                      onClick={() => handleStartLearning("devops")}
+                                    >
                                       Start Learning
                                     </Button>
                                   </div>
@@ -535,12 +883,22 @@ const RoadmapPage = () => {
                             
                             {/* Add more sections similar to previous stages */}
                             <div className="flex space-x-2 mt-4 pt-4 border-t border-gray-100">
-                              <Button size="sm" variant="outline" className="text-xs flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path><path d="M8 10h.01"></path><path d="M12 10h.01"></path><path d="M16 10h.01"></path></svg>
+                              <Button 
+                                size="sm" 
+                                variant="outline" 
+                                className="text-xs flex items-center"
+                                onClick={() => setGroupChatOpen(true)}
+                              >
+                                <User className="mr-1 h-4 w-4" />
                                 Ask a Mentor
                               </Button>
-                              <Button size="sm" variant="outline" className="text-xs flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1"><path d="m15 18-6-6 6-6"></path></svg>
+                              <Button 
+                                size="sm" 
+                                variant="outline" 
+                                className="text-xs flex items-center"
+                                onClick={() => setGroupChatOpen(true)}
+                              >
+                                <MessageCircle className="mr-1 h-4 w-4" />
                                 Discuss
                               </Button>
                             </div>
@@ -551,16 +909,32 @@ const RoadmapPage = () => {
                     
                     {/* Action buttons */}
                     <div className="mt-10 flex flex-wrap gap-3 justify-center">
-                      <Button className="bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700 text-white">
+                      <Button 
+                        className="bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700 text-white"
+                        onClick={handleSaveRoadmap}
+                      >
+                        <Save className="mr-2 h-4 w-4" />
                         Save Roadmap
                       </Button>
-                      <Button variant="outline">
+                      <Button 
+                        variant="outline" 
+                        onClick={handleDownloadPDF}
+                      >
+                        <Download className="mr-2 h-4 w-4" />
                         Download PDF
                       </Button>
-                      <Button variant="outline">
+                      <Button 
+                        variant="outline"
+                        onClick={handleCustomize}
+                      >
+                        <Pencil className="mr-2 h-4 w-4" />
                         Customize
                       </Button>
-                      <Button variant="outline">
+                      <Button 
+                        variant="outline"
+                        onClick={handleShareRoadmap}
+                      >
+                        <Share className="mr-2 h-4 w-4" />
                         Share
                       </Button>
                     </div>
@@ -570,12 +944,15 @@ const RoadmapPage = () => {
               
               <div className="mt-10 text-center">
                 <p className="text-gray-600 mb-4">Not what you're looking for?</p>
-                <div className="flex space-x-4 justify-center">
+                <div className="flex flex-wrap gap-4 justify-center">
                   <Button variant="outline" onClick={() => setCurrentStep(1)}>
                     Start Over
                   </Button>
-                  <Button variant="outline">
+                  <Button variant="outline" onClick={() => navigate("/quiz")}>
                     Take Career Quiz
+                  </Button>
+                  <Button variant="outline" onClick={handleViewAllRoadmaps}>
+                    Browse All Roadmaps
                   </Button>
                 </div>
               </div>
@@ -583,6 +960,31 @@ const RoadmapPage = () => {
           )}
         </div>
       </div>
+
+      {/* Share Dialog */}
+      <ShareDialog 
+        open={shareDialogOpen}
+        onOpenChange={setShareDialogOpen}
+        title={`${selectedGoal} Roadmap`}
+        url={window.location.href}
+      />
+      
+      {/* Group Chat Dialog */}
+      <GroupChat 
+        open={groupChatOpen}
+        onOpenChange={setGroupChatOpen}
+        groupName={selectedGoal || "Career"}
+        currentUser={currentUser}
+      />
+      
+      {/* Learning Dialog */}
+      {currentCourse && (
+        <LearningDialog 
+          open={learningDialogOpen}
+          onOpenChange={setLearningDialogOpen}
+          course={currentCourse}
+        />
+      )}
     </div>
   );
 };

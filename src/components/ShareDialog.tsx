@@ -10,11 +10,17 @@ import { copyToClipboard } from '@/utils/roadmapUtils';
 interface ShareDialogProps {
   title: string;
   url: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
 }
 
-const ShareDialog = ({ title, url, children }: ShareDialogProps) => {
-  const [open, setOpen] = useState(false);
+const ShareDialog = ({ title, url, children, open, onOpenChange }: ShareDialogProps) => {
+  const [internalOpen, setInternalOpen] = useState(false);
+  
+  // Use either the controlled (external) state or internal state
+  const isOpen = open !== undefined ? open : internalOpen;
+  const setIsOpen = onOpenChange || setInternalOpen;
   
   const handleShare = async (platform: string) => {
     let shareUrl = '';
@@ -54,11 +60,11 @@ const ShareDialog = ({ title, url, children }: ShareDialogProps) => {
         }
     }
     
-    setOpen(false);
+    setIsOpen(false);
   };
   
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         {children}
       </DialogTrigger>

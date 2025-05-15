@@ -3,7 +3,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { 
   Home, BookOpen, Gamepad, Trophy, 
-  Users, Calendar, MessageCircle, 
+  Users, Calendar, MessageSquare, 
   Award, Search, FileEdit, Brain 
 } from "lucide-react";
 import {
@@ -29,17 +29,17 @@ export function AppSidebar() {
     { title: "Skill Challenges", icon: Trophy, url: "/challenges" },
     { title: "Mentors", icon: Users, url: "/mentors" },
     { title: "My Planner", icon: Calendar, url: "/planner" },
-    { title: "Community", icon: MessageCircle, url: "/community" },
+    { title: "Community", icon: MessageSquare, url: "/community" },
+    { title: "Messages", icon: MessageSquare, url: "/messaging" },
     { title: "Leaderboard", icon: Award, url: "/leaderboard" },
     { title: "Explore Careers", icon: Search, url: "/careers" },
     { title: "Resume & Portfolio", icon: FileEdit, url: "/portfolio" },
   ];
 
   return (
-    <Sidebar variant="floating" collapsible="icon">
+    <Sidebar variant="floating" collapsible="icon" className="border-r border-gray-200 w-64">
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Navigation</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {menuItems.map((item) => (

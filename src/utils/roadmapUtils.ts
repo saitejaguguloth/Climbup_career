@@ -1,6 +1,7 @@
 
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
+import { toast } from "@/hooks/use-toast";
 
 // Interface for roadmap data
 export interface RoadmapData {
@@ -30,9 +31,18 @@ export interface RoadmapData {
 export const saveRoadmap = (roadmapData: RoadmapData) => {
   try {
     localStorage.setItem(`roadmap-${roadmapData.careerGoal}`, JSON.stringify(roadmapData));
+    toast({
+      title: "Roadmap Saved",
+      description: "Your roadmap has been saved successfully"
+    });
     return true;
   } catch (error) {
     console.error("Error saving roadmap:", error);
+    toast({
+      title: "Save Failed",
+      description: "There was an error saving your roadmap",
+      variant: "destructive"
+    });
     return false;
   }
 };
@@ -44,6 +54,11 @@ export const downloadRoadmapAsPDF = async (elementId: string, fileName: string =
     if (!element) {
       throw new Error("Element not found");
     }
+    
+    toast({
+      title: "Preparing PDF",
+      description: "Creating your roadmap PDF..."
+    });
     
     // Create canvas from the DOM element
     const canvas = await html2canvas(element, {
@@ -65,9 +80,19 @@ export const downloadRoadmapAsPDF = async (elementId: string, fileName: string =
     pdf.addImage(imgData, 'PNG', 0, 0, canvas.width, canvas.height);
     pdf.save(`${fileName}.pdf`);
     
+    toast({
+      title: "PDF Downloaded",
+      description: "Your roadmap PDF has been downloaded"
+    });
+    
     return true;
   } catch (error) {
     console.error("Error downloading roadmap as PDF:", error);
+    toast({
+      title: "Download Failed",
+      description: "There was an error creating your PDF",
+      variant: "destructive"
+    });
     return false;
   }
 };
@@ -77,9 +102,20 @@ export const shareRoadmap = async (data: { title: string, text: string, url: str
   if (navigator.share) {
     try {
       await navigator.share(data);
+      toast({
+        title: "Shared Successfully",
+        description: "Your roadmap has been shared"
+      });
       return true;
     } catch (error) {
       console.error("Error sharing roadmap:", error);
+      if (error.name !== 'AbortError') {
+        toast({
+          title: "Share Failed",
+          description: "There was an error sharing your roadmap",
+          variant: "destructive"
+        });
+      }
       return false;
     }
   } else {
@@ -92,9 +128,18 @@ export const shareRoadmap = async (data: { title: string, text: string, url: str
 export const copyToClipboard = async (text: string) => {
   try {
     await navigator.clipboard.writeText(text);
+    toast({
+      title: "Link Copied",
+      description: "Roadmap link copied to clipboard"
+    });
     return true;
   } catch (error) {
     console.error("Error copying to clipboard:", error);
+    toast({
+      title: "Copy Failed",
+      description: "Could not copy link to clipboard",
+      variant: "destructive"
+    });
     return false;
   }
 };
@@ -105,9 +150,26 @@ export const markStepAsDone = (stepId: string, isDone: boolean) => {
     const completedSteps = JSON.parse(localStorage.getItem('completedRoadmapSteps') || '{}');
     completedSteps[stepId] = isDone;
     localStorage.setItem('completedRoadmapSteps', JSON.stringify(completedSteps));
+    
+    if (isDone) {
+      toast({
+        title: "Step Completed",
+        description: "This step has been marked as complete"
+      });
+    } else {
+      toast({
+        description: "Step has been marked as incomplete"
+      });
+    }
+    
     return true;
   } catch (error) {
     console.error("Error marking step as done:", error);
+    toast({
+      title: "Action Failed",
+      description: "There was an error updating this step",
+      variant: "destructive"
+    });
     return false;
   }
 };
@@ -141,4 +203,30 @@ export const getAllRoadmaps = () => {
     console.error("Error getting all roadmaps:", error);
     return [];
   }
+};
+
+// Function to navigate to roadmap from quiz results
+export const viewRoadmapFromQuiz = (careerPath: string, navigate: any) => {
+  if (careerPath) {
+    navigate(`/roadmap/${encodeURIComponent(careerPath)}`);
+  } else {
+    navigate('/roadmap');
+  }
+};
+
+// Function to navigate to messaging page
+export const navigateToMessaging = (navigate: any, groupId?: string) => {
+  navigate('/messaging');
+  if (groupId) {
+    // In a real app, you would store the groupId in state or context
+    // and then access it in the messaging page to open the correct group
+    localStorage.setItem('activeGroupId', groupId);
+  }
+};
+
+// Function to navigate to mentors chat
+export const askMentor = (navigate: any) => {
+  navigate('/messaging');
+  // In a real app, you would store the mentor group ID
+  localStorage.setItem('activeGroupId', '3'); // ID of the mentor group
 };

@@ -21,6 +21,7 @@ import PlannerPage from "./pages/PlannerPage";
 import LeaderboardPage from "./pages/LeaderboardPage";
 import CareersPage from "./pages/CareersPage";
 import PortfolioPage from "./pages/PortfolioPage";
+import MessagingPage from "./pages/MessagingPage";
 
 const queryClient = new QueryClient();
 
@@ -49,6 +50,7 @@ const App = () => {
                   <Route path="leaderboard" element={<LeaderboardPage />} />
                   <Route path="careers" element={<CareersPage />} />
                   <Route path="portfolio" element={<PortfolioPage />} />
+                  <Route path="messaging" element={<MessagingPage />} />
                   <Route path="*" element={<NotFound />} />
                 </Route>
               </Routes>

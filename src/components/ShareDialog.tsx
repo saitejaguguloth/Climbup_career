@@ -1,117 +1,100 @@
 
 import React, { useState } from 'react';
-import { Check, Copy, Facebook, Link, Twitter, MessageSquare } from 'lucide-react';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
+import { MessageSquare, Copy, Link, Share2 } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import { copyToClipboard } from '@/utils/roadmapUtils';
 import { toast } from '@/hooks/use-toast';
+import { copyToClipboard } from '@/utils/roadmapUtils';
 
 interface ShareDialogProps {
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
   title: string;
   url: string;
+  children: React.ReactNode;
 }
 
-const ShareDialog: React.FC<ShareDialogProps> = ({ open, onOpenChange, title, url }) => {
-  const [copied, setCopied] = useState(false);
-
-  const handleCopy = async () => {
-    const success = await copyToClipboard(url);
-    if (success) {
-      setCopied(true);
-      toast({
-        title: "Link copied!",
-        description: "The roadmap link has been copied to your clipboard."
-      });
-      setTimeout(() => setCopied(false), 2000);
-    }
-  };
-
-  const handleShare = (platform: string) => {
+const ShareDialog = ({ title, url, children }: ShareDialogProps) => {
+  const [open, setOpen] = useState(false);
+  
+  const handleShare = async (platform: string) => {
     let shareUrl = '';
     
     switch (platform) {
-      case 'twitter':
-        shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(`Check out this career roadmap: ${title}`)}&url=${encodeURIComponent(url)}`;
-        break;
-      case 'facebook':
-        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}&quote=${encodeURIComponent(`Check out this career roadmap: ${title}`)}`;
-        break;
       case 'whatsapp':
-        shareUrl = `https://wa.me/?text=${encodeURIComponent(`Check out this career roadmap: ${title} ${url}`)}`;
+        shareUrl = `https://wa.me/?text=${encodeURIComponent(`Check out this ${title}: ${url}`)}`;
+        window.open(shareUrl, '_blank');
+        break;
+      case 'twitter':
+        shareUrl = `https://twitter.com/intent/tweet?text=${encodeURIComponent(`Check out this ${title}`)}&url=${encodeURIComponent(url)}`;
+        window.open(shareUrl, '_blank');
+        break;
+      case 'linkedin':
+        shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`;
+        window.open(shareUrl, '_blank');
+        break;
+      case 'copy':
+        await copyToClipboard(url);
         break;
       default:
-        return;
+        if (navigator.share) {
+          try {
+            await navigator.share({
+              title: title,
+              text: `Check out this ${title}`,
+              url: url,
+            });
+            toast({
+              description: "Shared successfully"
+            });
+          } catch (error) {
+            console.error("Error sharing:", error);
+          }
+        } else {
+          await copyToClipboard(url);
+        }
     }
     
-    window.open(shareUrl, '_blank', 'noopener,noreferrer');
+    setOpen(false);
   };
-
+  
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        {children}
+      </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Share Roadmap</DialogTitle>
-          <DialogDescription>
-            Share this roadmap with your friends or classmates
-          </DialogDescription>
+          <DialogTitle>Share {title}</DialogTitle>
         </DialogHeader>
-        
-        <div className="flex items-center space-x-2 mt-4">
-          <Input 
-            value={url} 
-            readOnly 
+        <div className="flex items-center space-x-2 py-4">
+          <Input
+            value={url}
+            readOnly
             className="flex-1"
           />
-          <Button size="icon" variant="outline" onClick={handleCopy}>
-            {copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+          <Button size="sm" onClick={() => handleShare('copy')}>
+            <Copy className="h-4 w-4 mr-2" />
+            Copy
           </Button>
         </div>
-        
-        <div className="flex justify-center space-x-4 mt-6">
-          <Button 
-            onClick={() => handleShare('twitter')} 
-            size="lg"
-            variant="outline"
-            className="flex flex-col items-center gap-2 h-auto py-4 px-6"
-          >
-            <Twitter className="h-8 w-8 text-sky-500" />
-            <span className="text-sm">Twitter</span>
+        <div className="flex flex-col space-y-2 sm:flex-row sm:space-x-2 sm:space-y-0">
+          <Button variant="outline" className="flex-1" onClick={() => handleShare('whatsapp')}>
+            <MessageSquare className="h-4 w-4 mr-2 text-green-500" />
+            WhatsApp
           </Button>
-          
-          <Button 
-            onClick={() => handleShare('facebook')} 
-            size="lg"
-            variant="outline"
-            className="flex flex-col items-center gap-2 h-auto py-4 px-6"
-          >
-            <Facebook className="h-8 w-8 text-blue-600" />
-            <span className="text-sm">Facebook</span>
+          <Button variant="outline" className="flex-1" onClick={() => handleShare('twitter')}>
+            <MessageSquare className="h-4 w-4 mr-2 text-blue-500" />
+            Twitter
           </Button>
-          
-          <Button 
-            onClick={() => handleShare('whatsapp')} 
-            size="lg"
-            variant="outline"
-            className="flex flex-col items-center gap-2 h-auto py-4 px-6"
-          >
-            <MessageSquare className="h-8 w-8 text-green-500" />
-            <span className="text-sm">WhatsApp</span>
+          <Button variant="outline" className="flex-1" onClick={() => handleShare('linkedin')}>
+            <Link className="h-4 w-4 mr-2 text-blue-700" />
+            LinkedIn
+          </Button>
+          <Button variant="outline" className="flex-1" onClick={() => handleShare('default')}>
+            <Share2 className="h-4 w-4 mr-2" />
+            More
           </Button>
         </div>
-
-        <DialogFooter className="sm:justify-center mt-4">
-          <Button 
-            variant="ghost" 
-            onClick={handleCopy}
-            className="flex items-center gap-2"
-          >
-            <Link className="h-4 w-4" />
-            Copy Link
-          </Button>
-        </DialogFooter>
       </DialogContent>
     </Dialog>
   );

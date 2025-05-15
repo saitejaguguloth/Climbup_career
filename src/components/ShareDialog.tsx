@@ -1,6 +1,6 @@
 
 import React, { useState } from 'react';
-import { Check, Copy, Facebook, Link, Twitter, WhatsApp } from 'lucide-react';
+import { Check, Copy, Facebook, Link, Twitter, MessageSquare } from 'lucide-react';
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -97,7 +97,7 @@ const ShareDialog: React.FC<ShareDialogProps> = ({ open, onOpenChange, title, ur
             variant="outline"
             className="flex flex-col items-center gap-2 h-auto py-4 px-6"
           >
-            <WhatsApp className="h-8 w-8 text-green-500" />
+            <MessageSquare className="h-8 w-8 text-green-500" />
             <span className="text-sm">WhatsApp</span>
           </Button>
         </div>

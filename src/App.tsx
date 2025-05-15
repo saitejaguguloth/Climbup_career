@@ -3,8 +3,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { useState } from "react";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import Layout from "./components/Layout";
 import HomePage from "./pages/HomePage";
 import RoadmapPage from "./pages/RoadmapPage";
@@ -27,6 +27,20 @@ const queryClient = new QueryClient();
 
 const App = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  useEffect(() => {
+    // Check if user is authenticated on component mount
+    const authStatus = localStorage.getItem("isAuthenticated");
+    if (authStatus === "true") {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
+  // Function to protect routes that require authentication
+  const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+    return isAuthenticated ? <>{children}</> : <Navigate to="/login" replace />;
+  };
 
   return (
     <QueryClientProvider client={queryClient}>
@@ -36,14 +50,21 @@ const App = () => {
             <div className="min-h-screen flex w-full">
               <AppSidebar />
               <Routes>
-                <Route path="/" element={<Layout />}>
+                <Route path="/login" element={<LoginPage />} />
+                <Route 
+                  path="/" 
+                  element={
+                    <ProtectedRoute>
+                      <Layout />
+                    </ProtectedRoute>
+                  }
+                >
                   <Route index element={<HomePage />} />
                   <Route path="roadmap" element={<RoadmapPage />} />
                   <Route path="roadmap/:careerPath" element={<RoadmapPage />} />
                   <Route path="quiz" element={<QuizPage />} />
                   <Route path="games" element={<GamesPage />} />
                   <Route path="challenges" element={<ChallengesPage />} />
-                  <Route path="login" element={<LoginPage />} />
                   <Route path="mentors" element={<MentorsPage />} />
                   <Route path="planner" element={<PlannerPage />} />
                   <Route path="community" element={<CommunityPage />} />

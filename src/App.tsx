@@ -31,11 +31,20 @@ const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    // Check if user is authenticated on component mount
-    const authStatus = localStorage.getItem("isAuthenticated");
-    if (authStatus === "true") {
-      setIsAuthenticated(true);
-    }
+    // Check if user is authenticated on component mount and on localStorage change
+    const checkAuthStatus = () => {
+      const authStatus = localStorage.getItem("isAuthenticated");
+      setIsAuthenticated(authStatus === "true");
+    };
+
+    checkAuthStatus();
+
+    // Listen for storage events to update auth status across tabs
+    window.addEventListener("storage", checkAuthStatus);
+    
+    return () => {
+      window.removeEventListener("storage", checkAuthStatus);
+    };
   }, []);
 
   // Function to protect routes that require authentication
@@ -50,9 +59,9 @@ const App = () => {
           <BrowserRouter>
             <SidebarProvider defaultOpen={false} open={sidebarOpen} onOpenChange={setSidebarOpen}>
               <div className="min-h-screen flex w-full">
-                <AppSidebar />
+                {isAuthenticated && <AppSidebar />}
                 <Routes>
-                  <Route path="/login" element={<LoginPage />} />
+                  <Route path="/login" element={isAuthenticated ? <Navigate to="/" replace /> : <LoginPage />} />
                   <Route 
                     path="/" 
                     element={

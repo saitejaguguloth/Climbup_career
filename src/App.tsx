@@ -22,6 +22,7 @@ import LeaderboardPage from "./pages/LeaderboardPage";
 import CareersPage from "./pages/CareersPage";
 import PortfolioPage from "./pages/PortfolioPage";
 import MessagingPage from "./pages/MessagingPage";
+import { ToastProvider } from "@/contexts/toast-context";
 
 const queryClient = new QueryClient();
 
@@ -45,41 +46,43 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <BrowserRouter>
-          <SidebarProvider defaultOpen={false} open={sidebarOpen} onOpenChange={setSidebarOpen}>
-            <div className="min-h-screen flex w-full">
-              <AppSidebar />
-              <Routes>
-                <Route path="/login" element={<LoginPage />} />
-                <Route 
-                  path="/" 
-                  element={
-                    <ProtectedRoute>
-                      <Layout />
-                    </ProtectedRoute>
-                  }
-                >
-                  <Route index element={<HomePage />} />
-                  <Route path="roadmap" element={<RoadmapPage />} />
-                  <Route path="roadmap/:careerPath" element={<RoadmapPage />} />
-                  <Route path="quiz" element={<QuizPage />} />
-                  <Route path="games" element={<GamesPage />} />
-                  <Route path="challenges" element={<ChallengesPage />} />
-                  <Route path="mentors" element={<MentorsPage />} />
-                  <Route path="planner" element={<PlannerPage />} />
-                  <Route path="community" element={<CommunityPage />} />
-                  <Route path="leaderboard" element={<LeaderboardPage />} />
-                  <Route path="careers" element={<CareersPage />} />
-                  <Route path="portfolio" element={<PortfolioPage />} />
-                  <Route path="messaging" element={<MessagingPage />} />
-                  <Route path="*" element={<NotFound />} />
-                </Route>
-              </Routes>
-            </div>
-          </SidebarProvider>
-          <Toaster />
-          <Sonner />
-        </BrowserRouter>
+        <ToastProvider>
+          <BrowserRouter>
+            <SidebarProvider defaultOpen={false} open={sidebarOpen} onOpenChange={setSidebarOpen}>
+              <div className="min-h-screen flex w-full">
+                <AppSidebar />
+                <Routes>
+                  <Route path="/login" element={<LoginPage />} />
+                  <Route 
+                    path="/" 
+                    element={
+                      <ProtectedRoute>
+                        <Layout />
+                      </ProtectedRoute>
+                    }
+                  >
+                    <Route index element={<HomePage />} />
+                    <Route path="roadmap" element={<RoadmapPage />} />
+                    <Route path="roadmap/:careerPath" element={<RoadmapPage />} />
+                    <Route path="quiz" element={<QuizPage />} />
+                    <Route path="games" element={<GamesPage />} />
+                    <Route path="challenges" element={<ChallengesPage />} />
+                    <Route path="mentors" element={<MentorsPage />} />
+                    <Route path="planner" element={<PlannerPage />} />
+                    <Route path="community" element={<CommunityPage />} />
+                    <Route path="leaderboard" element={<LeaderboardPage />} />
+                    <Route path="careers" element={<CareersPage />} />
+                    <Route path="portfolio" element={<PortfolioPage />} />
+                    <Route path="messaging" element={<MessagingPage />} />
+                    <Route path="*" element={<NotFound />} />
+                  </Route>
+                </Routes>
+              </div>
+            </SidebarProvider>
+            <Toaster />
+            <Sonner />
+          </BrowserRouter>
+        </ToastProvider>
       </TooltipProvider>
     </QueryClientProvider>
   );

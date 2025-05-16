@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from "@/components/ui/toaster"
@@ -23,7 +24,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route path="/" element={<Layout sidebarVisible={false} />}>
+        <Route element={<Layout sidebarVisible={false} />}>
           <Route index element={<HomePage />} />
           <Route path="roadmap" element={<RoadmapPage />} />
           <Route path="roadmap/:careerPath" element={<RoadmapPage />} />

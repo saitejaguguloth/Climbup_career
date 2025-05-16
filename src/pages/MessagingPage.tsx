@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -448,13 +447,55 @@ const MessagingPage = () => {
                 </div>
                 
                 <div className="flex-1 overflow-y-auto">
-                  <TabsContent value="chats" className="m-0">
-                    <div className="flex justify-between items-center p-4 border-b border-gray-200">
-                      <h3 className="font-medium">Recent Chats</h3>
-                    </div>
-                    {filteredGroups
-                      .filter(group => !group.isMentorGroup)
-                      .map(group => (
+                  <Tabs defaultValue={activeTab} onValueChange={setActiveTab} className="w-full">
+                    <TabsContent value="chats" className="mt-0">
+                      <div className="flex justify-between items-center p-4 border-b border-gray-200">
+                        <h3 className="font-medium">Recent Chats</h3>
+                      </div>
+                      {filteredGroups
+                        .filter(group => !group.isMentorGroup)
+                        .map(group => (
+                          <div 
+                            key={group.id}
+                            className={`flex items-center gap-3 p-4 hover:bg-gray-50 cursor-pointer border-b border-gray-100 transition-colors ${activeChat === group.id ? 'bg-blue-50' : ''}`}
+                            onClick={() => setActiveChat(group.id)}
+                          >
+                            <Avatar className="h-12 w-12">
+                              <AvatarImage src={group.avatar} />
+                              <AvatarFallback>{group.name[0]}</AvatarFallback>
+                            </Avatar>
+                            <div className="flex-1 min-w-0">
+                              <div className="flex justify-between">
+                                <h4 className="font-medium truncate">{group.name}</h4>
+                                <span className="text-xs text-gray-500">
+                                  {group.lastMessageTime ? formatTime(group.lastMessageTime) : ''}
+                                </span>
+                              </div>
+                              <p className="text-sm text-gray-500 truncate">{group.lastMessage}</p>
+                            </div>
+                            {group.unread > 0 && (
+                              <span className="bg-blue-500 text-white text-xs rounded-full h-5 min-w-5 flex items-center justify-center">
+                                {group.unread}
+                              </span>
+                            )}
+                          </div>
+                        ))}
+                    </TabsContent>
+                    
+                    <TabsContent value="groups" className="mt-0">
+                      <div className="flex justify-between items-center p-4 border-b border-gray-200">
+                        <h3 className="font-medium">All Groups</h3>
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          className="flex items-center gap-1"
+                          onClick={handleCreateGroup}
+                        >
+                          <Plus className="h-4 w-4" />
+                          New
+                        </Button>
+                      </div>
+                      {filteredGroups.map(group => (
                         <div 
                           key={group.id}
                           className={`flex items-center gap-3 p-4 hover:bg-gray-50 cursor-pointer border-b border-gray-100 transition-colors ${activeChat === group.id ? 'bg-blue-50' : ''}`}
@@ -466,13 +507,35 @@ const MessagingPage = () => {
                           </Avatar>
                           <div className="flex-1 min-w-0">
                             <div className="flex justify-between">
-                              <h4 className="font-medium truncate">{group.name}</h4>
-                              <span className="text-xs text-gray-500">
-                                {group.lastMessageTime ? formatTime(group.lastMessageTime) : ''}
-                              </span>
+                              <h4 className="font-medium truncate">
+                                {group.name}
+                                {group.isMentorGroup && (
+                                  <span className="ml-2 text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full">Mentor</span>
+                                )}
+                              </h4>
                             </div>
-                            <p className="text-sm text-gray-500 truncate">{group.lastMessage}</p>
+                            <div className="flex flex-wrap gap-1 mt-1">
+                              {group.tags?.slice(0, 3).map(tag => (
+                                <span key={tag} className="text-xs bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded">
+                                  {tag}
+                                </span>
+                              ))}
+                            </div>
+                            <p className="text-xs text-gray-500 mt-1">{group.members} members</p>
                           </div>
+                          {!messages[group.id] && (
+                            <Button 
+                              variant="ghost" 
+                              size="sm" 
+                              className="text-xs"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                joinGroup(group.id);
+                              }}
+                            >
+                              Join
+                            </Button>
+                          )}
                           {group.unread > 0 && (
                             <span className="bg-blue-500 text-white text-xs rounded-full h-5 min-w-5 flex items-center justify-center">
                               {group.unread}
@@ -480,70 +543,8 @@ const MessagingPage = () => {
                           )}
                         </div>
                       ))}
-                  </TabsContent>
-                  
-                  <TabsContent value="groups" className="m-0">
-                    <div className="flex justify-between items-center p-4 border-b border-gray-200">
-                      <h3 className="font-medium">All Groups</h3>
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
-                        className="flex items-center gap-1"
-                        onClick={handleCreateGroup}
-                      >
-                        <Plus className="h-4 w-4" />
-                        New
-                      </Button>
-                    </div>
-                    {filteredGroups.map(group => (
-                      <div 
-                        key={group.id}
-                        className={`flex items-center gap-3 p-4 hover:bg-gray-50 cursor-pointer border-b border-gray-100 transition-colors ${activeChat === group.id ? 'bg-blue-50' : ''}`}
-                        onClick={() => setActiveChat(group.id)}
-                      >
-                        <Avatar className="h-12 w-12">
-                          <AvatarImage src={group.avatar} />
-                          <AvatarFallback>{group.name[0]}</AvatarFallback>
-                        </Avatar>
-                        <div className="flex-1 min-w-0">
-                          <div className="flex justify-between">
-                            <h4 className="font-medium truncate">
-                              {group.name}
-                              {group.isMentorGroup && (
-                                <span className="ml-2 text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full">Mentor</span>
-                              )}
-                            </h4>
-                          </div>
-                          <div className="flex flex-wrap gap-1 mt-1">
-                            {group.tags?.slice(0, 3).map(tag => (
-                              <span key={tag} className="text-xs bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded">
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-                          <p className="text-xs text-gray-500 mt-1">{group.members} members</p>
-                        </div>
-                        {!messages[group.id] && (
-                          <Button 
-                            variant="ghost" 
-                            size="sm" 
-                            className="text-xs"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              joinGroup(group.id);
-                            }}
-                          >
-                            Join
-                          </Button>
-                        )}
-                        {group.unread > 0 && (
-                          <span className="bg-blue-500 text-white text-xs rounded-full h-5 min-w-5 flex items-center justify-center">
-                            {group.unread}
-                          </span>
-                        )}
-                      </div>
-                    ))}
-                  </TabsContent>
+                    </TabsContent>
+                  </Tabs>
                 </div>
               </div>
             </div>

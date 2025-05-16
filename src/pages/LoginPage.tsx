@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -94,6 +93,19 @@ const LoginPage = () => {
     }));
   }, [userType]);
 
+  // Load registered users from localStorage
+  const getRegisteredUsers = (): UserDetails[] => {
+    const usersJson = localStorage.getItem("registeredUsers");
+    return usersJson ? JSON.parse(usersJson) : [];
+  };
+
+  // Save registered users to localStorage
+  const saveRegisteredUser = (user: UserDetails) => {
+    const currentUsers = getRegisteredUsers();
+    const updatedUsers = [...currentUsers, user];
+    localStorage.setItem("registeredUsers", JSON.stringify(updatedUsers));
+  };
+
   // Validation functions
   const validateEmail = (email: string): string => {
     if (!email) return "Email is required";
@@ -178,8 +190,9 @@ const LoginPage = () => {
     
     setIsLoading(true);
     
-    // Check if email exists in mock database
-    const user = MOCK_USERS.find(user => user.email === loginCredentials.email);
+    // Check if email exists in registered users
+    const registeredUsers = getRegisteredUsers();
+    const user = registeredUsers.find(user => user.email === loginCredentials.email);
     
     setTimeout(() => {
       if (!user) {
@@ -200,7 +213,8 @@ const LoginPage = () => {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
-        userType: user.userType
+        userType: user.userType,
+        education: user.education
       }));
       
       toast({
@@ -238,7 +252,8 @@ const LoginPage = () => {
     setIsLoading(true);
     
     // Check if email is already registered
-    const existingUser = MOCK_USERS.find(user => user.email === signupDetails.email);
+    const registeredUsers = getRegisteredUsers();
+    const existingUser = registeredUsers.find(user => user.email === signupDetails.email);
     
     setTimeout(() => {
       if (existingUser) {
@@ -247,8 +262,9 @@ const LoginPage = () => {
         return;
       }
       
-      // In a real app, you would create a new user in the database
-      // For demo, we'll just simulate a successful registration
+      // Store the new user in localStorage
+      saveRegisteredUser(signupDetails);
+      
       localStorage.setItem("isAuthenticated", "true");
       localStorage.setItem("user", JSON.stringify({
         firstName: signupDetails.firstName,

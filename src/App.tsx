@@ -16,6 +16,8 @@ import NotFound from "./pages/NotFound";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import AppSidebar from "./components/AppSidebar";
 import GamesPage from "./pages/GamesPage";
+import GameDetailPage from "./pages/GameDetailPage";
+import GameLeaderboardPage from "./pages/GameLeaderboardPage";
 import ChallengesPage from "./pages/ChallengesPage";
 import PlannerPage from "./pages/PlannerPage";
 import LeaderboardPage from "./pages/LeaderboardPage";
@@ -75,6 +77,8 @@ const App = () => {
                     <Route path="roadmap/:careerPath" element={<RoadmapPage />} />
                     <Route path="quiz" element={<QuizPage />} />
                     <Route path="games" element={<GamesPage />} />
+                    <Route path="games/:gameType/:gameId" element={<GameDetailPage />} />
+                    <Route path="games/leaderboard" element={<GameLeaderboardPage />} />
                     <Route path="challenges" element={<ChallengesPage />} />
                     <Route path="mentors" element={<MentorsPage />} />
                     <Route path="planner" element={<PlannerPage />} />

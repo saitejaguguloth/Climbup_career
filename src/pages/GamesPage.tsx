@@ -1,5 +1,6 @@
 
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
@@ -9,6 +10,17 @@ import { BookOpen, Gamepad, Trophy, Brain, Code, PenTool } from "lucide-react";
 
 const GamesPage = () => {
   const [activeTab, setActiveTab] = useState("flashcards");
+  const navigate = useNavigate();
+  
+  // Function to handle play now button click
+  const handlePlayNow = (gameId, gameType) => {
+    navigate(`/games/${gameType}/${gameId}`);
+  };
+  
+  // Function to view leaderboard
+  const handleViewLeaderboard = () => {
+    navigate('/games/leaderboard');
+  };
 
   // Sample data for games
   const games = {
@@ -140,7 +152,10 @@ const GamesPage = () => {
             </CardContent>
             
             <CardFooter>
-              <Button className="w-full bg-gradient-to-r from-blue-600 to-indigo-600">
+              <Button 
+                className="w-full bg-gradient-to-r from-blue-600 to-indigo-600"
+                onClick={() => handlePlayNow(game.id, activeTab)}
+              >
                 Play Now
               </Button>
             </CardFooter>
@@ -252,7 +267,11 @@ const GamesPage = () => {
                 Compete with peers, track your progress, and earn rewards. Join the Career Arena to showcase your skills.
               </p>
             </div>
-            <Button variant="secondary" className="whitespace-nowrap">
+            <Button 
+              variant="secondary" 
+              className="whitespace-nowrap"
+              onClick={handleViewLeaderboard}
+            >
               <Trophy className="w-4 h-4 mr-2" />
               View Leaderboard
             </Button>

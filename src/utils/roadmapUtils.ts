@@ -1,4 +1,3 @@
-
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 import { toast } from "@/hooks/use-toast";
@@ -36,11 +35,11 @@ export const careerRoadmapTemplates: Record<string, Partial<RoadmapData>> = {
         courses: [
           { 
             title: "Introduction to Programming", 
-            links: [{ type: "Online Course", url: "https://www.example.com/intro-programming" }] 
+            links: [{ type: "YouTube", url: "https://www.youtube.com/watch?v=zOjov-2OZ0E" }] 
           },
           { 
             title: "Data Structures and Algorithms", 
-            links: [{ type: "Online Course", url: "https://www.example.com/dsa" }] 
+            links: [{ type: "YouTube", url: "https://www.youtube.com/watch?v=zOjov-2OZ0E" }] 
           }
         ],
         skills: ["Problem Solving", "Basic Programming", "Logical Thinking"],
@@ -51,11 +50,11 @@ export const careerRoadmapTemplates: Record<string, Partial<RoadmapData>> = {
         courses: [
           { 
             title: "Web Development Fundamentals", 
-            links: [{ type: "Online Course", url: "https://www.example.com/web-dev" }] 
+            links: [{ type: "YouTube", url: "https://www.youtube.com/watch?v=zOjov-2OZ0E" }] 
           },
           { 
             title: "Database Management", 
-            links: [{ type: "Online Course", url: "https://www.example.com/database" }] 
+            links: [{ type: "YouTube", url: "https://www.youtube.com/watch?v=zOjov-2OZ0E" }] 
           }
         ],
         skills: ["HTML/CSS", "JavaScript", "SQL", "Git"],
@@ -66,11 +65,11 @@ export const careerRoadmapTemplates: Record<string, Partial<RoadmapData>> = {
         courses: [
           { 
             title: "Full Stack Development", 
-            links: [{ type: "Online Course", url: "https://www.example.com/fullstack" }] 
+            links: [{ type: "YouTube", url: "https://www.youtube.com/watch?v=zOjov-2OZ0E" }] 
           },
           { 
             title: "DevOps and CI/CD", 
-            links: [{ type: "Online Course", url: "https://www.example.com/devops" }] 
+            links: [{ type: "YouTube", url: "https://www.youtube.com/watch?v=zOjov-2OZ0E" }] 
           }
         ],
         skills: ["React/Angular/Vue", "Node.js", "Docker", "Cloud Services"],
@@ -91,52 +90,52 @@ export const careerRoadmapTemplates: Record<string, Partial<RoadmapData>> = {
         courses: [
           { 
             title: "Biology and Chemistry Fundamentals", 
-            links: [{ type: "Online Course", url: "https://www.example.com/bio-chem" }] 
+            links: [{ type: "YouTube", url: "https://www.youtube.com/watch?v=zOjov-2OZ0E" }] 
           },
           { 
-            title: "Anatomy and Physiology", 
-            links: [{ type: "Online Course", url: "https://www.example.com/anatomy" }] 
+            title: "Human Anatomy and Physiology", 
+            links: [{ type: "Free Course", url: "https://www.khanacademy.org/science/health-and-medicine/human-anatomy-and-physiology" }] 
           }
         ],
-        skills: ["Medical Terminology", "Lab Techniques", "Critical Thinking"],
-        projects: ["Anatomy Studies", "Basic Health Assessment Practice"]
+        skills: ["Science Fundamentals", "Memorization", "Focus & Discipline"],
+        projects: ["Human Anatomy Studies", "Biology Research Paper"]
       },
       {
         name: "Intermediate",
         courses: [
           { 
-            title: "Pathophysiology", 
-            links: [{ type: "Online Course", url: "https://www.example.com/pathophysiology" }] 
+            title: "NEET Preparation", 
+            links: [{ type: "YouTube", url: "https://www.youtube.com/c/neetstudy" }] 
           },
           { 
-            title: "Pharmacology Basics", 
-            links: [{ type: "Online Course", url: "https://www.example.com/pharmacology" }] 
+            title: "Medical Entrance Exams", 
+            links: [{ type: "Online Course", url: "https://www.unacademy.com/goal/neet-ug/TMUVD" }] 
           }
         ],
-        skills: ["Patient Assessment", "Medical Ethics", "Research Methods"],
-        projects: ["Case Studies Analysis", "Medical Documentation Practice"]
+        skills: ["Physics", "Chemistry", "Biology", "Time Management"],
+        projects: ["Mock Tests Practice", "Science Laboratory Work"]
       },
       {
         name: "Advanced",
         courses: [
           { 
-            title: "Clinical Diagnostics", 
-            links: [{ type: "Online Course", url: "https://www.example.com/diagnostics" }] 
+            title: "MBBS Core Subjects", 
+            links: [{ type: "YouTube", url: "https://www.youtube.com/c/DrNajeebLectures" }] 
           },
           { 
-            title: "Treatment Planning", 
-            links: [{ type: "Online Course", url: "https://www.example.com/treatment" }] 
+            title: "Medical Ethics", 
+            links: [{ type: "Online Course", url: "https://www.coursera.org/learn/medical-ethics" }] 
           }
         ],
-        skills: ["Diagnostic Reasoning", "Patient Communication", "Medical Decision Making"],
-        projects: ["Clinical Shadowing", "Medical Research Paper"]
+        skills: ["Patient Care", "Clinical Diagnostics", "Medical Decision-Making"],
+        projects: ["Health Awareness Camp", "Hospital Volunteering"]
       }
     ],
     timeline: {
       foundation: "12 months",
       intermediate: "24 months",
-      advanced: "36 months",
-      total: "72 months"
+      advanced: "60 months",
+      total: "96 months"
     }
   },
   "Data Scientist": {
@@ -146,11 +145,11 @@ export const careerRoadmapTemplates: Record<string, Partial<RoadmapData>> = {
         courses: [
           { 
             title: "Statistics and Probability", 
-            links: [{ type: "Online Course", url: "https://www.example.com/stats" }] 
+            links: [{ type: "YouTube", url: "https://www.youtube.com/playlist?list=PLblh5JKOoLUK0FLuzwntyYI10UQFUhsY9" }] 
           },
           { 
             title: "Programming with Python", 
-            links: [{ type: "Online Course", url: "https://www.example.com/python" }] 
+            links: [{ type: "Online Course", url: "https://www.datacamp.com/tracks/python-programmer" }] 
           }
         ],
         skills: ["Math Fundamentals", "Python Programming", "Data Analysis"],
@@ -161,11 +160,11 @@ export const careerRoadmapTemplates: Record<string, Partial<RoadmapData>> = {
         courses: [
           { 
             title: "Machine Learning Fundamentals", 
-            links: [{ type: "Online Course", url: "https://www.example.com/ml-basics" }] 
+            links: [{ type: "YouTube", url: "https://www.youtube.com/playlist?list=PLLssT5z_DsK-h9vYZkQkYNWcItqhlRJLN" }] 
           },
           { 
             title: "Data Visualization", 
-            links: [{ type: "Online Course", url: "https://www.example.com/data-viz" }] 
+            links: [{ type: "Online Course", url: "https://www.coursera.org/specializations/data-visualization" }] 
           }
         ],
         skills: ["Machine Learning Algorithms", "Data Visualization", "SQL", "Feature Engineering"],
@@ -176,11 +175,11 @@ export const careerRoadmapTemplates: Record<string, Partial<RoadmapData>> = {
         courses: [
           { 
             title: "Deep Learning", 
-            links: [{ type: "Online Course", url: "https://www.example.com/deep-learning" }] 
+            links: [{ type: "Online Course", url: "https://www.deeplearning.ai/courses/deep-learning-specialization/" }] 
           },
           { 
             title: "Big Data Technologies", 
-            links: [{ type: "Online Course", url: "https://www.example.com/big-data" }] 
+            links: [{ type: "YouTube", url: "https://www.youtube.com/playlist?list=PL9ooVrP1hQOFrYxqxb0NJCdCABPZNo0pD" }] 
           }
         ],
         skills: ["Deep Learning", "Big Data Processing", "Model Deployment", "Business Analysis"],
@@ -192,6 +191,61 @@ export const careerRoadmapTemplates: Record<string, Partial<RoadmapData>> = {
       intermediate: "8 months",
       advanced: "12 months",
       total: "24 months"
+    }
+  },
+  "Engineer": {
+    stages: [
+      {
+        name: "Foundation",
+        courses: [
+          { 
+            title: "Mathematics and Physics", 
+            links: [{ type: "YouTube", url: "https://www.youtube.com/c/JEEengineeringMainsAdvanced" }] 
+          },
+          { 
+            title: "Engineering Drawing", 
+            links: [{ type: "Online Course", url: "https://www.nptel.ac.in/courses/112/103/112103019/" }] 
+          }
+        ],
+        skills: ["Mathematics", "Physics", "Problem Solving"],
+        projects: ["Basic Engineering Designs", "Physics Projects"]
+      },
+      {
+        name: "Intermediate",
+        courses: [
+          { 
+            title: "JEE Preparation", 
+            links: [{ type: "YouTube", url: "https://www.youtube.com/c/PhysicsWallah" }] 
+          },
+          { 
+            title: "Engineering Mechanics", 
+            links: [{ type: "Online Course", url: "https://www.nptel.ac.in/courses/112/105/112105268/" }] 
+          }
+        ],
+        skills: ["Advanced Mathematics", "Applied Physics", "Chemistry"],
+        projects: ["Engineering Models", "Mechanical Designs"]
+      },
+      {
+        name: "Advanced",
+        courses: [
+          { 
+            title: "Engineering Specialization", 
+            links: [{ type: "YouTube", url: "https://www.youtube.com/c/MITOpenCourseWare" }] 
+          },
+          { 
+            title: "Project Management", 
+            links: [{ type: "Online Course", url: "https://www.coursera.org/professional-certificates/google-project-management" }] 
+          }
+        ],
+        skills: ["Specialized Engineering Skills", "Technical Drawing", "Team Management"],
+        projects: ["Engineering Capstone Project", "Internship"]
+      }
+    ],
+    timeline: {
+      foundation: "12 months",
+      intermediate: "24 months",
+      advanced: "24 months",
+      total: "60 months"
     }
   },
   // Default roadmap as a fallback

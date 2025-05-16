@@ -22,32 +22,30 @@ import Layout from "@/components/Layout";
 
 const App: React.FC = () => {
   return (
-    <>
-      <Router>
-        <Routes>
-          <Route element={<Layout sidebarVisible={false} />}>
-            <Route index element={<HomePage />} />
-            <Route path="roadmap" element={<RoadmapPage />} />
-            <Route path="roadmap/:careerPath" element={<RoadmapPage />} />
-            <Route path="quiz" element={<QuizPage />} />
-            <Route path="games" element={<GamesPage />} />
-            <Route path="games/:gameId" element={<GameDetailPage />} />
-            <Route path="games/:gameId/leaderboard" element={<GameLeaderboardPage />} />
-            <Route path="challenges" element={<ChallengesPage />} />
-            <Route path="mentors" element={<MentorsPage />} />
-            <Route path="planner" element={<PlannerPage />} />
-            <Route path="community" element={<CommunityPage />} />
-            <Route path="messaging" element={<MessagingPage />} />
-            <Route path="leaderboard" element={<LeaderboardPage />} />
-            <Route path="careers" element={<CareersPage />} />
-            <Route path="portfolio" element={<PortfolioPage />} />
-            <Route path="login" element={<LoginPage />} />
-            <Route path="*" element={<NotFound />} />
-          </Route>
-        </Routes>
-        <Toaster />
-      </Router>
-    </>
+    <Router>
+      <Routes>
+        <Route element={<Layout sidebarVisible={false} />}>
+          <Route index element={<HomePage />} />
+          <Route path="roadmap" element={<RoadmapPage />} />
+          <Route path="roadmap/:careerPath" element={<RoadmapPage />} />
+          <Route path="quiz" element={<QuizPage />} />
+          <Route path="games" element={<GamesPage />} />
+          <Route path="games/:gameId" element={<GameDetailPage />} />
+          <Route path="games/:gameId/leaderboard" element={<GameLeaderboardPage />} />
+          <Route path="challenges" element={<ChallengesPage />} />
+          <Route path="mentors" element={<MentorsPage />} />
+          <Route path="planner" element={<PlannerPage />} />
+          <Route path="community" element={<CommunityPage />} />
+          <Route path="messaging" element={<MessagingPage />} />
+          <Route path="leaderboard" element={<LeaderboardPage />} />
+          <Route path="careers" element={<CareersPage />} />
+          <Route path="portfolio" element={<PortfolioPage />} />
+          <Route path="login" element={<LoginPage />} />
+          <Route path="*" element={<NotFound />} />
+        </Route>
+      </Routes>
+      <Toaster />
+    </Router>
   );
 }
 

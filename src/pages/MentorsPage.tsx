@@ -28,8 +28,8 @@ interface Mentor {
 
 const MentorsPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedSpecialization, setSelectedSpecialization] = useState<string>("");
-  const [selectedAvailability, setSelectedAvailability] = useState<string>("");
+  const [selectedSpecialization, setSelectedSpecialization] = useState<string>("all");
+  const [selectedAvailability, setSelectedAvailability] = useState<string>("all");
 
   const mentors: Mentor[] = [
     {
@@ -112,10 +112,10 @@ const MentorsPage = () => {
                           mentor.role.toLowerCase().includes(searchTerm.toLowerCase()) ||
                           mentor.specialization.some(spec => spec.toLowerCase().includes(searchTerm.toLowerCase()));
     
-    const matchesSpecialization = selectedSpecialization === "" || 
+    const matchesSpecialization = selectedSpecialization === "all" || 
                                   mentor.specialization.includes(selectedSpecialization);
     
-    const matchesAvailability = selectedAvailability === "" || 
+    const matchesAvailability = selectedAvailability === "all" || 
                                 mentor.availability.includes(selectedAvailability);
     
     return matchesSearch && matchesSpecialization && matchesAvailability;
@@ -166,7 +166,7 @@ const MentorsPage = () => {
                     <SelectValue placeholder="All Specializations" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">All Specializations</SelectItem>
+                    <SelectItem value="all">All Specializations</SelectItem>
                     {specializations.map((spec, index) => (
                       <SelectItem key={index} value={spec}>{spec}</SelectItem>
                     ))}
@@ -181,7 +181,7 @@ const MentorsPage = () => {
                     <SelectValue placeholder="Any Time" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="">Any Time</SelectItem>
+                    <SelectItem value="all">Any Time</SelectItem>
                     {availabilities.map((time, index) => (
                       <SelectItem key={index} value={time}>{time}</SelectItem>
                     ))}

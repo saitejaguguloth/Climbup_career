@@ -1,12 +1,9 @@
-
 import { Link } from "react-router-dom";
 import { ArrowRight, Check, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
-
 const HomePage = () => {
-  return (
-    <div className="flex flex-col w-full">
+  return <div className="flex flex-col w-full">
       {/* Hero Section */}
       <section className="relative py-20 overflow-hidden">
         {/* Blurry background elements */}
@@ -19,7 +16,7 @@ const HomePage = () => {
         
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 text-gray-900">
+            <h1 className="text-5xl mb-6 text-gray-900 font-extrabold py-[146px] px-0 mx-[31px] my-[7px] md:text-9xl">
               Climb <span className="bg-gradient-to-r from-blue-600 to-violet-600 bg-clip-text text-transparent">Up</span>
             </h1>
             <p className="text-xl md:text-2xl font-medium mb-4 bg-gradient-to-r from-blue-700 to-violet-700 bg-clip-text text-transparent">
@@ -29,19 +26,10 @@ const HomePage = () => {
               Personalized career roadmaps that guide students to success, from choosing a path to landing your dream job.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                size="lg" 
-                className="bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700 text-white shadow-lg" 
-                asChild
-              >
+              <Button size="lg" className="bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700 text-white shadow-lg" asChild>
                 <Link to="/roadmap">Get Your Roadmap</Link>
               </Button>
-              <Button 
-                size="lg" 
-                variant="outline" 
-                className="border-2 border-gray-200 hover:border-gray-300 shadow-sm" 
-                asChild
-              >
+              <Button size="lg" variant="outline" className="border-2 border-gray-200 hover:border-gray-300 shadow-sm" asChild>
                 <Link to="/quiz">Take Career Quiz</Link>
               </Button>
             </div>
@@ -118,11 +106,7 @@ const HomePage = () => {
                     <span>Web & Mobile Development</span>
                   </li>
                 </ul>
-                <Button 
-                  variant="outline" 
-                  className="w-full hover:bg-blue-50 hover:text-blue-700 group-hover:border-blue-300 transition-colors" 
-                  asChild
-                >
+                <Button variant="outline" className="w-full hover:bg-blue-50 hover:text-blue-700 group-hover:border-blue-300 transition-colors" asChild>
                   <Link to="/roadmap/software-engineer">
                     View Roadmap
                     <ArrowRight size={16} className="ml-2 transition-transform group-hover:translate-x-1" />
@@ -151,11 +135,7 @@ const HomePage = () => {
                     <span>Data Visualization</span>
                   </li>
                 </ul>
-                <Button 
-                  variant="outline" 
-                  className="w-full hover:bg-violet-50 hover:text-violet-700 group-hover:border-violet-300 transition-colors" 
-                  asChild
-                >
+                <Button variant="outline" className="w-full hover:bg-violet-50 hover:text-violet-700 group-hover:border-violet-300 transition-colors" asChild>
                   <Link to="/roadmap/data-scientist">
                     View Roadmap
                     <ArrowRight size={16} className="ml-2 transition-transform group-hover:translate-x-1" />
@@ -184,11 +164,7 @@ const HomePage = () => {
                     <span>Mock Interviews</span>
                   </li>
                 </ul>
-                <Button 
-                  variant="outline" 
-                  className="w-full hover:bg-blue-50 hover:text-blue-700 group-hover:border-blue-300 transition-colors" 
-                  asChild
-                >
+                <Button variant="outline" className="w-full hover:bg-blue-50 hover:text-blue-700 group-hover:border-blue-300 transition-colors" asChild>
                   <Link to="/roadmap/ias-officer">
                     View Roadmap
                     <ArrowRight size={16} className="ml-2 transition-transform group-hover:translate-x-1" />
@@ -199,11 +175,7 @@ const HomePage = () => {
           </div>
           
           <div className="text-center mt-10">
-            <Button 
-              variant="outline" 
-              className="border-2 border-gray-200 hover:border-gray-300" 
-              asChild
-            >
+            <Button variant="outline" className="border-2 border-gray-200 hover:border-gray-300" asChild>
               <Link to="/roadmaps">Browse All Roadmaps</Link>
             </Button>
           </div>
@@ -223,11 +195,7 @@ const HomePage = () => {
               <p className="text-gray-600 mb-8">
                 Not sure which path to choose? Our AI-powered quiz will help you discover careers matching your interests, skills, and values.
               </p>
-              <Button 
-                size="lg" 
-                className="bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700 text-white shadow-lg" 
-                asChild
-              >
+              <Button size="lg" className="bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700 text-white shadow-lg" asChild>
                 <Link to="/quiz">Start Quiz</Link>
               </Button>
             </div>
@@ -297,17 +265,11 @@ const HomePage = () => {
           <p className="max-w-xl mx-auto mb-8">
             Ready to start your journey towards a successful career? Reach out to us for personalized guidance and support.
           </p>
-          <Button 
-            size="lg" 
-            className="bg-white text-blue-600 hover:bg-gray-100 shadow-lg" 
-            asChild
-          >
+          <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100 shadow-lg" asChild>
             <Link to="/contact">Contact Us</Link>
           </Button>
         </div>
       </section>
-    </div>
-  );
+    </div>;
 };
-
 export default HomePage;

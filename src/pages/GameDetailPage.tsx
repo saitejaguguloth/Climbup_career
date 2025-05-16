@@ -6,14 +6,47 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, Trophy, Users, Book, BookOpen, Brain, Clock, CheckCircle2, XCircle } from "lucide-react";
+import { ArrowLeft, Trophy, Users, Book, BookOpen, Brain, Clock, CheckCircle2 } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+
+interface Challenge {
+  id: string;
+  title: string;
+  completed: boolean;
+  score?: number;
+}
+
+interface LevelData {
+  title: string;
+  challenges: Challenge[];
+}
+
+interface GameData {
+  id: string;
+  type: string;
+  title: string;
+  description: string;
+  image: string;
+  progress: number;
+  difficulty: string;
+  players: {
+    id: string;
+    name: string;
+    avatar: string;
+    level: number;
+  }[];
+  levels: {
+    beginner: LevelData;
+    intermediate: LevelData;
+    advanced: LevelData;
+  };
+}
 
 const GameDetailPage = () => {
   const { gameId, gameType } = useParams();
   const navigate = useNavigate();
   const [activeLevel, setActiveLevel] = useState("beginner");
-  const [game, setGame] = useState<any>(null);
+  const [game, setGame] = useState<GameData | null>(null);
   const [loading, setLoading] = useState(true);
 
   // Sample game data structure (would be fetched from API/database in a real app)
@@ -21,9 +54,9 @@ const GameDetailPage = () => {
     // Simulate API fetch delay
     const timer = setTimeout(() => {
       // Sample data structure - in a real app, this would be fetched based on gameId
-      const gameData = {
-        id: gameId,
-        type: gameType,
+      const gameData: GameData = {
+        id: gameId || "",
+        type: gameType || "",
         title: gameType === "flashcards" ? "DSA Fundamentals" : 
               gameType === "simulations" ? "Data Scientist Career Path" : 
               gameType === "careerPathBuilder" ? "Build Your Dream Career" : "Speed Coding Race",
@@ -98,6 +131,16 @@ const GameDetailPage = () => {
         <div className="text-center">
           <div className="animate-spin h-12 w-12 border-4 border-blue-500 border-t-transparent rounded-full mx-auto mb-4"></div>
           <p className="text-gray-600">Loading game...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!game) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <p className="text-gray-600">Game not found.</p>
         </div>
       </div>
     );
@@ -233,7 +276,7 @@ const GameDetailPage = () => {
                           )}
                           <div>
                             <h4 className="font-medium">{challenge.title}</h4>
-                            {challenge.completed && (
+                            {challenge.completed && challenge.score !== undefined && (
                               <p className="text-sm text-gray-600">Score: {challenge.score}%</p>
                             )}
                           </div>

@@ -1,7 +1,11 @@
 
 import { useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Menu, X, User, LogOut } from "lucide-react";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { 
+  Menu, X, User, LogOut, 
+  Home, BookOpen, Gamepad, Trophy, Users, 
+  Calendar, MessageSquare, Award, Search, FileEdit, Brain 
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -11,8 +15,17 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
 import { toast } from "@/hooks/use-toast";
 import Logo from "./Logo";
+import { cn } from "@/lib/utils";
 
 interface User {
   firstName?: string;
@@ -26,6 +39,7 @@ const Navbar = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [user, setUser] = useState<User | null>(null);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     // Check if user is authenticated on component mount
@@ -65,6 +79,22 @@ const Navbar = () => {
     return "U";
   };
 
+  // Main menu items with correct paths
+  const menuItems = [
+    { title: "Home", icon: Home, url: "/" },
+    { title: "Roadmaps", icon: BookOpen, url: "/roadmap" },
+    { title: "Career Quiz", icon: Brain, url: "/quiz" },
+    { title: "Games", icon: Gamepad, url: "/games" },
+    { title: "Challenges", icon: Trophy, url: "/challenges" },
+    { title: "Mentors", icon: Users, url: "/mentors" },
+    { title: "Planner", icon: Calendar, url: "/planner" },
+    { title: "Community", icon: MessageSquare, url: "/community" },
+    { title: "Messages", icon: MessageSquare, url: "/messaging" },
+    { title: "Leaderboard", icon: Award, url: "/leaderboard" },
+    { title: "Careers", icon: Search, url: "/careers" },
+    { title: "Portfolio", icon: FileEdit, url: "/portfolio" },
+  ];
+
   return (
     <nav className="w-full bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
@@ -72,23 +102,58 @@ const Navbar = () => {
           <Logo />
         </Link>
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex items-center space-x-8">
-          <Link to="/" className="text-gray-800 hover:text-climbup-blue transition-colors font-medium">
-            Home
-          </Link>
-          <Link to="/roadmap" className="text-gray-800 hover:text-climbup-blue transition-colors font-medium">
-            Roadmaps
-          </Link>
-          <Link to="/quiz" className="text-gray-800 hover:text-climbup-blue transition-colors font-medium">
-            Quiz
-          </Link>
-          <Link to="/mentors" className="text-gray-800 hover:text-climbup-blue transition-colors font-medium">
-            Mentors
-          </Link>
-          <Link to="/community" className="text-gray-800 hover:text-climbup-blue transition-colors font-medium">
-            Community
-          </Link>
+        {/* Desktop Navigation Menu */}
+        <div className="hidden md:flex items-center space-x-1">
+          <NavigationMenu>
+            <NavigationMenuList>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>Key Features</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid gap-3 p-4 w-[400px] grid-cols-2">
+                    {menuItems.slice(0, 6).map((item) => (
+                      <li key={item.title}>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            to={item.url}
+                            className={cn(
+                              "flex items-center space-x-2 rounded-md px-3 py-2 hover:bg-accent",
+                              location.pathname === item.url ? "bg-accent" : ""
+                            )}
+                          >
+                            <item.icon className="h-4 w-4" />
+                            <span>{item.title}</span>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                    ))}
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>Tools</NavigationMenuTrigger>
+                <NavigationMenuContent>
+                  <ul className="grid gap-3 p-4 w-[400px] grid-cols-2">
+                    {menuItems.slice(6, 12).map((item) => (
+                      <li key={item.title}>
+                        <NavigationMenuLink asChild>
+                          <Link
+                            to={item.url}
+                            className={cn(
+                              "flex items-center space-x-2 rounded-md px-3 py-2 hover:bg-accent",
+                              location.pathname === item.url ? "bg-accent" : ""
+                            )}
+                          >
+                            <item.icon className="h-4 w-4" />
+                            <span>{item.title}</span>
+                          </Link>
+                        </NavigationMenuLink>
+                      </li>
+                    ))}
+                  </ul>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
         </div>
 
         <div className="hidden md:flex items-center space-x-4">
@@ -141,41 +206,17 @@ const Navbar = () => {
       {isMenuOpen && (
         <div className="md:hidden bg-white border-t border-gray-100 animate-fade-in">
           <div className="container mx-auto px-4 py-2 flex flex-col space-y-3">
-            <Link 
-              to="/" 
-              className="py-2 text-gray-800 hover:text-climbup-blue transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Home
-            </Link>
-            <Link 
-              to="/roadmap" 
-              className="py-2 text-gray-800 hover:text-climbup-blue transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Roadmaps
-            </Link>
-            <Link 
-              to="/quiz" 
-              className="py-2 text-gray-800 hover:text-climbup-blue transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Quiz
-            </Link>
-            <Link 
-              to="/mentors" 
-              className="py-2 text-gray-800 hover:text-climbup-blue transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Mentors
-            </Link>
-            <Link 
-              to="/community" 
-              className="py-2 text-gray-800 hover:text-climbup-blue transition-colors"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Community
-            </Link>
+            {menuItems.map((item) => (
+              <Link 
+                key={item.title}
+                to={item.url} 
+                className="py-2 flex items-center space-x-2 text-gray-800 hover:text-climbup-blue transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <item.icon className="h-4 w-4" />
+                <span>{item.title}</span>
+              </Link>
+            ))}
             <div className="pt-2 flex flex-col space-y-2">
               {isAuthenticated ? (
                 <>

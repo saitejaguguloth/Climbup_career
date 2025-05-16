@@ -27,6 +27,235 @@ export interface RoadmapData {
   };
 }
 
+// Career-specific roadmap data templates
+export const careerRoadmapTemplates: Record<string, Partial<RoadmapData>> = {
+  "Software Developer": {
+    stages: [
+      {
+        name: "Foundation",
+        courses: [
+          { 
+            title: "Introduction to Programming", 
+            links: [{ type: "Online Course", url: "https://www.example.com/intro-programming" }] 
+          },
+          { 
+            title: "Data Structures and Algorithms", 
+            links: [{ type: "Online Course", url: "https://www.example.com/dsa" }] 
+          }
+        ],
+        skills: ["Problem Solving", "Basic Programming", "Logical Thinking"],
+        projects: ["Simple Calculator", "To-Do List App"]
+      },
+      {
+        name: "Intermediate",
+        courses: [
+          { 
+            title: "Web Development Fundamentals", 
+            links: [{ type: "Online Course", url: "https://www.example.com/web-dev" }] 
+          },
+          { 
+            title: "Database Management", 
+            links: [{ type: "Online Course", url: "https://www.example.com/database" }] 
+          }
+        ],
+        skills: ["HTML/CSS", "JavaScript", "SQL", "Git"],
+        projects: ["Personal Portfolio Website", "E-commerce Store Frontend"]
+      },
+      {
+        name: "Advanced",
+        courses: [
+          { 
+            title: "Full Stack Development", 
+            links: [{ type: "Online Course", url: "https://www.example.com/fullstack" }] 
+          },
+          { 
+            title: "DevOps and CI/CD", 
+            links: [{ type: "Online Course", url: "https://www.example.com/devops" }] 
+          }
+        ],
+        skills: ["React/Angular/Vue", "Node.js", "Docker", "Cloud Services"],
+        projects: ["Full Stack Web Application", "Mobile App with API Integration"]
+      }
+    ],
+    timeline: {
+      foundation: "3 months",
+      intermediate: "6 months",
+      advanced: "9 months",
+      total: "18 months"
+    }
+  },
+  "Doctor": {
+    stages: [
+      {
+        name: "Foundation",
+        courses: [
+          { 
+            title: "Biology and Chemistry Fundamentals", 
+            links: [{ type: "Online Course", url: "https://www.example.com/bio-chem" }] 
+          },
+          { 
+            title: "Anatomy and Physiology", 
+            links: [{ type: "Online Course", url: "https://www.example.com/anatomy" }] 
+          }
+        ],
+        skills: ["Medical Terminology", "Lab Techniques", "Critical Thinking"],
+        projects: ["Anatomy Studies", "Basic Health Assessment Practice"]
+      },
+      {
+        name: "Intermediate",
+        courses: [
+          { 
+            title: "Pathophysiology", 
+            links: [{ type: "Online Course", url: "https://www.example.com/pathophysiology" }] 
+          },
+          { 
+            title: "Pharmacology Basics", 
+            links: [{ type: "Online Course", url: "https://www.example.com/pharmacology" }] 
+          }
+        ],
+        skills: ["Patient Assessment", "Medical Ethics", "Research Methods"],
+        projects: ["Case Studies Analysis", "Medical Documentation Practice"]
+      },
+      {
+        name: "Advanced",
+        courses: [
+          { 
+            title: "Clinical Diagnostics", 
+            links: [{ type: "Online Course", url: "https://www.example.com/diagnostics" }] 
+          },
+          { 
+            title: "Treatment Planning", 
+            links: [{ type: "Online Course", url: "https://www.example.com/treatment" }] 
+          }
+        ],
+        skills: ["Diagnostic Reasoning", "Patient Communication", "Medical Decision Making"],
+        projects: ["Clinical Shadowing", "Medical Research Paper"]
+      }
+    ],
+    timeline: {
+      foundation: "12 months",
+      intermediate: "24 months",
+      advanced: "36 months",
+      total: "72 months"
+    }
+  },
+  "Data Scientist": {
+    stages: [
+      {
+        name: "Foundation",
+        courses: [
+          { 
+            title: "Statistics and Probability", 
+            links: [{ type: "Online Course", url: "https://www.example.com/stats" }] 
+          },
+          { 
+            title: "Programming with Python", 
+            links: [{ type: "Online Course", url: "https://www.example.com/python" }] 
+          }
+        ],
+        skills: ["Math Fundamentals", "Python Programming", "Data Analysis"],
+        projects: ["Data Cleaning Project", "Exploratory Data Analysis"]
+      },
+      {
+        name: "Intermediate",
+        courses: [
+          { 
+            title: "Machine Learning Fundamentals", 
+            links: [{ type: "Online Course", url: "https://www.example.com/ml-basics" }] 
+          },
+          { 
+            title: "Data Visualization", 
+            links: [{ type: "Online Course", url: "https://www.example.com/data-viz" }] 
+          }
+        ],
+        skills: ["Machine Learning Algorithms", "Data Visualization", "SQL", "Feature Engineering"],
+        projects: ["Predictive Model", "Interactive Dashboard"]
+      },
+      {
+        name: "Advanced",
+        courses: [
+          { 
+            title: "Deep Learning", 
+            links: [{ type: "Online Course", url: "https://www.example.com/deep-learning" }] 
+          },
+          { 
+            title: "Big Data Technologies", 
+            links: [{ type: "Online Course", url: "https://www.example.com/big-data" }] 
+          }
+        ],
+        skills: ["Deep Learning", "Big Data Processing", "Model Deployment", "Business Analysis"],
+        projects: ["Complex ML System", "Industry-Specific Data Project"]
+      }
+    ],
+    timeline: {
+      foundation: "4 months",
+      intermediate: "8 months",
+      advanced: "12 months",
+      total: "24 months"
+    }
+  },
+  // Default roadmap as a fallback
+  "default": {
+    stages: [
+      {
+        name: "Foundation",
+        courses: [
+          { 
+            title: "Core Fundamentals", 
+            links: [{ type: "Online Course", url: "https://www.example.com/fundamentals" }] 
+          }
+        ],
+        skills: ["Critical Thinking", "Communication", "Time Management"],
+        projects: ["Self-assessment", "Skill Development Plan"]
+      },
+      {
+        name: "Intermediate",
+        courses: [
+          { 
+            title: "Field-Specific Knowledge", 
+            links: [{ type: "Online Course", url: "https://www.example.com/specific-field" }] 
+          }
+        ],
+        skills: ["Field-Specific Skills", "Problem Solving", "Collaboration"],
+        projects: ["Field Research", "Portfolio Development"]
+      },
+      {
+        name: "Advanced",
+        courses: [
+          { 
+            title: "Specialization", 
+            links: [{ type: "Online Course", url: "https://www.example.com/specialization" }] 
+          }
+        ],
+        skills: ["Advanced Techniques", "Leadership", "Industry Best Practices"],
+        projects: ["Capstone Project", "Industry Networking"]
+      }
+    ],
+    timeline: {
+      foundation: "6 months",
+      intermediate: "12 months",
+      advanced: "12 months",
+      total: "30 months"
+    }
+  }
+};
+
+// Function to generate roadmap based on education and career goal
+export const generateRoadmap = (education: string, careerGoal: string): RoadmapData => {
+  // Get career-specific template or default if not found
+  const template = careerRoadmapTemplates[careerGoal] || careerRoadmapTemplates["default"];
+  
+  // Create a complete roadmap data object
+  const roadmapData: RoadmapData = {
+    education,
+    careerGoal,
+    stages: template.stages || careerRoadmapTemplates["default"].stages!,
+    timeline: template.timeline || careerRoadmapTemplates["default"].timeline!
+  };
+  
+  return roadmapData;
+};
+
 // Function to save roadmap data to local storage
 export const saveRoadmap = (roadmapData: RoadmapData) => {
   try {
@@ -109,7 +338,7 @@ export const shareRoadmap = async (data: { title: string, text: string, url: str
       return true;
     } catch (error) {
       console.error("Error sharing roadmap:", error);
-      if (error.name !== 'AbortError') {
+      if ((error as Error).name !== 'AbortError') {
         toast({
           title: "Share Failed",
           description: "There was an error sharing your roadmap",

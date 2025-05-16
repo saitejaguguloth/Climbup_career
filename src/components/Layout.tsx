@@ -1,16 +1,27 @@
-
+import React from "react";
 import { Outlet } from "react-router-dom";
+import Navbar from "./Navbar";
+import AppSidebar from "./AppSidebar";
 import Footer from "./Footer";
 
-const Layout = () => {
+type LayoutProps = {
+  children?: React.ReactNode;
+  sidebarVisible?: boolean;
+};
+
+function Layout({ sidebarVisible = true }: LayoutProps) {
   return (
-    <div className="flex flex-col min-h-screen w-full">
-      <main className="flex-1">
-        <Outlet />
-      </main>
+    <div className="flex flex-col min-h-screen">
+      <Navbar />
+      <div className="flex flex-1">
+        {sidebarVisible && <AppSidebar />}
+        <main className="flex-1 p-4 md:p-6">
+          <Outlet />
+        </main>
+      </div>
       <Footer />
     </div>
   );
-};
+}
 
 export default Layout;

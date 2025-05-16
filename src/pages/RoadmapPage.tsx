@@ -1,21 +1,31 @@
 
 import { useState, useEffect } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate, Link, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Check, Download, Share, Save, Pencil, MessageCircle, BookOpen, User } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { toast } from "@/hooks/use-toast";
-import { downloadRoadmapAsPDF, saveRoadmap, shareRoadmap, isStepDone, markStepAsDone } from "@/utils/roadmapUtils";
+import { 
+  downloadRoadmapAsPDF, 
+  saveRoadmap, 
+  shareRoadmap, 
+  isStepDone, 
+  markStepAsDone,
+  generateRoadmap,
+  RoadmapData,
+  careerRoadmapTemplates
+} from "@/utils/roadmapUtils";
 import ShareDialog from "@/components/ShareDialog";
 import GroupChat from "@/components/GroupChat";
 import LearningDialog from "@/components/LearningDialog";
 
 const RoadmapPage = () => {
   const navigate = useNavigate();
+  const { careerPath } = useParams<{ careerPath: string }>();
   const [currentStep, setCurrentStep] = useState(1);
   const [selectedEducation, setSelectedEducation] = useState("");
-  const [selectedGoal, setSelectedGoal] = useState("");
+  const [selectedGoal, setSelectedGoal] = useState(careerPath ? decodeURIComponent(careerPath) : "");
   const [careerOptions, setCareerOptions] = useState<string[]>([]);
   const [progress, setProgress] = useState(0);
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
@@ -26,6 +36,7 @@ const RoadmapPage = () => {
   const [foundationProgress, setFoundationProgress] = useState(0);
   const [intermediateProgress, setIntermediateProgress] = useState(0);
   const [advancedProgress, setAdvancedProgress] = useState(0);
+  const [roadmapData, setRoadmapData] = useState<RoadmapData | null>(null);
 
   // Current user data (would come from authentication in a real app)
   const currentUser = {
@@ -49,112 +60,67 @@ const RoadmapPage = () => {
 
   const careerOptionsByEducation: Record<string, string[]> = {
     "10th Grade": [
-      "Software Engineer",
-      "Mechanical Engineer",
-      "Civil Engineer",
-      "AI/ML Specialist",
-      "Doctor (MBBS)",
-      "Dentist",
-      "Pharmacist",
-      "Nurse",
-      "Graphic Designer",
-      "Video Editor",
-      "Game Developer",
-      "Chartered Accountant (CA)",
-      "Financial Analyst",
-      "Entrepreneur",
-      "Defense (NDA)",
-      "Government Jobs (SSC)",
-      "Digital Marketer"
+      "Software Developer",
+      "Engineer",
+      "Doctor",
+      "IAS Officer",
+      "Lawyer",
+      "Chartered Accountant",
+      "Designer",
+      "Data Scientist"
     ],
     "12th Grade (Science)": [
-      "Engineering (JEE/BTech)",
-      "Medical (NEET/MBBS)",
-      "Research Scientist",
+      "Software Developer",
       "Data Scientist",
-      "Pilot"
+      "Doctor",
+      "Engineer"
     ],
     "12th Grade (Commerce)": [
-      "Chartered Accountant (CA)",
-      "Company Secretary (CS)",
-      "MBA/BBA",
-      "Financial Planner"
+      "Chartered Accountant",
+      "IAS Officer",
+      "Lawyer"
     ],
     "12th Grade (Arts)": [
-      "Journalist",
-      "Psychologist",
-      "Teacher",
-      "Content Writer",
-      "Social Worker"
+      "IAS Officer",
+      "Lawyer",
+      "Designer"
     ],
     "BTech/BE": [
-      "Higher Studies (MTech/MS)",
-      "IT Jobs (FAANG)",
-      "Entrepreneurship",
-      "Civil Services (UPSC)"
+      "Software Developer",
+      "Data Scientist",
+      "Engineer"
     ]
   };
 
   // Default career options for other education levels
-  const defaultCareerOptions = [
-    "Software Engineer",
-    "Data Scientist",
-    "IAS Officer",
-    "Doctor",
-    "Business Analyst",
-    "Digital Marketer",
-    "UI/UX Designer"
-  ];
+  const defaultCareerOptions = Object.keys(careerRoadmapTemplates).filter(key => key !== 'default');
 
-  // Sample course data for learning dialog
-  const sampleCourse = {
-    title: "Introduction to Computer Science",
-    description: "A comprehensive introduction to computer science principles, algorithms, and programming fundamentals. Perfect for beginners starting their journey in software engineering.",
-    duration: "6 weeks",
-    level: "Beginner",
-    instructor: "Dr. Rajesh Kumar",
-    resources: {
-      videos: [
-        { 
-          title: "Introduction to Programming", 
-          url: "https://www.youtube.com/watch?v=zOjov-2OZ0E", 
-          duration: "45 min" 
-        },
-        { 
-          title: "Data Structures Basics", 
-          url: "https://www.youtube.com/watch?v=zOjov-2OZ0E", 
-          duration: "55 min" 
-        },
-        { 
-          title: "Algorithms and Complexity", 
-          url: "https://www.youtube.com/watch?v=zOjov-2OZ0E", 
-          duration: "60 min" 
-        }
-      ],
-      readings: [
-        { 
-          title: "Programming Fundamentals PDF", 
-          url: "https://example.com/fundamentals.pdf", 
-          type: "PDF Document" 
-        },
-        { 
-          title: "Introduction to Computer Science", 
-          url: "https://example.com/cs101", 
-          type: "Web Resource" 
-        }
-      ],
-      exercises: [
-        {
-          title: "Basic Programming Exercises",
-          description: "Complete 5 basic programming exercises to test your understanding of variables, loops, and conditionals."
-        },
-        {
-          title: "Algorithm Implementation",
-          description: "Implement a simple sorting algorithm and analyze its time complexity."
-        }
-      ]
+  useEffect(() => {
+    // If a career path is specified in the URL, go directly to step 3
+    if (careerPath) {
+      setSelectedGoal(decodeURIComponent(careerPath));
+      // For URL-based navigation, we'll use a default education level if none was selected
+      const defaultEducation = "Other";
+      setSelectedEducation(defaultEducation);
+      setCurrentStep(3);
+      
+      // Generate roadmap data based on the provided career path
+      const generatedRoadmap = generateRoadmap(defaultEducation, decodeURIComponent(careerPath));
+      setRoadmapData(generatedRoadmap);
+
+      // Update progress to 100% since we're at step 3
+      setProgress(100);
+      
+      // Load any completed steps from localStorage
+      try {
+        const savedSteps = JSON.parse(localStorage.getItem('completedRoadmapSteps') || '{}');
+        setCompletedSteps(savedSteps);
+        updateStageProgress(savedSteps);
+      } catch (error) {
+        console.error("Error loading completed steps:", error);
+      }
     }
-  };
+  }, [careerPath]);
 
   useEffect(() => {
     if (selectedEducation) {
@@ -169,37 +135,45 @@ const RoadmapPage = () => {
     } else if (currentStep === 3) {
       setProgress(100);
       
+      if (selectedEducation && selectedGoal && !roadmapData) {
+        // Generate roadmap data based on selected education and goal
+        const generatedRoadmap = generateRoadmap(selectedEducation, selectedGoal);
+        setRoadmapData(generatedRoadmap);
+      }
+      
       // Load completed steps from localStorage
       try {
         const savedSteps = JSON.parse(localStorage.getItem('completedRoadmapSteps') || '{}');
         setCompletedSteps(savedSteps);
-        
-        // Calculate progress for each stage
-        let foundationDone = 0;
-        let foundationTotal = 2; // Number of foundation items
-        let intermediateDone = 0;
-        let intermediateTotal = 2; // Number of intermediate items
-        let advancedDone = 0;
-        let advancedTotal = 2; // Number of advanced items
-        
-        Object.keys(savedSteps).forEach(key => {
-          if (savedSteps[key] && key.includes('foundation')) {
-            foundationDone++;
-          } else if (savedSteps[key] && key.includes('intermediate')) {
-            intermediateDone++;
-          } else if (savedSteps[key] && key.includes('advanced')) {
-            advancedDone++;
-          }
-        });
-        
-        setFoundationProgress((foundationDone / foundationTotal) * 100);
-        setIntermediateProgress((intermediateDone / intermediateTotal) * 100);
-        setAdvancedProgress((advancedDone / advancedTotal) * 100);
+        updateStageProgress(savedSteps);
       } catch (error) {
         console.error("Error loading completed steps:", error);
       }
     }
-  }, [selectedEducation, currentStep]);
+  }, [selectedEducation, currentStep, selectedGoal, roadmapData]);
+
+  const updateStageProgress = (savedSteps: Record<string, boolean>) => {
+    let foundationDone = 0;
+    let foundationTotal = 2; // Number of foundation items
+    let intermediateDone = 0;
+    let intermediateTotal = 2; // Number of intermediate items
+    let advancedDone = 0;
+    let advancedTotal = 2; // Number of advanced items
+    
+    Object.keys(savedSteps).forEach(key => {
+      if (savedSteps[key] && key.includes('foundation')) {
+        foundationDone++;
+      } else if (savedSteps[key] && key.includes('intermediate')) {
+        intermediateDone++;
+      } else if (savedSteps[key] && key.includes('advanced')) {
+        advancedDone++;
+      }
+    });
+    
+    setFoundationProgress((foundationDone / foundationTotal) * 100);
+    setIntermediateProgress((intermediateDone / intermediateTotal) * 100);
+    setAdvancedProgress((advancedDone / advancedTotal) * 100);
+  };
 
   const handleNext = () => {
     if (currentStep === 1 && selectedEducation) {
@@ -231,88 +205,24 @@ const RoadmapPage = () => {
   };
 
   const handleSaveRoadmap = () => {
-    const roadmapData = {
-      education: selectedEducation,
-      careerGoal: selectedGoal,
-      stages: [
-        {
-          name: "Foundation Stage",
-          courses: [
-            {
-              title: "Introduction to Computer Science",
-              links: [
-                { type: "YouTube", url: "https://www.youtube.com/watch?v=zOjov-2OZ0E" },
-                { type: "Free Course", url: "https://example.com/cs101" }
-              ]
-            },
-            {
-              title: "Data Structures & Algorithms",
-              links: [
-                { type: "YouTube", url: "https://www.youtube.com/watch?v=zOjov-2OZ0E" },
-                { type: "Premium", url: "https://example.com/dsa" }
-              ]
-            }
-          ],
-          skills: ["Problem Solving", "Basic Programming"],
-          projects: ["Personal portfolio website", "Simple applications"]
-        },
-        {
-          name: "Intermediate Stage",
-          courses: [
-            {
-              title: "Advanced Programming",
-              links: [
-                { type: "YouTube", url: "https://www.youtube.com/watch?v=zOjov-2OZ0E" }
-              ]
-            },
-            {
-              title: "Web Development",
-              links: [
-                { type: "YouTube", url: "https://www.youtube.com/watch?v=zOjov-2OZ0E" }
-              ]
-            }
-          ],
-          skills: ["Frontend Development", "Backend Development"],
-          projects: ["E-commerce website", "Social media app"]
-        },
-        {
-          name: "Advanced Stage",
-          courses: [
-            {
-              title: "System Design",
-              links: [
-                { type: "YouTube", url: "https://www.youtube.com/watch?v=zOjov-2OZ0E" }
-              ]
-            },
-            {
-              title: "DevOps",
-              links: [
-                { type: "YouTube", url: "https://www.youtube.com/watch?v=zOjov-2OZ0E" }
-              ]
-            }
-          ],
-          skills: ["Cloud Computing", "CI/CD"],
-          projects: ["Enterprise application", "Cloud-native app"]
-        }
-      ],
-      timeline: {
-        foundation: "2 months",
-        intermediate: "4 months",
-        advanced: "3 months",
-        total: "9 months"
+    if (roadmapData) {
+      const success = saveRoadmap(roadmapData);
+      if (success) {
+        toast({
+          title: "Roadmap saved!",
+          description: "Your roadmap has been saved to your device."
+        });
+      } else {
+        toast({
+          title: "Error saving roadmap",
+          description: "There was an error saving your roadmap. Please try again.",
+          variant: "destructive"
+        });
       }
-    };
-
-    const success = saveRoadmap(roadmapData);
-    if (success) {
-      toast({
-        title: "Roadmap saved!",
-        description: "Your roadmap has been saved to your device."
-      });
     } else {
       toast({
-        title: "Error saving roadmap",
-        description: "There was an error saving your roadmap. Please try again.",
+        title: "No roadmap to save",
+        description: "Please complete your selections to generate a roadmap first.",
         variant: "destructive"
       });
     }
@@ -348,7 +258,42 @@ const RoadmapPage = () => {
   };
 
   const handleStartLearning = (course: any) => {
-    setCurrentCourse(sampleCourse);
+    // In a real app, you would fetch course details
+    // For now, we'll use the selected course title to construct a sample course
+    setCurrentCourse({
+      title: course.title || "Course Title",
+      description: "A comprehensive course to help you master the required skills for your career path.",
+      duration: "6 weeks",
+      level: "Beginner to Intermediate",
+      instructor: "Expert Instructor",
+      resources: {
+        videos: [
+          { 
+            title: "Introduction to the Course", 
+            url: course.links?.[0]?.url || "https://www.youtube.com/watch?v=example", 
+            duration: "45 min" 
+          },
+          { 
+            title: "Key Concepts", 
+            url: "https://www.youtube.com/watch?v=example", 
+            duration: "55 min" 
+          }
+        ],
+        readings: [
+          { 
+            title: "Course Materials PDF", 
+            url: "https://example.com/materials.pdf", 
+            type: "PDF Document" 
+          }
+        ],
+        exercises: [
+          {
+            title: "Practice Exercises",
+            description: "Complete these exercises to test your understanding."
+          }
+        ]
+      }
+    });
     setLearningDialogOpen(true);
   };
 
@@ -365,6 +310,150 @@ const RoadmapPage = () => {
       title: "Customize Roadmap",
       description: "This would open a roadmap customization interface."
     });
+  };
+
+  const renderRoadmapContent = () => {
+    if (!roadmapData) return null;
+
+    return (
+      <div className="space-y-8">
+        {roadmapData.stages.map((stage, index) => (
+          <div key={index} className="flex">
+            <div className="mr-4 flex flex-col items-center">
+              <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-violet-500 text-white flex items-center justify-center font-bold shadow-md">{index + 1}</div>
+              {index < roadmapData.stages.length - 1 && (
+                <div className="w-1 h-full bg-gradient-to-b from-blue-500 to-violet-500 mt-2 rounded-full"></div>
+              )}
+            </div>
+            <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex-1">
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="font-bold text-xl text-gray-900">{stage.name}</h3>
+                <Button 
+                  variant={completedSteps[`${stage.name.toLowerCase().replace(/\s+/g, '-')}`] ? "default" : "outline"} 
+                  size="sm" 
+                  className={completedSteps[`${stage.name.toLowerCase().replace(/\s+/g, '-')}`] ? "bg-green-600" : "text-xs"}
+                  onClick={() => handleMarkAsDone(`${stage.name.toLowerCase().replace(/\s+/g, '-')}`)}
+                >
+                  <Check className="mr-1 h-4 w-4" />
+                  {completedSteps[`${stage.name.toLowerCase().replace(/\s+/g, '-')}`] ? "Completed" : "Mark as Done"}
+                </Button>
+              </div>
+              <p className="text-gray-700 mb-4">
+                {index === 0 && "Build core knowledge and skills needed for your journey"}
+                {index === 1 && "Deepen knowledge and begin to specialize in your field"}
+                {index === 2 && "Master skills and prepare for industry"}
+              </p>
+              
+              <div className="space-y-6">
+                {/* Courses */}
+                <div>
+                  <h4 className="font-semibold text-blue-700 mb-2 flex items-center">
+                    <BookOpen className="mr-2 h-4 w-4" />
+                    Courses
+                  </h4>
+                  <ul className="space-y-3">
+                    {stage.courses.map((course, courseIndex) => (
+                      <li key={courseIndex} className="flex flex-col">
+                        <div className="flex items-center justify-between">
+                          <span className="text-gray-800">{course.title}</span>
+                          <Button 
+                            size="sm" 
+                            variant="ghost" 
+                            className="h-7 text-xs text-blue-600 hover:text-blue-800 hover:bg-blue-50"
+                            onClick={() => handleStartLearning(course)}
+                          >
+                            Start Learning
+                          </Button>
+                        </div>
+                        <div className="flex flex-wrap gap-2 mt-1">
+                          {course.links.map((link, linkIndex) => (
+                            <a 
+                              key={linkIndex}
+                              href={link.url} 
+                              target="_blank" 
+                              rel="noopener noreferrer" 
+                              className={`text-xs ${link.type === "Premium" 
+                                ? "bg-violet-50 text-violet-700" 
+                                : "bg-blue-50 text-blue-700"} px-2 py-1 rounded flex items-center`}
+                            >
+                              {link.type === "YouTube" && (
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"></path><path d="m10 15 5-3-5-3z"></path></svg>
+                              )}
+                              {link.type === "Premium" && (
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1"><circle cx="12" cy="12" r="10"></circle><path d="M6 12h12"></path><path d="M12 6v12"></path></svg>
+                              )}
+                              {link.type === "Free Course" && (
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1"><rect width="20" height="14" x="2" y="7" rx="2"/><path d="M16 2v5"/><path d="M8 2v5"/><path d="M12 13h.01"/><path d="M17 13h.01"/><path d="M7 13h.01"/><path d="M12 17h.01"/><path d="M17 17h.01"/><path d="M7 17h.01"/></svg>
+                              )}
+                              {link.type === "Online Course" && (
+                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>
+                              )}
+                              {link.type}
+                            </a>
+                          ))}
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                
+                {/* Skills */}
+                <div>
+                  <h4 className="font-semibold text-emerald-700 mb-2 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2"><path d="M2 12h2a2 2 0 0 1 2 2v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4a2 2 0 0 1 2-2h2"></path><path d="M16 8V4a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v4"></path><path d="M12 2v10"></path><path d="m9 7 3 3 3-3"></path></svg>
+                    Skills
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {stage.skills.map((skill, skillIndex) => (
+                      <span key={skillIndex} className="bg-emerald-100 text-emerald-800 text-xs font-medium px-2 py-1 rounded">
+                        {skill}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                
+                {/* Projects */}
+                <div>
+                  <h4 className="font-semibold text-violet-700 mb-2 flex items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2"><path d="M20 10c0 6-8 10-8 10s-8-4-8-10a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                    Projects
+                  </h4>
+                  <div className="flex flex-wrap gap-2">
+                    {stage.projects.map((project, projectIndex) => (
+                      <span key={projectIndex} className="bg-violet-100 text-violet-800 text-xs font-medium px-2 py-1 rounded">
+                        {project}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                
+                {/* Discussion buttons */}
+                <div className="flex space-x-2 mt-4 pt-4 border-t border-gray-100">
+                  <Button 
+                    size="sm" 
+                    variant="outline" 
+                    className="text-xs flex items-center"
+                    onClick={() => setGroupChatOpen(true)}
+                  >
+                    <User className="mr-1 h-4 w-4" />
+                    Ask a Mentor
+                  </Button>
+                  <Button 
+                    size="sm" 
+                    variant="outline" 
+                    className="text-xs flex items-center"
+                    onClick={() => setGroupChatOpen(true)}
+                  >
+                    <MessageCircle className="mr-1 h-4 w-4" />
+                    Discuss
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    );
   };
 
   return (
@@ -529,27 +618,29 @@ const RoadmapPage = () => {
                       </div>
                     </div>
                     
-                    <div className="mb-6">
-                      <h3 className="font-bold mb-3">Estimated Timeline</h3>
-                      <div className="space-y-2 text-sm">
-                        <div className="flex justify-between">
-                          <span>Foundation Stage</span>
-                          <span>2 months</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>Intermediate Stage</span>
-                          <span>4 months</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>Advanced Stage</span>
-                          <span>3 months</span>
-                        </div>
-                        <div className="flex justify-between font-medium pt-2 border-t">
-                          <span>Total Duration</span>
-                          <span>9 months</span>
+                    {roadmapData && (
+                      <div className="mb-6">
+                        <h3 className="font-bold mb-3">Estimated Timeline</h3>
+                        <div className="space-y-2 text-sm">
+                          <div className="flex justify-between">
+                            <span>Foundation Stage</span>
+                            <span>{roadmapData.timeline.foundation}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Intermediate Stage</span>
+                            <span>{roadmapData.timeline.intermediate}</span>
+                          </div>
+                          <div className="flex justify-between">
+                            <span>Advanced Stage</span>
+                            <span>{roadmapData.timeline.advanced}</span>
+                          </div>
+                          <div className="flex justify-between font-medium pt-2 border-t">
+                            <span>Total Duration</span>
+                            <span>{roadmapData.timeline.total}</span>
+                          </div>
                         </div>
                       </div>
-                    </div>
+                    )}
                     
                     <div className="mb-6">
                       <h3 className="font-bold mb-3">Join Community</h3>
@@ -592,320 +683,7 @@ const RoadmapPage = () => {
                       </div>
                     </div>
                     
-                    <div className="space-y-8">
-                      <div className="flex">
-                        <div className="mr-4 flex flex-col items-center">
-                          <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-violet-500 text-white flex items-center justify-center font-bold shadow-md">1</div>
-                          <div className="w-1 h-full bg-gradient-to-b from-blue-500 to-violet-500 mt-2 rounded-full"></div>
-                        </div>
-                        <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex-1">
-                          <div className="flex justify-between items-center mb-4">
-                            <h3 className="font-bold text-xl text-gray-900">Foundation Stage</h3>
-                            <Button 
-                              variant={completedSteps['foundation-stage'] ? "default" : "outline"} 
-                              size="sm" 
-                              className={completedSteps['foundation-stage'] ? "bg-green-600" : "text-xs"}
-                              onClick={() => handleMarkAsDone('foundation-stage')}
-                            >
-                              <Check className="mr-1 h-4 w-4" />
-                              {completedSteps['foundation-stage'] ? "Completed" : "Mark as Done"}
-                            </Button>
-                          </div>
-                          <p className="text-gray-700 mb-4">Build core knowledge and skills needed for your journey</p>
-                          
-                          <div className="space-y-6">
-                            <div>
-                              <h4 className="font-semibold text-blue-700 mb-2 flex items-center">
-                                <BookOpen className="mr-2 h-4 w-4" />
-                                Courses
-                              </h4>
-                              <ul className="space-y-3">
-                                <li className="flex flex-col">
-                                  <div className="flex items-center justify-between">
-                                    <span className="text-gray-800">Introduction to Computer Science</span>
-                                    <Button 
-                                      size="sm" 
-                                      variant="ghost" 
-                                      className="h-7 text-xs text-blue-600 hover:text-blue-800 hover:bg-blue-50"
-                                      onClick={() => handleStartLearning("intro-cs")}
-                                    >
-                                      Start Learning
-                                    </Button>
-                                  </div>
-                                  <div className="flex flex-wrap gap-2 mt-1">
-                                    <a 
-                                      href="https://www.youtube.com/watch?v=zOjov-2OZ0E" 
-                                      target="_blank" 
-                                      rel="noopener noreferrer" 
-                                      className="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded flex items-center"
-                                    >
-                                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"></path><path d="m10 15 5-3-5-3z"></path></svg>
-                                      YouTube
-                                    </a>
-                                    <a 
-                                      href="https://example.com/cs101" 
-                                      target="_blank" 
-                                      rel="noopener noreferrer" 
-                                      className="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded flex items-center"
-                                    >
-                                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1"><rect width="20" height="14" x="2" y="7" rx="2"/><path d="M16 2v5"/><path d="M8 2v5"/><path d="M12 13h.01"/><path d="M17 13h.01"/><path d="M7 13h.01"/><path d="M12 17h.01"/><path d="M17 17h.01"/><path d="M7 17h.01"/></svg>
-                                      Free Course
-                                    </a>
-                                  </div>
-                                </li>
-                                <li className="flex flex-col">
-                                  <div className="flex items-center justify-between">
-                                    <span className="text-gray-800">Data Structures & Algorithms</span>
-                                    <Button 
-                                      size="sm" 
-                                      variant="ghost" 
-                                      className="h-7 text-xs text-blue-600 hover:text-blue-800 hover:bg-blue-50"
-                                      onClick={() => handleStartLearning("dsa")}
-                                    >
-                                      Start Learning
-                                    </Button>
-                                  </div>
-                                  <div className="flex flex-wrap gap-2 mt-1">
-                                    <a 
-                                      href="https://www.youtube.com/watch?v=zOjov-2OZ0E" 
-                                      target="_blank" 
-                                      rel="noopener noreferrer" 
-                                      className="text-xs bg-blue-50 text-blue-700 px-2 py-1 rounded flex items-center"
-                                    >
-                                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"></path><path d="m10 15 5-3-5-3z"></path></svg>
-                                      YouTube
-                                    </a>
-                                    <a 
-                                      href="https://example.com/dsa" 
-                                      target="_blank" 
-                                      rel="noopener noreferrer" 
-                                      className="text-xs bg-violet-50 text-violet-700 px-2 py-1 rounded flex items-center"
-                                    >
-                                      <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1"><circle cx="12" cy="12" r="10"></circle><path d="M6 12h12"></path><path d="M12 6v12"></path></svg>
-                                      Premium
-                                    </a>
-                                  </div>
-                                </li>
-                              </ul>
-                            </div>
-                            
-                            <div>
-                              <h4 className="font-semibold text-emerald-700 mb-2 flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2"><path d="M2 12h2a2 2 0 0 1 2 2v4a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-4a2 2 0 0 1 2-2h2"></path><path d="M16 8V4a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v4"></path><path d="M12 2v10"></path><path d="m9 7 3 3 3-3"></path></svg>
-                                Skills
-                              </h4>
-                              <ul className="space-y-1 ml-2">
-                                <li className="flex items-start">
-                                  <span className="bg-emerald-100 text-emerald-800 text-xs font-medium px-2 py-1 rounded">Problem Solving</span>
-                                </li>
-                                <li className="flex items-start">
-                                  <span className="bg-emerald-100 text-emerald-800 text-xs font-medium px-2 py-1 rounded">Basic Programming</span>
-                                </li>
-                              </ul>
-                            </div>
-                            
-                            <div>
-                              <h4 className="font-semibold text-violet-700 mb-2 flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-2"><path d="M20 10c0 6-8 10-8 10s-8-4-8-10a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                                Projects
-                              </h4>
-                              <ul className="space-y-1 ml-2">
-                                <li className="flex items-start">
-                                  <span className="bg-violet-100 text-violet-800 text-xs font-medium px-2 py-1 rounded">Personal portfolio website</span>
-                                </li>
-                                <li className="flex items-start">
-                                  <span className="bg-violet-100 text-violet-800 text-xs font-medium px-2 py-1 rounded">Simple applications</span>
-                                </li>
-                              </ul>
-                            </div>
-                            
-                            <div className="flex space-x-2 mt-4 pt-4 border-t border-gray-100">
-                              <Button 
-                                size="sm" 
-                                variant="outline" 
-                                className="text-xs flex items-center"
-                                onClick={() => setGroupChatOpen(true)}
-                              >
-                                <User className="mr-1 h-4 w-4" />
-                                Ask a Mentor
-                              </Button>
-                              <Button 
-                                size="sm" 
-                                variant="outline" 
-                                className="text-xs flex items-center"
-                                onClick={() => setGroupChatOpen(true)}
-                              >
-                                <MessageCircle className="mr-1 h-4 w-4" />
-                                Discuss
-                              </Button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div className="flex">
-                        <div className="mr-4 flex flex-col items-center">
-                          <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-violet-500 text-white flex items-center justify-center font-bold shadow-md">2</div>
-                          <div className="w-1 h-full bg-gradient-to-b from-blue-500 to-violet-500 mt-2 rounded-full"></div>
-                        </div>
-                        <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex-1">
-                          <div className="flex justify-between items-center mb-4">
-                            <h3 className="font-bold text-xl text-gray-900">Intermediate Stage</h3>
-                            <Button 
-                              variant={completedSteps['intermediate-stage'] ? "default" : "outline"} 
-                              size="sm" 
-                              className={completedSteps['intermediate-stage'] ? "bg-green-600" : "text-xs"}
-                              onClick={() => handleMarkAsDone('intermediate-stage')}
-                            >
-                              <Check className="mr-1 h-4 w-4" />
-                              {completedSteps['intermediate-stage'] ? "Completed" : "Mark as Done"}
-                            </Button>
-                          </div>
-                          <p className="text-gray-700 mb-4">Deepen knowledge and begin to specialize in your field</p>
-                          
-                          {/* Similar structure as the first stage */}
-                          <div className="space-y-6">
-                            <div>
-                              <h4 className="font-semibold text-blue-700 mb-2 flex items-center">
-                                <BookOpen className="mr-2 h-4 w-4" />
-                                Courses
-                              </h4>
-                              <ul className="space-y-3">
-                                <li className="flex flex-col">
-                                  <div className="flex items-center justify-between">
-                                    <span className="text-gray-800">Advanced Programming</span>
-                                    <Button 
-                                      size="sm" 
-                                      variant="ghost" 
-                                      className="h-7 text-xs text-blue-600 hover:text-blue-800 hover:bg-blue-50"
-                                      onClick={() => handleStartLearning("adv-programming")}
-                                    >
-                                      Start Learning
-                                    </Button>
-                                  </div>
-                                </li>
-                                <li className="flex flex-col">
-                                  <div className="flex items-center justify-between">
-                                    <span className="text-gray-800">Web Development</span>
-                                    <Button 
-                                      size="sm" 
-                                      variant="ghost" 
-                                      className="h-7 text-xs text-blue-600 hover:text-blue-800 hover:bg-blue-50"
-                                      onClick={() => handleStartLearning("web-dev")}
-                                    >
-                                      Start Learning
-                                    </Button>
-                                  </div>
-                                </li>
-                              </ul>
-                            </div>
-                            
-                            {/* Add more sections similar to the first stage */}
-                            <div className="flex space-x-2 mt-4 pt-4 border-t border-gray-100">
-                              <Button 
-                                size="sm" 
-                                variant="outline" 
-                                className="text-xs flex items-center"
-                                onClick={() => setGroupChatOpen(true)}
-                              >
-                                <User className="mr-1 h-4 w-4" />
-                                Ask a Mentor
-                              </Button>
-                              <Button 
-                                size="sm" 
-                                variant="outline" 
-                                className="text-xs flex items-center"
-                                onClick={() => setGroupChatOpen(true)}
-                              >
-                                <MessageCircle className="mr-1 h-4 w-4" />
-                                Discuss
-                              </Button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      
-                      <div className="flex">
-                        <div className="mr-4 flex flex-col items-center">
-                          <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-violet-500 text-white flex items-center justify-center font-bold shadow-md">3</div>
-                        </div>
-                        <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex-1">
-                          <div className="flex justify-between items-center mb-4">
-                            <h3 className="font-bold text-xl text-gray-900">Advanced Stage</h3>
-                            <Button 
-                              variant={completedSteps['advanced-stage'] ? "default" : "outline"} 
-                              size="sm" 
-                              className={completedSteps['advanced-stage'] ? "bg-green-600" : "text-xs"}
-                              onClick={() => handleMarkAsDone('advanced-stage')}
-                            >
-                              <Check className="mr-1 h-4 w-4" />
-                              {completedSteps['advanced-stage'] ? "Completed" : "Mark as Done"}
-                            </Button>
-                          </div>
-                          <p className="text-gray-700 mb-4">Master skills and prepare for industry</p>
-                          
-                          {/* Similar structure as previous stages */}
-                          <div className="space-y-6">
-                            <div>
-                              <h4 className="font-semibold text-blue-700 mb-2 flex items-center">
-                                <BookOpen className="mr-2 h-4 w-4" />
-                                Courses
-                              </h4>
-                              <ul className="space-y-3">
-                                <li className="flex flex-col">
-                                  <div className="flex items-center justify-between">
-                                    <span className="text-gray-800">System Design</span>
-                                    <Button 
-                                      size="sm" 
-                                      variant="ghost" 
-                                      className="h-7 text-xs text-blue-600 hover:text-blue-800 hover:bg-blue-50"
-                                      onClick={() => handleStartLearning("system-design")}
-                                    >
-                                      Start Learning
-                                    </Button>
-                                  </div>
-                                </li>
-                                <li className="flex flex-col">
-                                  <div className="flex items-center justify-between">
-                                    <span className="text-gray-800">DevOps</span>
-                                    <Button 
-                                      size="sm" 
-                                      variant="ghost" 
-                                      className="h-7 text-xs text-blue-600 hover:text-blue-800 hover:bg-blue-50"
-                                      onClick={() => handleStartLearning("devops")}
-                                    >
-                                      Start Learning
-                                    </Button>
-                                  </div>
-                                </li>
-                              </ul>
-                            </div>
-                            
-                            {/* Add more sections similar to previous stages */}
-                            <div className="flex space-x-2 mt-4 pt-4 border-t border-gray-100">
-                              <Button 
-                                size="sm" 
-                                variant="outline" 
-                                className="text-xs flex items-center"
-                                onClick={() => setGroupChatOpen(true)}
-                              >
-                                <User className="mr-1 h-4 w-4" />
-                                Ask a Mentor
-                              </Button>
-                              <Button 
-                                size="sm" 
-                                variant="outline" 
-                                className="text-xs flex items-center"
-                                onClick={() => setGroupChatOpen(true)}
-                              >
-                                <MessageCircle className="mr-1 h-4 w-4" />
-                                Discuss
-                              </Button>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
+                    {renderRoadmapContent()}
                     
                     {/* Action buttons */}
                     <div className="mt-10 flex flex-wrap gap-3 justify-center">

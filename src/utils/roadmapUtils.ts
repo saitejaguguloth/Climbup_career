@@ -1,3 +1,4 @@
+
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 import { toast } from "@/hooks/use-toast";
@@ -90,7 +91,7 @@ export const careerRoadmapTemplates: Record<string, Partial<RoadmapData>> = {
         courses: [
           { 
             title: "Biology and Chemistry Fundamentals", 
-            links: [{ type: "YouTube", url: "https://www.youtube.com/watch?v=zOjov-2OZ0E" }] 
+            links: [{ type: "YouTube", url: "https://www.youtube.com/watch?v=0RRVV4Diomg" }] 
           },
           { 
             title: "Human Anatomy and Physiology", 
@@ -246,6 +247,226 @@ export const careerRoadmapTemplates: Record<string, Partial<RoadmapData>> = {
       intermediate: "24 months",
       advanced: "24 months",
       total: "60 months"
+    }
+  },
+  "IAS Officer": {
+    stages: [
+      {
+        name: "Foundation",
+        courses: [
+          { 
+            title: "General Studies Foundation", 
+            links: [{ type: "YouTube", url: "https://www.youtube.com/c/StudyIQeducation" }] 
+          },
+          { 
+            title: "Indian Polity & Constitution", 
+            links: [{ type: "Online Course", url: "https://www.unacademy.com/goal/upsc-civil-services-examination-ias-preparation/KSCGY" }] 
+          }
+        ],
+        skills: ["Reading Comprehension", "Critical Thinking", "Current Affairs Analysis"],
+        projects: ["Daily Newspaper Analysis", "NCERT Book Summaries"]
+      },
+      {
+        name: "Intermediate",
+        courses: [
+          { 
+            title: "UPSC Prelims Preparation", 
+            links: [{ type: "YouTube", url: "https://www.youtube.com/c/UnacademyUPSC" }] 
+          },
+          { 
+            title: "Economy & International Relations", 
+            links: [{ type: "Online Course", url: "https://www.cleariasexam.com/course" }] 
+          }
+        ],
+        skills: ["MCQ Solving", "Map Reading", "Memorization Techniques"],
+        projects: ["Mock Tests", "Subject-wise Notes Compilation"]
+      },
+      {
+        name: "Advanced",
+        courses: [
+          { 
+            title: "UPSC Mains Answer Writing", 
+            links: [{ type: "YouTube", url: "https://www.youtube.com/c/ShouldersOfGiants" }] 
+          },
+          { 
+            title: "Essay & Optional Subject", 
+            links: [{ type: "Online Course", url: "https://iasscore.in/upsc-coaching" }] 
+          }
+        ],
+        skills: ["Essay Writing", "Opinion Formation", "Interview Skills"],
+        projects: ["Answer Writing Practice", "Mock Interviews"]
+      }
+    ],
+    timeline: {
+      foundation: "6 months",
+      intermediate: "12 months",
+      advanced: "6 months",
+      total: "24 months"
+    }
+  },
+  "Lawyer": {
+    stages: [
+      {
+        name: "Foundation",
+        courses: [
+          { 
+            title: "Introduction to Legal Studies", 
+            links: [{ type: "YouTube", url: "https://www.youtube.com/c/LexCliq" }] 
+          },
+          { 
+            title: "Indian Constitution", 
+            links: [{ type: "Online Course", url: "https://www.coursera.org/learn/introduction-to-law" }] 
+          }
+        ],
+        skills: ["Reading Comprehension", "Logical Reasoning", "Critical Analysis"],
+        projects: ["Case Studies", "Legal Document Analysis"]
+      },
+      {
+        name: "Intermediate",
+        courses: [
+          { 
+            title: "CLAT/AILET Preparation", 
+            links: [{ type: "YouTube", url: "https://www.youtube.com/c/LegalEdge" }] 
+          },
+          { 
+            title: "Legal Research Methods", 
+            links: [{ type: "Online Course", url: "https://lawsikho.com/" }] 
+          }
+        ],
+        skills: ["Legal Writing", "Case Analysis", "Time Management"],
+        projects: ["Mock CLAT Exams", "Legal Essays"]
+      },
+      {
+        name: "Advanced",
+        courses: [
+          { 
+            title: "Specialized Law Fields", 
+            links: [{ type: "YouTube", url: "https://www.youtube.com/c/FinologyLegal" }] 
+          },
+          { 
+            title: "Court Procedures", 
+            links: [{ type: "Online Course", url: "https://www.udemy.com/course/practical-course-on-criminal-trial/" }] 
+          }
+        ],
+        skills: ["Argument Formation", "Client Consultation", "Court Etiquette"],
+        projects: ["Moot Court", "Legal Internship", "Drafting Legal Documents"]
+      }
+    ],
+    timeline: {
+      foundation: "6 months",
+      intermediate: "12 months",
+      advanced: "36 months",
+      total: "54 months"
+    }
+  },
+  "Chartered Accountant": {
+    stages: [
+      {
+        name: "Foundation",
+        courses: [
+          { 
+            title: "Accounting Fundamentals", 
+            links: [{ type: "YouTube", url: "https://www.youtube.com/c/CANareshAggarwal" }] 
+          },
+          { 
+            title: "Business Mathematics", 
+            links: [{ type: "Online Course", url: "https://www.superprofs.com/courses/ca-foundation/" }] 
+          }
+        ],
+        skills: ["Numerical Ability", "Logical Reasoning", "Basic Accounting"],
+        projects: ["Journal Entry Practice", "Company Financial Statement Analysis"]
+      },
+      {
+        name: "Intermediate",
+        courses: [
+          { 
+            title: "CA Foundation Exam Prep", 
+            links: [{ type: "YouTube", url: "https://www.youtube.com/c/CAGeniusEducation" }] 
+          },
+          { 
+            title: "Advanced Accounting", 
+            links: [{ type: "Online Course", url: "https://www.selfstudys.com/ca/foundation" }] 
+          }
+        ],
+        skills: ["Financial Statement Preparation", "Tax Calculation", "Audit Planning"],
+        projects: ["Tax Filing Practice", "Audit Documentation"]
+      },
+      {
+        name: "Advanced",
+        courses: [
+          { 
+            title: "CA Final Preparation", 
+            links: [{ type: "YouTube", url: "https://www.youtube.com/c/CAclubindia" }] 
+          },
+          { 
+            title: "Corporate Finance", 
+            links: [{ type: "Online Course", url: "https://www.cakart.in/" }] 
+          }
+        ],
+        skills: ["Advanced Taxation", "Corporate Auditing", "Financial Management"],
+        projects: ["Articleship", "Corporate Tax Planning", "Audit Report Preparation"]
+      }
+    ],
+    timeline: {
+      foundation: "8 months",
+      intermediate: "18 months",
+      advanced: "30 months",
+      total: "56 months"
+    }
+  },
+  "Designer": {
+    stages: [
+      {
+        name: "Foundation",
+        courses: [
+          { 
+            title: "Design Principles & Color Theory", 
+            links: [{ type: "YouTube", url: "https://www.youtube.com/c/TheDesignAcademy" }] 
+          },
+          { 
+            title: "Introduction to Adobe Suite", 
+            links: [{ type: "Online Course", url: "https://www.udemy.com/course/graphic-design-masterclass/" }] 
+          }
+        ],
+        skills: ["Visual Thinking", "Color Theory", "Typography"],
+        projects: ["Logo Design", "Poster Creation"]
+      },
+      {
+        name: "Intermediate",
+        courses: [
+          { 
+            title: "UI/UX Design", 
+            links: [{ type: "YouTube", url: "https://www.youtube.com/c/JesseShowalter" }] 
+          },
+          { 
+            title: "Motion Graphics", 
+            links: [{ type: "Online Course", url: "https://www.domestika.org/en/courses/areas/3-design" }] 
+          }
+        ],
+        skills: ["Prototyping", "User Research", "Interface Design"],
+        projects: ["Mobile App Design", "Website Redesign"]
+      },
+      {
+        name: "Advanced",
+        courses: [
+          { 
+            title: "Design Systems", 
+            links: [{ type: "YouTube", url: "https://www.youtube.com/c/DesignCourse" }] 
+          },
+          { 
+            title: "Brand Identity", 
+            links: [{ type: "Online Course", url: "https://www.masterclass.com/classes/david-carson-teaches-graphic-design" }] 
+          }
+        ],
+        skills: ["Design Leadership", "Art Direction", "Client Management"],
+        projects: ["Complete Brand Identity", "Product Design", "Design Portfolio"]
+      }
+    ],
+    timeline: {
+      foundation: "6 months",
+      intermediate: "12 months",
+      advanced: "18 months",
+      total: "36 months"
     }
   },
   // Default roadmap as a fallback
@@ -513,3 +734,4 @@ export const askMentor = (navigate: any) => {
   // In a real app, you would store the mentor group ID
   localStorage.setItem('activeGroupId', '3'); // ID of the mentor group
 };
+

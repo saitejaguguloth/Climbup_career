@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate, Link, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Check, Download, Share, Save, Pencil, MessageCircle, BookOpen, User } from "lucide-react";
+import { ArrowRight, Check, Download, Share, Save, Pencil, MessageCircle, BookOpen, User, Calendar, Target, School, GitFork } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { toast } from "@/hooks/use-toast";
@@ -14,7 +14,8 @@ import {
   markStepAsDone,
   generateRoadmap,
   RoadmapData,
-  careerRoadmapTemplates
+  careerRoadmapTemplates,
+  educationalPaths
 } from "@/utils/roadmapUtils";
 import ShareDialog from "@/components/ShareDialog";
 import GroupChat from "@/components/GroupChat";
@@ -37,6 +38,7 @@ const RoadmapPage = () => {
   const [intermediateProgress, setIntermediateProgress] = useState(0);
   const [advancedProgress, setAdvancedProgress] = useState(0);
   const [roadmapData, setRoadmapData] = useState<RoadmapData | null>(null);
+  const [nextStepsVisible, setNextStepsVisible] = useState<Record<number, boolean>>({});
 
   // Current user data (would come from authentication in a real app)
   const currentUser = {
@@ -88,7 +90,28 @@ const RoadmapPage = () => {
     "BTech/BE": [
       "Software Developer",
       "Data Scientist",
-      "Engineer"
+      "Engineer",
+      "IAS Officer"
+    ],
+    "BSc": [
+      "Data Scientist",
+      "Doctor",
+      "IAS Officer"
+    ],
+    "BCom": [
+      "Chartered Accountant",
+      "IAS Officer",
+      "Lawyer"
+    ],
+    "BA": [
+      "IAS Officer",
+      "Lawyer",
+      "Designer"
+    ],
+    "Diploma": [
+      "Engineer",
+      "Software Developer",
+      "Designer"
     ]
   };
 
@@ -204,6 +227,13 @@ const RoadmapPage = () => {
     });
   };
 
+  const toggleNextSteps = (index: number) => {
+    setNextStepsVisible(prev => ({
+      ...prev,
+      [index]: !prev[index]
+    }));
+  };
+
   const handleSaveRoadmap = () => {
     if (roadmapData) {
       const success = saveRoadmap(roadmapData);
@@ -312,6 +342,106 @@ const RoadmapPage = () => {
     });
   };
 
+  const getEducationalPathInfo = () => {
+    if (!selectedEducation || !selectedGoal) return null;
+    
+    const educationPath = educationalPaths[selectedEducation] || educationalPaths["Other"];
+    return educationPath[selectedGoal] || educationPath["default"];
+  };
+
+  const renderNextStepsInfo = (stageIndex: number) => {
+    const pathInfo = getEducationalPathInfo();
+    if (!pathInfo || stageIndex !== 0) return null;
+
+    return (
+      <div className="mt-6 pt-4 border-t border-gray-100">
+        <h4 className="font-semibold text-blue-700 mb-3 flex items-center cursor-pointer" onClick={() => toggleNextSteps(stageIndex)}>
+          <GitFork className="mr-2 h-4 w-4" />
+          What's Next? {nextStepsVisible[stageIndex] ? '▼' : '►'}
+        </h4>
+        
+        {nextStepsVisible[stageIndex] && (
+          <div className="pl-6 space-y-4 animate-fadeIn">
+            {/* Next Steps */}
+            {pathInfo.nextSteps && pathInfo.nextSteps.length > 0 && (
+              <div>
+                <h5 className="font-medium text-gray-700 mb-1">Next Steps:</h5>
+                <ul className="list-disc pl-5 text-sm text-gray-600">
+                  {pathInfo.nextSteps.map((step, i) => (
+                    <li key={i} className="mb-1">{step}</li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            
+            {/* Stream Options */}
+            {pathInfo.streamOptions && pathInfo.streamOptions.length > 0 && (
+              <div>
+                <h5 className="font-medium text-gray-700 mb-1">Stream Options:</h5>
+                <div className="flex flex-wrap gap-2">
+                  {pathInfo.streamOptions.map((stream, i) => (
+                    <span key={i} className="bg-blue-50 text-blue-700 text-xs px-2 py-1 rounded">
+                      {stream}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            )}
+            
+            {/* Entrance Exams */}
+            {pathInfo.entranceExams && pathInfo.entranceExams.length > 0 && (
+              <div>
+                <h5 className="font-medium text-gray-700 mb-2">Entrance Exams:</h5>
+                <div className="space-y-3">
+                  {pathInfo.entranceExams.map((exam, i) => (
+                    <div key={i} className="bg-violet-50 p-3 rounded-md">
+                      <div className="font-medium text-violet-800">{exam.name}</div>
+                      <div className="grid grid-cols-1 gap-1 mt-1 text-xs text-violet-700">
+                        <div className="flex items-center">
+                          <Target className="h-3 w-3 mr-1" /> 
+                          Target Rank: {exam.targetRank}
+                        </div>
+                        <div className="flex items-center">
+                          <Calendar className="h-3 w-3 mr-1" /> 
+                          Exam Month: {exam.examMonth}
+                        </div>
+                        <div className="flex items-center">
+                          <User className="h-3 w-3 mr-1" /> 
+                          Eligibility: {exam.eligibility}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            
+            {/* College Options */}
+            {pathInfo.collegeOptions && pathInfo.collegeOptions.length > 0 && (
+              <div>
+                <h5 className="font-medium text-gray-700 mb-2">College Options:</h5>
+                <div className="space-y-2">
+                  {pathInfo.collegeOptions.map((option, i) => (
+                    <div key={i}>
+                      <div className="text-sm font-medium text-gray-700">{option.tier} Tier:</div>
+                      <div className="flex flex-wrap gap-1 mt-1">
+                        {option.examples.map((college, j) => (
+                          <span key={j} className="bg-emerald-50 text-emerald-700 text-xs px-2 py-1 rounded">
+                            <School className="inline h-3 w-3 mr-1" /> {college}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    );
+  };
+
   const renderRoadmapContent = () => {
     if (!roadmapData) return null;
 
@@ -338,13 +468,86 @@ const RoadmapPage = () => {
                   {completedSteps[`${stage.name.toLowerCase().replace(/\s+/g, '-')}`] ? "Completed" : "Mark as Done"}
                 </Button>
               </div>
+              
               <p className="text-gray-700 mb-4">
-                {index === 0 && "Build core knowledge and skills needed for your journey"}
-                {index === 1 && "Deepen knowledge and begin to specialize in your field"}
-                {index === 2 && "Master skills and prepare for industry"}
+                {stage.description || (
+                  <>
+                    {index === 0 && "Build core knowledge and skills needed for your journey"}
+                    {index === 1 && "Deepen knowledge and begin to specialize in your field"}
+                    {index === 2 && "Master skills and prepare for industry"}
+                  </>
+                )}
               </p>
               
               <div className="space-y-6">
+                {/* Entrance Exams if available */}
+                {stage.examInfo && stage.examInfo.exams && stage.examInfo.exams.length > 0 && (
+                  <div>
+                    <h4 className="font-semibold text-violet-700 mb-2 flex items-center">
+                      <Target className="mr-2 h-4 w-4" />
+                      Entrance Exams
+                    </h4>
+                    <div className="bg-violet-50 p-3 rounded-md">
+                      <ul className="space-y-2">
+                        {stage.examInfo.exams.map((exam, examIndex) => (
+                          <li key={examIndex} className="text-violet-800">
+                            {exam}
+                          </li>
+                        ))}
+                      </ul>
+                      {stage.examInfo.targetRanks && (
+                        <div className="mt-2 text-sm text-violet-700">
+                          <span className="font-medium">Target Rank:</span> {stage.examInfo.targetRanks}
+                        </div>
+                      )}
+                      {stage.examInfo.examDates && (
+                        <div className="text-sm text-violet-700">
+                          <span className="font-medium">Exam Dates:</span> {stage.examInfo.examDates}
+                        </div>
+                      )}
+                      {stage.examInfo.eligibility && (
+                        <div className="text-sm text-violet-700">
+                          <span className="font-medium">Eligibility:</span> {stage.examInfo.eligibility}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+              
+                {/* Colleges if available */}
+                {stage.colleges && stage.colleges.length > 0 && (
+                  <div>
+                    <h4 className="font-semibold text-emerald-700 mb-2 flex items-center">
+                      <School className="mr-2 h-4 w-4" />
+                      College Options
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {stage.colleges.map((college, collegeIndex) => (
+                        <span key={collegeIndex} className="bg-emerald-50 text-emerald-700 text-xs px-2 py-1 rounded">
+                          {college}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                
+                {/* Alternative Paths if available */}
+                {stage.alternativePaths && stage.alternativePaths.length > 0 && (
+                  <div>
+                    <h4 className="font-semibold text-amber-700 mb-2 flex items-center">
+                      <GitFork className="mr-2 h-4 w-4" />
+                      Alternative Paths
+                    </h4>
+                    <div className="flex flex-wrap gap-2">
+                      {stage.alternativePaths.map((path, pathIndex) => (
+                        <span key={pathIndex} className="bg-amber-50 text-amber-700 text-xs px-2 py-1 rounded">
+                          {path}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                
                 {/* Courses */}
                 <div>
                   <h4 className="font-semibold text-blue-700 mb-2 flex items-center">
@@ -426,6 +629,9 @@ const RoadmapPage = () => {
                     ))}
                   </div>
                 </div>
+                
+                {/* "What's Next?" section with educational path info */}
+                {renderNextStepsInfo(index)}
                 
                 {/* Discussion buttons */}
                 <div className="flex space-x-2 mt-4 pt-4 border-t border-gray-100">

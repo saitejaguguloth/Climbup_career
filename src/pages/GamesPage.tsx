@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -5,7 +6,8 @@ import { Button } from "@/components/ui/button";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { BookOpen, Gamepad, Trophy, Brain, Code, PenTool } from "lucide-react";
+import { BookOpen, Gamepad, Trophy, Brain, Code, PenTool, Play, Star } from "lucide-react";
+import { toast } from "@/hooks/use-toast";
 
 const GamesPage = () => {
   const [activeTab, setActiveTab] = useState("flashcards");
@@ -14,6 +16,11 @@ const GamesPage = () => {
   // Function to handle play now button click - updated to use correct path
   const handlePlayNow = (gameId, gameType) => {
     navigate(`/games/${gameType}/${gameId}/play`);
+    toast({
+      title: "Game launching...",
+      description: "Get ready to level up your skills!",
+      duration: 2000,
+    });
   };
   
   // Function to view leaderboard
@@ -118,33 +125,35 @@ const GamesPage = () => {
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
         {gamesList.map((game) => (
-          <Card key={game.id} className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-[1.02] bg-white/90 backdrop-blur">
+          <Card key={game.id} className="overflow-hidden hover:shadow-lg transition-all duration-300 hover:scale-[1.02] bg-gradient-to-br from-white/90 to-blue-50/90 backdrop-blur border-blue-100">
             <div className="relative">
               <AspectRatio ratio={16/9}>
                 <img 
                   src={game.image} 
                   alt={game.title}
-                  className="object-cover w-full h-full"
+                  className="object-cover w-full h-full rounded-t-lg"
                 />
               </AspectRatio>
               <div className="absolute top-2 right-2 flex gap-2">
-                <Badge variant="secondary" className="bg-blue-100 text-blue-800">
+                <Badge variant="secondary" className="bg-blue-100 text-blue-800 border-blue-200">
                   {game.difficulty}
                 </Badge>
               </div>
             </div>
             
             <CardHeader className="pb-2">
-              <CardTitle className="text-xl">{game.title}</CardTitle>
+              <CardTitle className="text-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-transparent bg-clip-text">
+                {game.title}
+              </CardTitle>
               <CardDescription>{game.description}</CardDescription>
             </CardHeader>
             
             <CardContent className="pb-2">
               <div className="flex flex-wrap gap-2">
-                <Badge variant="outline" className="bg-purple-50">
+                <Badge variant="outline" className="bg-purple-50 border-purple-200">
                   {game.players}
                 </Badge>
-                <Badge variant="outline" className="bg-green-50">
+                <Badge variant="outline" className="bg-green-50 border-green-200">
                   {game.category}
                 </Badge>
               </div>
@@ -152,9 +161,10 @@ const GamesPage = () => {
             
             <CardFooter>
               <Button 
-                className="w-full bg-gradient-to-r from-blue-600 to-indigo-600"
+                className="w-full bg-gradient-to-r from-blue-600 to-indigo-600 transition-all hover:shadow-md hover:from-blue-700 hover:to-indigo-700 flex items-center gap-2 group"
                 onClick={() => handlePlayNow(game.id, activeTab)}
               >
+                <Play className="w-4 h-4 transition-transform group-hover:scale-110" />
                 Play Now
               </Button>
             </CardFooter>
@@ -185,20 +195,32 @@ const GamesPage = () => {
         
         <Tabs defaultValue="flashcards" className="w-full" onValueChange={setActiveTab}>
           <div className="flex justify-center mb-8">
-            <TabsList className="grid grid-cols-2 md:grid-cols-4 gap-2">
-              <TabsTrigger value="flashcards" className="flex items-center gap-2">
+            <TabsList className="grid grid-cols-2 md:grid-cols-4 gap-2 bg-blue-50">
+              <TabsTrigger 
+                value="flashcards" 
+                className="flex items-center gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-600 data-[state=active]:to-indigo-600 data-[state=active]:text-white"
+              >
                 <BookOpen className="w-4 h-4" />
                 <span>Flashcard Battles</span>
               </TabsTrigger>
-              <TabsTrigger value="simulations" className="flex items-center gap-2">
+              <TabsTrigger 
+                value="simulations" 
+                className="flex items-center gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-purple-600 data-[state=active]:to-violet-600 data-[state=active]:text-white"
+              >
                 <Brain className="w-4 h-4" />
                 <span>Career Simulations</span>
               </TabsTrigger>
-              <TabsTrigger value="careerPathBuilder" className="flex items-center gap-2">
+              <TabsTrigger 
+                value="careerPathBuilder" 
+                className="flex items-center gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-amber-500 data-[state=active]:to-orange-500 data-[state=active]:text-white"
+              >
                 <Gamepad className="w-4 h-4" />
                 <span>Career Path Builder</span>
               </TabsTrigger>
-              <TabsTrigger value="skillGames" className="flex items-center gap-2">
+              <TabsTrigger 
+                value="skillGames" 
+                className="flex items-center gap-2 data-[state=active]:bg-gradient-to-r data-[state=active]:from-emerald-600 data-[state=active]:to-teal-600 data-[state=active]:text-white"
+              >
                 <PenTool className="w-4 h-4" />
                 <span>Skill Games</span>
               </TabsTrigger>
@@ -208,8 +230,10 @@ const GamesPage = () => {
           <TabsContent value="flashcards" className="mt-2">
             <div className="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-md">
               <div className="flex items-center gap-3 mb-4">
-                <BookOpen className="w-6 h-6 text-blue-600" />
-                <h2 className="text-2xl font-bold">Flashcard Battles</h2>
+                <div className="p-2 rounded-full bg-blue-100 text-blue-600">
+                  <BookOpen className="w-6 h-6" />
+                </div>
+                <h2 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 text-transparent bg-clip-text">Flashcard Battles</h2>
               </div>
               <p className="text-gray-600 mb-4">
                 Test your knowledge and compete with friends in these interactive flashcard games. Master key concepts while having fun!
@@ -221,8 +245,10 @@ const GamesPage = () => {
           <TabsContent value="simulations">
             <div className="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-md">
               <div className="flex items-center gap-3 mb-4">
-                <Brain className="w-6 h-6 text-purple-600" />
-                <h2 className="text-2xl font-bold">Career Simulations</h2>
+                <div className="p-2 rounded-full bg-purple-100 text-purple-600">
+                  <Brain className="w-6 h-6" />
+                </div>
+                <h2 className="text-2xl font-bold bg-gradient-to-r from-purple-600 to-violet-600 text-transparent bg-clip-text">Career Simulations</h2>
               </div>
               <p className="text-gray-600 mb-4">
                 Experience different career paths through interactive storytelling. Make decisions and see where they lead you!
@@ -234,8 +260,10 @@ const GamesPage = () => {
           <TabsContent value="careerPathBuilder">
             <div className="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-md">
               <div className="flex items-center gap-3 mb-4">
-                <Gamepad className="w-6 h-6 text-indigo-600" />
-                <h2 className="text-2xl font-bold">Career Path Builder</h2>
+                <div className="p-2 rounded-full bg-amber-100 text-amber-600">
+                  <Gamepad className="w-6 h-6" />
+                </div>
+                <h2 className="text-2xl font-bold bg-gradient-to-r from-amber-500 to-orange-500 text-transparent bg-clip-text">Career Path Builder</h2>
               </div>
               <p className="text-gray-600 mb-4">
                 Design your own career path by dragging and dropping interests and skills. Visualize your journey and get personalized roadmaps.
@@ -247,8 +275,10 @@ const GamesPage = () => {
           <TabsContent value="skillGames">
             <div className="bg-white/80 backdrop-blur-md rounded-xl p-6 shadow-md">
               <div className="flex items-center gap-3 mb-4">
-                <PenTool className="w-6 h-6 text-emerald-600" />
-                <h2 className="text-2xl font-bold">Skill Games</h2>
+                <div className="p-2 rounded-full bg-emerald-100 text-emerald-600">
+                  <PenTool className="w-6 h-6" />
+                </div>
+                <h2 className="text-2xl font-bold bg-gradient-to-r from-emerald-600 to-teal-600 text-transparent bg-clip-text">Skill Games</h2>
               </div>
               <p className="text-gray-600 mb-4">
                 Improve specific skills through fun mini-games. Practice coding, debugging, and logical reasoning in an engaging way.
@@ -261,17 +291,20 @@ const GamesPage = () => {
         <div className="mt-12 bg-gradient-to-r from-blue-600 to-purple-600 rounded-xl p-8 text-white shadow-lg">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div>
-              <h3 className="text-2xl font-bold mb-2">Career Arena Leaderboard</h3>
+              <h3 className="text-2xl font-bold mb-2 flex items-center gap-2">
+                <Trophy className="w-6 h-6 text-amber-300" />
+                Career Arena Leaderboard
+              </h3>
               <p className="opacity-90">
                 Compete with peers, track your progress, and earn rewards. Join the Career Arena to showcase your skills.
               </p>
             </div>
             <Button 
               variant="secondary" 
-              className="whitespace-nowrap"
+              className="whitespace-nowrap hover:bg-white group transition-all"
               onClick={handleViewLeaderboard}
             >
-              <Trophy className="w-4 h-4 mr-2" />
+              <Trophy className="w-4 h-4 mr-2 text-amber-500 group-hover:scale-110 transition-transform" />
               View Leaderboard
             </Button>
           </div>

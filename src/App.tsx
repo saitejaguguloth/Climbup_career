@@ -8,7 +8,11 @@ import QuizPage from "@/pages/QuizPage";
 import GamesPage from "@/pages/GamesPage";
 import GameDetailPage from "@/pages/GameDetailPage";
 import GameLeaderboardPage from "@/pages/GameLeaderboardPage";
+import GamePlayPage from "@/pages/GamePlayPage";
 import ChallengesPage from "@/pages/ChallengesPage";
+import ChallengeDetailPage from "@/pages/ChallengeDetailPage";
+import ChallengeLeaderboardPage from "@/pages/ChallengeLeaderboardPage";
+import AchievementsPage from "@/pages/AchievementsPage";
 import MentorsPage from "@/pages/MentorsPage";
 import PlannerPage from "@/pages/PlannerPage";
 import CommunityPage from "@/pages/CommunityPage";
@@ -30,9 +34,13 @@ const App: React.FC = () => {
           <Route path="roadmap/:careerPath" element={<RoadmapPage />} />
           <Route path="quiz" element={<QuizPage />} />
           <Route path="games" element={<GamesPage />} />
-          <Route path="games/:gameId" element={<GameDetailPage />} />
-          <Route path="games/:gameId/leaderboard" element={<GameLeaderboardPage />} />
+          <Route path="games/:gameType/:gameId" element={<GameDetailPage />} />
+          <Route path="games/:gameType/:gameId/play" element={<GamePlayPage />} />
+          <Route path="games/:gameType/:gameId/leaderboard" element={<GameLeaderboardPage />} />
           <Route path="challenges" element={<ChallengesPage />} />
+          <Route path="challenges/:challengeType/:challengeId" element={<ChallengeDetailPage />} />
+          <Route path="challenges/:challengeType/:challengeId/leaderboard" element={<ChallengeLeaderboardPage />} />
+          <Route path="achievements" element={<AchievementsPage />} />
           <Route path="mentors" element={<MentorsPage />} />
           <Route path="planner" element={<PlannerPage />} />
           <Route path="community" element={<CommunityPage />} />

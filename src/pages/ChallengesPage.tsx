@@ -1,11 +1,12 @@
 
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
-import { Award, Brain, Code, Trophy, Puzzle } from 'lucide-react';
+import { Award, Brain, Code, Trophy, Puzzle, ChevronRight } from 'lucide-react';
 
 // Mock data
 const challenges = {
@@ -96,6 +97,19 @@ const challenges = {
 
 const ChallengesPage = () => {
   const [activeTab, setActiveTab] = useState('daily');
+  const navigate = useNavigate();
+
+  const handleChallengeClick = (challengeId) => {
+    navigate(`/challenges/${activeTab}/${challengeId}`);
+  };
+
+  const handleViewLeaderboard = () => {
+    navigate('/challenges/daily/1/leaderboard');
+  };
+
+  const handleViewAchievements = () => {
+    navigate('/achievements');
+  };
 
   const renderChallengeCards = (challengesList) => {
     return (
@@ -140,12 +154,29 @@ const ChallengesPage = () => {
             </CardContent>
             
             <CardFooter>
-              <Button className="w-full bg-gradient-to-r from-indigo-600 to-blue-700">
+              <Button 
+                className="w-full bg-gradient-to-r from-indigo-600 to-blue-700"
+                onClick={() => handleChallengeClick(challenge.id)}
+              >
                 {challenge.completedSteps > 0 ? "Continue Challenge" : "Start Challenge"}
               </Button>
             </CardFooter>
           </Card>
         ))}
+
+        {/* "See more" card */}
+        <Card className="flex flex-col items-center justify-center p-6 bg-gradient-to-r from-gray-50 to-gray-100 border-dashed">
+          <div className="rounded-full bg-indigo-100 p-4 mb-4">
+            <ChevronRight className="h-6 w-6 text-indigo-600" />
+          </div>
+          <h3 className="text-xl font-semibold mb-2 text-center">Explore More Challenges</h3>
+          <p className="text-gray-600 text-center mb-4">
+            Discover additional challenges to boost your skills
+          </p>
+          <Button variant="outline" className="border-indigo-200">
+            See More
+          </Button>
+        </Card>
       </div>
     );
   };
@@ -252,7 +283,11 @@ const ChallengesPage = () => {
                 See how you stack up against other students tackling the same challenges.
                 Climb the ranks and earn exclusive rewards!
               </p>
-              <Button variant="outline" className="border-amber-300 text-amber-800 hover:bg-amber-200 hover:text-amber-900">
+              <Button 
+                variant="outline" 
+                className="border-amber-300 text-amber-800 hover:bg-amber-200 hover:text-amber-900"
+                onClick={handleViewLeaderboard}
+              >
                 View Leaderboard
               </Button>
             </CardContent>
@@ -270,7 +305,11 @@ const ChallengesPage = () => {
                 You've earned 14 badges and completed 28 challenges.
                 View your collection and share your success!
               </p>
-              <Button variant="outline" className="border-indigo-300 text-indigo-800 hover:bg-indigo-200 hover:text-indigo-900">
+              <Button 
+                variant="outline" 
+                className="border-indigo-300 text-indigo-800 hover:bg-indigo-200 hover:text-indigo-900"
+                onClick={handleViewAchievements}
+              >
                 See Achievements
               </Button>
             </CardContent>

@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -12,9 +11,9 @@ const GamesPage = () => {
   const [activeTab, setActiveTab] = useState("flashcards");
   const navigate = useNavigate();
   
-  // Function to handle play now button click
+  // Function to handle play now button click - updated to use correct path
   const handlePlayNow = (gameId, gameType) => {
-    navigate(`/games/${gameType}/${gameId}`);
+    navigate(`/games/${gameType}/${gameId}/play`);
   };
   
   // Function to view leaderboard

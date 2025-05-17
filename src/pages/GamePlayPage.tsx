@@ -168,9 +168,9 @@ const GamePlayPage = () => {
                   <h3 className="text-xl font-bold">Code Challenge</h3>
                   <div className="my-4 bg-black/80 p-4 rounded text-green-400 font-mono text-sm">
                     <p>// Fix this function to return the sum of two numbers</p>
-                    <p>function add(a, b) {</p>
+                    <p>function add(a, b) {'{'}</p>
                     <p>&nbsp;&nbsp;return a - b; // Bug here!</p>
-                    <p>}</p>
+                    <p>{'}'}</p>
                   </div>
                   <button 
                     className="bg-white text-emerald-600 px-4 py-2 rounded-lg font-medium"

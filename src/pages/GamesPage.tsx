@@ -1,7 +1,7 @@
 
 import React, { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Gamepad2, LightbulbIcon } from "lucide-react";
+import { Gamepad, LightbulbIcon } from "lucide-react";
 import { useGamesData, GameCategory } from "@/hooks/use-games-data";
 import GamesHero from "@/components/games/GamesHero";
 import GamesFilterBar from "@/components/games/GamesFilterBar";
@@ -30,7 +30,7 @@ const GamesPage = () => {
           <div className="flex justify-center">
             <TabsList className="bg-black/30 border border-white/10 backdrop-blur-md">
               <TabsTrigger value="game" className="data-[state=active]:bg-white/10">
-                <Gamepad2 className="mr-2 h-4 w-4" />
+                <Gamepad className="mr-2 h-4 w-4" />
                 Game View
               </TabsTrigger>
               <TabsTrigger value="skill" className="data-[state=active]:bg-white/10">

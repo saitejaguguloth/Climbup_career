@@ -6,13 +6,13 @@
 @layer base {
   :root {
     --background: 0 0% 10%; /* Dark background */
-    --foreground: 0 0% 98%;
+    --foreground: 52 80% 68%; /* Neon yellow */
 
     --card: 0 0% 13%;
-    --card-foreground: 0 0% 98%;
+    --card-foreground: 52 80% 68%; /* Neon yellow */
 
     --popover: 0 0% 13%;
-    --popover-foreground: 0 0% 98%;
+    --popover-foreground: 52 80% 68%; /* Neon yellow */
 
     --primary: 52 80% 68%; /* Neon yellow */
     --primary-foreground: 0 0% 10%;
@@ -21,67 +21,67 @@
     --secondary-foreground: 0 0% 10%;
 
     --muted: 0 0% 20%;
-    --muted-foreground: 0 0% 70%;
+    --muted-foreground: 52 80% 68%; /* Neon yellow at 70% opacity */
 
     --accent: 17 100% 60%; /* Neon orange */
     --accent-foreground: 0 0% 10%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 17 100% 60%; /* Neon orange */
+    --destructive-foreground: 0 0% 10%;
 
-    --border: 0 0% 20%;
+    --border: 52 80% 68%; /* Neon yellow */
     --input: 0 0% 20%;
-    --ring: 0 0% 70%;
+    --ring: 52 80% 68%; /* Neon yellow */
 
     --radius: 0.5rem;
 
     --sidebar-background: 0 0% 13%;
-    --sidebar-foreground: 0 0% 90%;
-    --sidebar-primary: 172 48% 53%;
+    --sidebar-foreground: 52 80% 68%; /* Neon yellow */
+    --sidebar-primary: 172 48% 53%; /* Neon teal */
     --sidebar-primary-foreground: 0 0% 10%;
     --sidebar-accent: 0 0% 16%;
-    --sidebar-accent-foreground: 0 0% 90%;
-    --sidebar-border: 0 0% 20%;
-    --sidebar-ring: 172 48% 53%;
+    --sidebar-accent-foreground: 52 80% 68%; /* Neon yellow */
+    --sidebar-border: 52 80% 68%; /* Neon yellow */
+    --sidebar-ring: 172 48% 53%; /* Neon teal */
   }
 
   .light {
-    --background: 0 0% 98%;
+    --background: 52 80% 98%; /* Light yellow background */
     --foreground: 0 0% 10%;
 
-    --card: 0 0% 100%;
+    --card: 52 80% 95%; /* Light yellow card */
     --card-foreground: 0 0% 10%;
 
-    --popover: 0 0% 100%;
+    --popover: 52 80% 95%; /* Light yellow popover */
     --popover-foreground: 0 0% 10%;
 
-    --primary: 52 80% 68%;
-    --primary-foreground: 0 0% 10%;
+    --primary: 172 48% 53%; /* Neon teal */
+    --primary-foreground: 52 80% 98%; /* Light yellow */
 
-    --secondary: 172 48% 53%;
-    --secondary-foreground: 0 0% 10%;
+    --secondary: 17 100% 60%; /* Neon orange */
+    --secondary-foreground: 52 80% 98%; /* Light yellow */
 
-    --muted: 0 0% 90%;
+    --muted: 52 80% 90%; /* Light yellow muted */
     --muted-foreground: 0 0% 40%;
 
-    --accent: 17 100% 60%;
+    --accent: 52 80% 68%; /* Neon yellow */
     --accent-foreground: 0 0% 10%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 0 0% 98%;
+    --destructive: 17 100% 60%; /* Neon orange */
+    --destructive-foreground: 52 80% 98%; /* Light yellow */
 
-    --border: 0 0% 80%;
-    --input: 0 0% 80%;
-    --ring: 0 0% 40%;
+    --border: 172 48% 53%; /* Neon teal */
+    --input: 52 80% 85%; /* Light yellow input */
+    --ring: 172 48% 53%; /* Neon teal */
 
-    --sidebar-background: 0 0% 98%;
+    --sidebar-background: 52 80% 98%; /* Light yellow */
     --sidebar-foreground: 0 0% 10%;
-    --sidebar-primary: 172 48% 53%;
-    --sidebar-primary-foreground: 0 0% 98%;
-    --sidebar-accent: 0 0% 90%;
+    --sidebar-primary: 172 48% 53%; /* Neon teal */
+    --sidebar-primary-foreground: 52 80% 98%; /* Light yellow */
+    --sidebar-accent: 52 80% 90%; /* Light yellow */
     --sidebar-accent-foreground: 0 0% 10%;
-    --sidebar-border: 0 0% 80%;
-    --sidebar-ring: 172 48% 53%;
+    --sidebar-border: 172 48% 53%; /* Neon teal */
+    --sidebar-ring: 172 48% 53%; /* Neon teal */
   }
 }
 
@@ -149,15 +149,15 @@
   }
   
   .gradient-card {
-    @apply bg-black/40 backdrop-blur-md border rounded-xl transition-all hover:shadow-lg;
+    @apply bg-black/40 backdrop-blur-md border border-neon-yellow/30 rounded-xl transition-all hover:shadow-lg;
   }
   
   .gradient-button {
-    @apply relative overflow-hidden border border-current px-6 py-3 rounded-md font-medium transition-all duration-300 hover:brightness-110 hover:shadow-[0_0_15px_currentColor];
+    @apply relative overflow-hidden border border-neon-yellow px-6 py-3 rounded-md font-medium transition-all duration-300 hover:brightness-110 hover:shadow-[0_0_15px_currentColor];
   }
   
   .secondary-button {
-    @apply bg-muted text-muted-foreground border border-muted font-medium py-2 px-6 rounded-md transition-all hover:bg-muted/80 hover:border-muted-foreground/50;
+    @apply bg-muted text-neon-yellow border border-neon-yellow/30 font-medium py-2 px-6 rounded-md transition-all hover:bg-muted/80 hover:border-neon-yellow;
   }
 
   /* Game card designs */

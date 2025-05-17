@@ -28,12 +28,12 @@ const GamesPage = () => {
       <div className="container mx-auto px-4">
         <Tabs defaultValue={viewMode} onValueChange={(value) => setViewMode(value as 'game' | 'skill')} className="mb-8">
           <div className="flex justify-center">
-            <TabsList className="bg-black/30 border border-white/10 backdrop-blur-md">
-              <TabsTrigger value="game" className="data-[state=active]:bg-white/10">
+            <TabsList className="bg-black/30 border border-neon-yellow/20 backdrop-blur-md">
+              <TabsTrigger value="game" className="data-[state=active]:bg-neon-yellow/20 data-[state=active]:text-neon-yellow">
                 <Gamepad className="mr-2 h-4 w-4" />
                 Game View
               </TabsTrigger>
-              <TabsTrigger value="skill" className="data-[state=active]:bg-white/10">
+              <TabsTrigger value="skill" className="data-[state=active]:bg-neon-yellow/20 data-[state=active]:text-neon-yellow">
                 <LightbulbIcon className="mr-2 h-4 w-4" />
                 Skill View
               </TabsTrigger>

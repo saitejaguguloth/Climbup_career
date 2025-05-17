@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Filter, Gamepad2, Zap } from "lucide-react";
+import { Filter, Gamepad, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { NeonTitle, NeonButton } from "@/components/ui/neon-elements";
@@ -44,26 +44,26 @@ const GamesFilterBar = ({
               onClick={() => setCategory(cat.id as GameCategory)}
               className={`border border-transparent 
                 ${currentCategory === cat.id 
-                  ? "bg-white/10 text-white border-white/20" 
-                  : "bg-black/20 hover:border-white/10 hover:bg-black/30"}`}
+                  ? "bg-neon-yellow/20 text-neon-yellow border-neon-yellow/30" 
+                  : "bg-black/20 hover:border-neon-yellow/20 hover:bg-black/30"}`}
               size="sm"
             >
-              {cat.id === 'all' && <Gamepad2 className="h-4 w-4 mr-1" />}
+              {cat.id === 'all' && <Gamepad className="h-4 w-4 mr-1" />}
               {cat.label}
             </Button>
           ))}
         </div>
         
         <div className="flex items-center gap-2">
-          <span className="hidden md:inline text-sm text-muted-foreground">Sort by:</span>
+          <span className="hidden md:inline text-sm text-neon-yellow/70">Sort by:</span>
           <Select value={filterBy} onValueChange={setFilterBy}>
-            <SelectTrigger className="w-[180px] bg-black/30 border border-white/20">
+            <SelectTrigger className="w-[180px] bg-black/30 border border-neon-yellow/30">
               <div className="flex items-center">
-                <Filter className="h-4 w-4 mr-1 text-muted-foreground" />
+                <Filter className="h-4 w-4 mr-1 text-neon-yellow/70" />
                 <SelectValue placeholder="Sort by" />
               </div>
             </SelectTrigger>
-            <SelectContent className="bg-black/80 backdrop-blur-md border border-white/20">
+            <SelectContent className="bg-black/80 backdrop-blur-md border border-neon-yellow/30">
               <SelectItem value="newest">Newest</SelectItem>
               <SelectItem value="mostPlayed">Most Played</SelectItem>
               <SelectItem value="difficulty">By Difficulty</SelectItem>
@@ -74,7 +74,7 @@ const GamesFilterBar = ({
       
       {/* Results count */}
       <div className="flex justify-between items-center mb-4">
-        <p className="text-sm text-muted-foreground">
+        <p className="text-sm text-neon-yellow/70">
           Showing {totalGames} skill-building games 
           {currentCategory !== 'all' && ` for ${categories.find(c => c.id === currentCategory)?.label}`}
         </p>

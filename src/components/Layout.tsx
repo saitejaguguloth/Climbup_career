@@ -11,7 +11,7 @@ type LayoutProps = {
 
 function Layout({ sidebarVisible = true }: LayoutProps) {
   return (
-    <div className="flex flex-col min-h-screen bg-background text-foreground bg-dark-texture">
+    <div className="flex flex-col min-h-screen bg-background text-neon-yellow bg-dark-texture">
       <Navbar />
       <div className="flex flex-1">
         <main className="flex-1 p-4 md:p-6">

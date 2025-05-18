@@ -66,7 +66,7 @@ const HomePage = () => {
             </div>
             
             {/* Step 3 */}
-            <div className="bg-black/80 backdrop-blur-sm rounded-2xl shadow-xl border border-neon-yellow/50 p-8 text-center hover:shadow-2xl transition-all">
+            <div className="backdrop-blur-sm rounded-2xl shadow-xl border border-neon-yellow/50 p-8 text-center hover:shadow-2xl transition-all bg-[#e5d0ac]">
               <h3 className="font-bold text-xl mb-4 text-neon-yellow">Start climbing</h3>
               <p className="text-neon-yellow/80 mb-4">Follow your plan and track your progress</p>
               <div className="aspect-square bg-gradient-to-br from-neon-teal/20 to-neon-yellow/20 rounded-2xl flex items-center justify-center">

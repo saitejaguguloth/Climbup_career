@@ -24,7 +24,6 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { toast } from "@/hooks/use-toast";
-import Logo from "./Logo";
 import { cn } from "@/lib/utils";
 
 interface User {
@@ -96,10 +95,10 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="w-full bg-white/80 backdrop-blur-md sticky top-0 z-50 border-b border-gray-100">
+    <nav className="w-full bg-black/80 backdrop-blur-md sticky top-0 z-50 border-b border-white/10">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         <Link to="/" className="flex items-center">
-          <Logo />
+          <span className="font-display text-xl font-bold tracking-wider gradient-text-yellow">ClimbUp</span>
         </Link>
 
         {/* Desktop Navigation Menu */}
@@ -107,21 +106,21 @@ const Navbar = () => {
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
-                <NavigationMenuTrigger>Key Features</NavigationMenuTrigger>
+                <NavigationMenuTrigger className="bg-black/30">Key Features</NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <ul className="grid gap-3 p-4 w-[400px] grid-cols-2">
+                  <ul className="grid gap-3 p-4 w-[400px] grid-cols-2 bg-black/90 backdrop-blur-md border border-white/10">
                     {menuItems.slice(0, 6).map((item) => (
                       <li key={item.title}>
                         <NavigationMenuLink asChild>
                           <Link
                             to={item.url}
                             className={cn(
-                              "flex items-center space-x-2 rounded-md px-3 py-2 hover:bg-accent",
-                              location.pathname === item.url ? "bg-accent" : ""
+                              "flex items-center space-x-2 rounded-md px-3 py-2 hover:bg-white/10",
+                              location.pathname === item.url ? "bg-white/10" : ""
                             )}
                           >
-                            <item.icon className="h-4 w-4" />
-                            <span>{item.title}</span>
+                            <item.icon className="h-4 w-4 text-neon-yellow" />
+                            <span className="text-white">{item.title}</span>
                           </Link>
                         </NavigationMenuLink>
                       </li>
@@ -130,21 +129,21 @@ const Navbar = () => {
                 </NavigationMenuContent>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <NavigationMenuTrigger>Tools</NavigationMenuTrigger>
+                <NavigationMenuTrigger className="bg-black/30">Tools</NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <ul className="grid gap-3 p-4 w-[400px] grid-cols-2">
+                  <ul className="grid gap-3 p-4 w-[400px] grid-cols-2 bg-black/90 backdrop-blur-md border border-white/10">
                     {menuItems.slice(6, 12).map((item) => (
                       <li key={item.title}>
                         <NavigationMenuLink asChild>
                           <Link
                             to={item.url}
                             className={cn(
-                              "flex items-center space-x-2 rounded-md px-3 py-2 hover:bg-accent",
-                              location.pathname === item.url ? "bg-accent" : ""
+                              "flex items-center space-x-2 rounded-md px-3 py-2 hover:bg-white/10",
+                              location.pathname === item.url ? "bg-white/10" : ""
                             )}
                           >
-                            <item.icon className="h-4 w-4" />
-                            <span>{item.title}</span>
+                            <item.icon className="h-4 w-4 text-neon-yellow" />
+                            <span className="text-white">{item.title}</span>
                           </Link>
                         </NavigationMenuLink>
                       </li>
@@ -160,36 +159,36 @@ const Navbar = () => {
           {isAuthenticated ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="rounded-full h-10 w-10 p-0 border-2 border-indigo-100">
-                  <span className="font-medium text-indigo-700">{getUserInitials()}</span>
+                <Button variant="outline" className="rounded-full h-10 w-10 p-0 border-2 border-neon-yellow/50 bg-black/50">
+                  <span className="font-medium text-neon-yellow">{getUserInitials()}</span>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end" className="w-56">
+              <DropdownMenuContent align="end" className="w-56 bg-black/90 backdrop-blur-md border border-white/10">
                 <DropdownMenuLabel>
                   <div className="flex flex-col">
-                    <span>{user?.firstName} {user?.lastName}</span>
-                    <span className="text-xs text-gray-500 font-normal">{user?.email}</span>
+                    <span className="text-white">{user?.firstName} {user?.lastName}</span>
+                    <span className="text-xs text-white/60 font-normal">{user?.email}</span>
                   </div>
                 </DropdownMenuLabel>
-                <DropdownMenuSeparator />
+                <DropdownMenuSeparator className="bg-white/10" />
                 <DropdownMenuItem asChild>
-                  <Link to="/profile" className="cursor-pointer">
-                    <User className="mr-2 h-4 w-4" />
+                  <Link to="/profile" className="cursor-pointer text-white hover:bg-white/10">
+                    <User className="mr-2 h-4 w-4 text-neon-yellow" />
                     <span>Profile</span>
                   </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={handleLogout} className="cursor-pointer">
-                  <LogOut className="mr-2 h-4 w-4" />
+                <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-white hover:bg-white/10">
+                  <LogOut className="mr-2 h-4 w-4 text-neon-yellow" />
                   <span>Logout</span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
             <>
-              <Button variant="ghost" asChild>
+              <Button variant="ghost" className="text-white hover:bg-white/10" asChild>
                 <Link to="/login">Login</Link>
               </Button>
-              <Button className="gradient-button" asChild>
+              <Button className="gradient-button neon-yellow" asChild>
                 <Link to="/login?signup=true">Sign Up</Link>
               </Button>
             </>
@@ -197,23 +196,23 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Navigation Toggle */}
-        <button className="md:hidden" onClick={toggleMenu}>
+        <button className="md:hidden text-white" onClick={toggleMenu}>
           {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
 
       {/* Mobile Navigation Menu */}
       {isMenuOpen && (
-        <div className="md:hidden bg-white border-t border-gray-100 animate-fade-in">
+        <div className="md:hidden bg-black/90 backdrop-blur-md border-t border-white/10 animate-fade-in">
           <div className="container mx-auto px-4 py-2 flex flex-col space-y-3">
             {menuItems.map((item) => (
               <Link 
                 key={item.title}
                 to={item.url} 
-                className="py-2 flex items-center space-x-2 text-gray-800 hover:text-climbup-blue transition-colors"
+                className="py-2 flex items-center space-x-2 text-white hover:text-neon-yellow transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
-                <item.icon className="h-4 w-4" />
+                <item.icon className="h-4 w-4 text-neon-yellow" />
                 <span>{item.title}</span>
               </Link>
             ))}
@@ -221,36 +220,36 @@ const Navbar = () => {
               {isAuthenticated ? (
                 <>
                   <div className="flex items-center space-x-2 py-2">
-                    <div className="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center">
-                      <span className="font-medium text-indigo-700">{getUserInitials()}</span>
+                    <div className="h-8 w-8 rounded-full bg-black/50 border border-neon-yellow/30 flex items-center justify-center">
+                      <span className="font-medium text-neon-yellow">{getUserInitials()}</span>
                     </div>
                     <div className="flex flex-col">
-                      <span className="font-medium">{user?.firstName} {user?.lastName}</span>
-                      <span className="text-xs text-gray-500">{user?.email}</span>
+                      <span className="font-medium text-white">{user?.firstName} {user?.lastName}</span>
+                      <span className="text-xs text-white/60">{user?.email}</span>
                     </div>
                   </div>
                   <Button 
-                    variant="outline" 
+                    variant="outline"
+                    className="border-white/10 bg-black/30 text-white hover:bg-white/10"
                     asChild 
                     onClick={() => setIsMenuOpen(false)}
                   >
                     <Link to="/profile">My Profile</Link>
                   </Button>
                   <Button 
-                    className="w-full" 
-                    variant="outline" 
+                    className="w-full bg-black/30 border border-white/10 text-white hover:bg-white/20" 
                     onClick={() => {
                       handleLogout();
                       setIsMenuOpen(false);
                     }}
                   >
-                    <LogOut className="mr-2 h-4 w-4" />
+                    <LogOut className="mr-2 h-4 w-4 text-neon-yellow" />
                     Logout
                   </Button>
                 </>
               ) : (
                 <>
-                  <Button variant="outline" asChild>
+                  <Button variant="outline" className="border-white/10 bg-black/30 text-white hover:bg-white/10" asChild>
                     <Link 
                       to="/login"
                       onClick={() => setIsMenuOpen(false)}
@@ -258,7 +257,7 @@ const Navbar = () => {
                       Login
                     </Link>
                   </Button>
-                  <Button className="gradient-button w-full" asChild>
+                  <Button className="gradient-button neon-yellow w-full" asChild>
                     <Link 
                       to="/login?signup=true"
                       onClick={() => setIsMenuOpen(false)}

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from "@/components/ui/toaster";
@@ -23,6 +22,7 @@ import PortfolioPage from "@/pages/PortfolioPage";
 import LoginPage from "@/pages/LoginPage";
 import NotFound from "@/pages/NotFound";
 import Layout from "@/components/Layout";
+import GameRoutes from './components/GameRoutes';
 
 const App: React.FC = () => {
   return (
@@ -53,6 +53,7 @@ const App: React.FC = () => {
         </Route>
       </Routes>
       <Toaster />
+      <GameRoutes />
     </Router>
   );
 }

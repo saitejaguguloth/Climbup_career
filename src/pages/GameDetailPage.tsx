@@ -1,6 +1,5 @@
-
 import React, { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, Award, Clock, PlayCircle, ChevronRight, Star, Trophy, Users, Zap, ChevronDown } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -38,12 +37,17 @@ const GameDetailPage = () => {
     color: gameId === '1' ? 'teal' : gameId === '3' ? 'orange' : 'yellow'
   };
 
+  // Function to open the game in a new tab
+  const handlePlayGame = () => {
+    window.open(`/games/play/${gameId}`, '_blank');
+  };
+
   return (
     <div className="container mx-auto py-8 px-4">
       {/* Back button */}
       <Button 
         variant="ghost" 
-        className="mb-6 flex items-center gap-2 hover:bg-white/5" 
+        className="mb-6 flex items-center gap-2 hover:bg-white/5 text-white" 
         onClick={() => navigate("/games")}
       >
         <ArrowLeft className="h-4 w-4" />
@@ -133,7 +137,7 @@ const GameDetailPage = () => {
               <NeonButton 
                 color={gameData.color as "yellow" | "teal" | "orange"}
                 className="w-full"
-                onClick={() => navigate(`/games/${gameId}/play`)}
+                onClick={handlePlayGame}
               >
                 <PlayCircle className="h-4 w-4 mr-2" />
                 Start Game
@@ -263,19 +267,19 @@ const GameDetailPage = () => {
               <TabsList className="bg-black/30 border-b border-white/10 w-full justify-start rounded-none p-0 mb-6">
                 <TabsTrigger 
                   value="overview" 
-                  className="data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-b-current rounded-none"
+                  className="data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-b-current rounded-none text-white data-[state=active]:text-neon-yellow"
                 >
                   Overview
                 </TabsTrigger>
                 <TabsTrigger 
                   value="instructions" 
-                  className="data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-b-current rounded-none"
+                  className="data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-b-current rounded-none text-white data-[state=active]:text-neon-yellow"
                 >
                   How to Play
                 </TabsTrigger>
                 <TabsTrigger 
                   value="rewards" 
-                  className="data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-b-current rounded-none"
+                  className="data-[state=active]:bg-transparent data-[state=active]:border-b-2 data-[state=active]:border-b-current rounded-none text-white data-[state=active]:text-neon-yellow"
                 >
                   Rewards
                 </TabsTrigger>
@@ -292,7 +296,7 @@ const GameDetailPage = () => {
                     <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                       <div className="flex items-center mb-2">
                         <Trophy className={`h-4 w-4 mr-2 text-neon-${gameData.color}`} />
-                        <h4 className="font-medium">Your Best Score</h4>
+                        <h4 className="font-medium text-white">Your Best Score</h4>
                       </div>
                       <div className="flex items-center">
                         <div className={`text-2xl font-display text-neon-${gameData.color}`}>
@@ -307,7 +311,7 @@ const GameDetailPage = () => {
                     <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                       <div className="flex items-center mb-2">
                         <Star className={`h-4 w-4 mr-2 text-neon-${gameData.color}`} />
-                        <h4 className="font-medium">Skills Gained</h4>
+                        <h4 className="font-medium text-white">Skills Gained</h4>
                       </div>
                       <div className="flex flex-wrap gap-1">
                         {gameData.skills.slice(0, 3).map((skill, index) => (
@@ -332,7 +336,7 @@ const GameDetailPage = () => {
                     <NeonButton
                       color={gameData.color as "yellow" | "teal" | "orange"}
                       size="lg"
-                      onClick={() => navigate(`/games/${gameId}/play`)}
+                      onClick={handlePlayGame}
                     >
                       <PlayCircle className="h-5 w-5 mr-2" />
                       Start Game
@@ -349,9 +353,9 @@ const GameDetailPage = () => {
                     <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                       <div className="flex items-center mb-2">
                         <div className="h-6 w-6 rounded-full bg-white/10 flex items-center justify-center mr-2">
-                          <span className="font-medium">1</span>
+                          <span className="font-medium text-white">1</span>
                         </div>
-                        <h4 className="font-medium">Getting Started</h4>
+                        <h4 className="font-medium text-white">Getting Started</h4>
                       </div>
                       <p className="text-sm text-white/70">
                         Click the "Start Game" button and wait for the game to load. You'll be presented with an 
@@ -362,9 +366,9 @@ const GameDetailPage = () => {
                     <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                       <div className="flex items-center mb-2">
                         <div className="h-6 w-6 rounded-full bg-white/10 flex items-center justify-center mr-2">
-                          <span className="font-medium">2</span>
+                          <span className="font-medium text-white">2</span>
                         </div>
-                        <h4 className="font-medium">Game Objectives</h4>
+                        <h4 className="font-medium text-white">Game Objectives</h4>
                       </div>
                       <p className="text-sm text-white/70">
                         Complete challenges within the time limit. Each level increases in difficulty and introduces 
@@ -375,9 +379,9 @@ const GameDetailPage = () => {
                     <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                       <div className="flex items-center mb-2">
                         <div className="h-6 w-6 rounded-full bg-white/10 flex items-center justify-center mr-2">
-                          <span className="font-medium">3</span>
+                          <span className="font-medium text-white">3</span>
                         </div>
-                        <h4 className="font-medium">Controls</h4>
+                        <h4 className="font-medium text-white">Controls</h4>
                       </div>
                       <p className="text-sm text-white/70">
                         Use the mouse to interact with game elements. Some challenges may require keyboard input.
@@ -388,9 +392,9 @@ const GameDetailPage = () => {
                     <div className="bg-white/5 border border-white/10 p-4 rounded-lg">
                       <div className="flex items-center mb-2">
                         <div className="h-6 w-6 rounded-full bg-white/10 flex items-center justify-center mr-2">
-                          <span className="font-medium">4</span>
+                          <span className="font-medium text-white">4</span>
                         </div>
-                        <h4 className="font-medium">Scoring & Progression</h4>
+                        <h4 className="font-medium text-white">Scoring & Progression</h4>
                       </div>
                       <p className="text-sm text-white/70">
                         Your score is saved automatically. Complete all levels to earn maximum XP and unlock special 
@@ -411,7 +415,7 @@ const GameDetailPage = () => {
                         <Award className={`h-6 w-6 text-neon-${gameData.color}`} />
                       </div>
                       <div>
-                        <h4 className="font-medium mb-1">XP Points</h4>
+                        <h4 className="font-medium mb-1 text-white">XP Points</h4>
                         <p className="text-sm text-white/70">
                           Earn {gameData.xpReward} XP points upon completing this game. Extra XP is awarded for high scores and 
                           completing optional challenges.
@@ -424,7 +428,7 @@ const GameDetailPage = () => {
                         <Trophy className={`h-6 w-6 text-neon-${gameData.color}`} />
                       </div>
                       <div>
-                        <h4 className="font-medium mb-1">Achievement Badges</h4>
+                        <h4 className="font-medium mb-1 text-white">Achievement Badges</h4>
                         <p className="text-sm text-white/70">
                           Unlock special badges by achieving high scores or completing specific challenges within the game.
                           These badges will appear on your profile.
@@ -448,7 +452,7 @@ const GameDetailPage = () => {
                         <Star className={`h-6 w-6 text-neon-${gameData.color}`} />
                       </div>
                       <div>
-                        <h4 className="font-medium mb-1">Skill Development</h4>
+                        <h4 className="font-medium mb-1 text-white">Skill Development</h4>
                         <p className="text-sm text-white/70">
                           Each game you complete improves your skills and is reflected in your profile's skill radar chart.
                           This game enhances the following skills:
@@ -480,14 +484,14 @@ const GameDetailPage = () => {
             <div className="flex gap-3">
               <NeonButton 
                 color="teal"
-                onClick={() => navigate(`/games/${gameId}/play`)}
+                onClick={handlePlayGame}
               >
                 <PlayCircle className="h-4 w-4 mr-2" />
                 Start Game
               </NeonButton>
               <Button 
                 variant="outline" 
-                className="bg-transparent border-white/20 hover:bg-white/5"
+                className="bg-transparent border-white/20 hover:bg-white/5 text-white"
                 onClick={() => navigate(`/games/${gameId}/leaderboard`)}
               >
                 <Trophy className="h-4 w-4 mr-2" />

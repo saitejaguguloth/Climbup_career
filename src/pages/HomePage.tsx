@@ -78,7 +78,7 @@ const HomePage = () => {
       </section>
       
       {/* Top Roadmaps Section */}
-      <section className="py-20 bg-gradient-to-b from-black to-black/80 relative">
+      <section className="py-20 bg-gradient-to-b from-black to-black/80 relative rounded-3xl bg-[#a31d1d]">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-4 text-neon-yellow">Top Roadmaps You Can Explore</h2>
           <p className="text-neon-yellow/80 text-center mb-12 max-w-2xl mx-auto">

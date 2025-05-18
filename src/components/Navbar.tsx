@@ -120,7 +120,7 @@ const Navbar = () => {
               <NavigationMenuItem>
                 <NavigationMenuTrigger className="text-climbup-text hover:text-climbup-heading text-sm font-semibold mx-[10px] my-0 rounded-full">Key Features</NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <ul className="grid gap-3 p-4 w-[400px] grid-cols-2 glass-card">
+                  <ul className="grid gap-3 p-4 w-[400px] grid-cols-2 glass-card rounded-full">
                     {menuItems.slice(0, 6).map(item => <li key={item.title}>
                         <NavigationMenuLink asChild>
                           <Link to={item.url} className={cn("flex items-center space-x-2 rounded-md px-3 py-2 hover:bg-climbup-heading/20", location.pathname === item.url ? "bg-climbup-heading/20 text-climbup-text" : "text-climbup-text")}>

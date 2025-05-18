@@ -109,7 +109,8 @@ const Navbar = () => {
   return <nav className="navbar">
       <div className="container flex items-center justify-between px-[34px] py-[15px] my-0 mx-0 rounded-2xl">
         <Link to="/" className="flex items-center">
-          <h1 className="font-display text-2xl font-bold tracking-wider text-climbup-heading">ClimbUp</h1>
+          <h1 className="font-display text-2xl font-bold tracking-wider text-climbup-heading">
+        </h1>
         </Link>
 
         {/* Desktop Navigation Menu */}
@@ -132,7 +133,7 @@ const Navbar = () => {
                 </NavigationMenuContent>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="text-climbup-text hover:text-climbup-heading">Tools</NavigationMenuTrigger>
+                <NavigationMenuTrigger className="text-climbup-text hover:text-climbup-heading text-sm font-semibold rounded-full px-[37px]">Tools</NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="grid gap-3 p-4 w-[400px] grid-cols-2 glass-card">
                     {menuItems.slice(6, 12).map(item => <li key={item.title}>

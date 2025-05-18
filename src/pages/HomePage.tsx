@@ -204,7 +204,7 @@ const HomePage = () => {
       </section>
       
       {/* FAQ Section */}
-      <section className="py-20 bg-gradient-to-b from-black/50 to-black">
+      <section className="py-20 from-black/50 to-black bg-[t#] bg-[#e5d0ac] rounded-3xl">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12 text-neon-yellow">
             <span className="bg-gradient-to-r from-neon-teal to-neon-yellow bg-clip-text text-transparent">FAQs</span>

@@ -517,7 +517,7 @@ const RoadmapPage = () => {
                       </button>)}
                   </div>
                   
-                  <Button size="lg" onClick={handleNext} disabled={!selectedEducation} className="mt-10 from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700 shadow-md bg-[A31D1D] bg-[#a31d1d] text-[A31D1D] text-[#a31d1d]">
+                  <Button size="lg" onClick={handleNext} disabled={!selectedEducation} className="mt-10 from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700 shadow-md text-[A31D1D] text-[#a31d1d] bg-[E5D0AC] bg-[#e5d0ac] rounded-3xl">
                     Next <ArrowRight className="ml-2" size={16} />
                   </Button>
                 </div>

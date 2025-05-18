@@ -509,7 +509,7 @@ const RoadmapPage = () => {
                   Select your current education level to begin your journey
                 </p>
                 
-                <div className="bg-white/80 backdrop-blur-md rounded-3xl shadow-xl p-10 flex flex-col items-center border border-white/50">
+                <div className="backdrop-blur-md rounded-3xl shadow-xl p-10 flex flex-col items-center border border-white/50 bg-[A31D1D] bg-[#a31d1d]">
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full">
                     {educationLevels.map(level => <button key={level} onClick={() => setSelectedEducation(level)} className={`p-4 rounded-xl text-left transition-all flex items-center ${selectedEducation === level ? "bg-gradient-to-r from-blue-500 to-violet-500 text-white shadow-md" : "bg-white hover:bg-gray-50 text-gray-800 border border-gray-100"}`}>
                         {selectedEducation === level && <Check className="mr-2 h-4 w-4 text-white" />}
@@ -517,7 +517,7 @@ const RoadmapPage = () => {
                       </button>)}
                   </div>
                   
-                  <Button className="mt-10 bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700 text-white shadow-md" size="lg" onClick={handleNext} disabled={!selectedEducation}>
+                  <Button size="lg" onClick={handleNext} disabled={!selectedEducation} className="mt-10 from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700 shadow-md bg-[A31D1D] bg-[#a31d1d] text-[A31D1D] text-[#a31d1d]">
                     Next <ArrowRight className="ml-2" size={16} />
                   </Button>
                 </div>

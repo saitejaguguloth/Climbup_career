@@ -116,7 +116,7 @@ const HomePage = () => {
             </div>
             
             {/* Data Scientist Card */}
-            <div className="rounded-2xl overflow-hidden bg-black shadow-lg hover:shadow-xl transition-shadow group relative border border-neon-yellow/50">
+            <div className="rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow group relative border border-neon-yellow/50 bg-[#fef9e1]">
               <div className="h-40 bg-gradient-to-r from-neon-yellow to-neon-teal flex items-center justify-center">
                 <h3 className="font-bold text-2xl text-black">Data Scientist</h3>
               </div>
@@ -145,7 +145,7 @@ const HomePage = () => {
             </div>
             
             {/* IAS Officer Card */}
-            <div className="rounded-2xl overflow-hidden bg-black shadow-lg hover:shadow-xl transition-shadow group relative border border-neon-teal/50">
+            <div className="rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow group relative border border-neon-teal/50 bg-[#fef9e1]">
               <div className="h-40 bg-gradient-to-r from-neon-teal to-neon-yellow/70 flex items-center justify-center">
                 <h3 className="font-bold text-2xl text-black">IAS Officer</h3>
               </div>

@@ -547,7 +547,7 @@ const RoadmapPage = () => {
                     <Button variant="outline" onClick={() => setCurrentStep(1)} className="border-gray-300 rounded-3xl py-0">
                       Back
                     </Button>
-                    <Button onClick={handleNext} disabled={!selectedGoal} className="from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700 text-white shadow-md bg-[E5D0AC] bg-[#e5d0ac] rounded-3xl">
+                    <Button onClick={handleNext} disabled={!selectedGoal} className="from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700 shadow-md bg-[E5D0AC] bg-[#e5d0ac] rounded-3xl text-[#a31d1d]">
                       Next <ArrowRight className="ml-2" size={16} />
                     </Button>
                   </div>

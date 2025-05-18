@@ -10,19 +10,16 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90",
-        destructive:
-          "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-        outline:
-          "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
-        secondary:
-          "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
-        // Adding new variants for our neon colors
-        yellow: "bg-amber-400/20 text-amber-400 border border-amber-400/30 hover:bg-amber-400/30",
-        teal: "bg-teal-400/20 text-teal-400 border border-teal-400/30 hover:bg-teal-400/30",
-        orange: "bg-orange-400/20 text-orange-400 border border-orange-400/30 hover:bg-orange-400/30",
+        default: "bg-[#A31D1D] text-[#FEF9E1] hover:bg-[#6D2323]",
+        destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
+        outline: "border border-[#6D2323] bg-[#FEF9E1] text-[#6D2323] hover:bg-[#E5D0AC] hover:text-[#6D2323]",
+        secondary: "bg-[#E5D0AC] text-[#6D2323] hover:bg-[#E5D0AC]/80",
+        ghost: "text-[#6D2323] hover:bg-[#E5D0AC] hover:text-[#A31D1D]",
+        link: "text-[#A31D1D] underline-offset-4 hover:underline",
+        // Updated neon color variants to match our palette
+        yellow: "bg-[#E5D0AC]/20 text-[#A31D1D] border border-[#A31D1D]/30 hover:bg-[#E5D0AC]/30",
+        teal: "bg-[#E5D0AC]/20 text-[#6D2323] border border-[#6D2323]/30 hover:bg-[#E5D0AC]/30",
+        orange: "bg-[#A31D1D]/20 text-[#6D2323] border border-[#A31D1D]/30 hover:bg-[#A31D1D]/30",
       },
       size: {
         default: "h-10 px-4 py-2",

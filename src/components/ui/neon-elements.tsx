@@ -22,11 +22,11 @@ export const NeonIcon = ({
   };
 
   const colorClasses = {
-    primary: "text-climbup-heading warm-shadow",
-    secondary: "text-climbup-text warm-shadow",
-    yellow: "text-amber-400 warm-shadow",
-    teal: "text-teal-400 warm-shadow",
-    orange: "text-orange-400 warm-shadow"
+    primary: "text-[#A31D1D] warm-shadow",
+    secondary: "text-[#6D2323] warm-shadow",
+    yellow: "text-[#A31D1D] warm-shadow", // Using heading color
+    teal: "text-[#6D2323] warm-shadow",   // Using text color
+    orange: "text-[#E5D0AC] warm-shadow"  // Using component color
   };
 
   return (
@@ -44,9 +44,9 @@ export const NeonIcon = ({
         backgroundColor: 
           color === "primary" ? "#A31D1D20" : 
           color === "secondary" ? "#6D232320" :
-          color === "yellow" ? "#FBBF2420" :
-          color === "teal" ? "#2DD4BF20" :
-          color === "orange" ? "#FB923C20" : "#6D232320"
+          color === "yellow" ? "#A31D1D20" :   // Using heading color
+          color === "teal" ? "#6D232320" :     // Using text color
+          color === "orange" ? "#E5D0AC20" : "#6D232320" // Using component color
       }}></div>
     </div>
   );
@@ -73,11 +73,11 @@ export const NeonTitle = ({
   };
 
   const colorClasses = {
-    primary: "text-climbup-heading warm-shadow",
-    secondary: "text-climbup-text warm-shadow",
-    yellow: "text-amber-400 warm-shadow",
-    teal: "text-teal-400 warm-shadow",
-    orange: "text-orange-400 warm-shadow"
+    primary: "text-[#A31D1D] warm-shadow",
+    secondary: "text-[#6D2323] warm-shadow",
+    yellow: "text-[#A31D1D] warm-shadow", // Using heading color
+    teal: "text-[#6D2323] warm-shadow",   // Using text color
+    orange: "text-[#E5D0AC] warm-shadow"  // Using component color
   };
 
   return (
@@ -117,24 +117,24 @@ export const NeonButton = ({
 
   const colorVariantClasses = {
     primary: {
-      solid: "bg-climbup-heading/20 text-climbup-heading border-climbup-heading",
-      outline: "bg-transparent text-climbup-heading border-climbup-heading",
+      solid: "bg-[#A31D1D]/20 text-[#A31D1D] border-[#A31D1D]",
+      outline: "bg-transparent text-[#A31D1D] border-[#A31D1D]",
     },
     secondary: {
-      solid: "bg-climbup-text/20 text-climbup-text border-climbup-text",
-      outline: "bg-transparent text-climbup-text border-climbup-text",
+      solid: "bg-[#6D2323]/20 text-[#6D2323] border-[#6D2323]",
+      outline: "bg-transparent text-[#6D2323] border-[#6D2323]",
     },
     yellow: {
-      solid: "bg-amber-400/20 text-amber-400 border-amber-400",
-      outline: "bg-transparent text-amber-400 border-amber-400",
+      solid: "bg-[#A31D1D]/20 text-[#A31D1D] border-[#A31D1D]", // Using heading color
+      outline: "bg-transparent text-[#A31D1D] border-[#A31D1D]", // Using heading color
     },
     teal: {
-      solid: "bg-teal-400/20 text-teal-400 border-teal-400",
-      outline: "bg-transparent text-teal-400 border-teal-400",
+      solid: "bg-[#6D2323]/20 text-[#6D2323] border-[#6D2323]", // Using text color
+      outline: "bg-transparent text-[#6D2323] border-[#6D2323]", // Using text color
     },
     orange: {
-      solid: "bg-orange-400/20 text-orange-400 border-orange-400",
-      outline: "bg-transparent text-orange-400 border-orange-400",
+      solid: "bg-[#E5D0AC]/20 text-[#A31D1D] border-[#E5D0AC]", // Using component color with heading text
+      outline: "bg-transparent text-[#A31D1D] border-[#E5D0AC]", // Using component color with heading text
     }
   };
 
@@ -167,17 +167,17 @@ export const NeonCard = ({
   ...props
 }: NeonCardProps) => {
   const colorClasses = {
-    primary: "border-climbup-heading/40 hover:shadow-[0_0_15px_theme(colors.climbup.heading)]",
-    secondary: "border-climbup-text/40 hover:shadow-[0_0_15px_theme(colors.climbup.text)]",
-    yellow: "border-amber-400/40 hover:shadow-[0_0_15px_theme(colors.amber.400)]",
-    teal: "border-teal-400/40 hover:shadow-[0_0_15px_theme(colors.teal.400)]",
-    orange: "border-orange-400/40 hover:shadow-[0_0_15px_theme(colors.orange.400)]",
+    primary: "border-[#A31D1D]/40 hover:shadow-[0_0_15px_#A31D1D]",
+    secondary: "border-[#6D2323]/40 hover:shadow-[0_0_15px_#6D2323]",
+    yellow: "border-[#A31D1D]/40 hover:shadow-[0_0_15px_#A31D1D]", // Using heading color
+    teal: "border-[#6D2323]/40 hover:shadow-[0_0_15px_#6D2323]",   // Using text color
+    orange: "border-[#E5D0AC]/40 hover:shadow-[0_0_15px_#E5D0AC]", // Using component color
   };
 
   return (
     <div
       className={cn(
-        "bg-climbup-component/90 backdrop-blur-sm border rounded-xl p-5 transition-all duration-300",
+        "bg-[#E5D0AC]/90 backdrop-blur-sm border rounded-xl p-5 transition-all duration-300",
         hoverEffect && colorClasses[color],
         className
       )}
@@ -207,11 +207,11 @@ export const NeonDivider = ({
   };
 
   const colorClasses = {
-    primary: "bg-climbup-heading shadow-[0_0_5px_theme(colors.climbup.heading)]",
-    secondary: "bg-climbup-text shadow-[0_0_5px_theme(colors.climbup.text)]",
-    yellow: "bg-amber-400 shadow-[0_0_5px_theme(colors.amber.400)]",
-    teal: "bg-teal-400 shadow-[0_0_5px_theme(colors.teal.400)]",
-    orange: "bg-orange-400 shadow-[0_0_5px_theme(colors.orange.400)]",
+    primary: "bg-[#A31D1D] shadow-[0_0_5px_#A31D1D]",
+    secondary: "bg-[#6D2323] shadow-[0_0_5px_#6D2323]",
+    yellow: "bg-[#A31D1D] shadow-[0_0_5px_#A31D1D]", // Using heading color
+    teal: "bg-[#6D2323] shadow-[0_0_5px_#6D2323]",   // Using text color
+    orange: "bg-[#E5D0AC] shadow-[0_0_5px_#E5D0AC]", // Using component color
   };
 
   return (

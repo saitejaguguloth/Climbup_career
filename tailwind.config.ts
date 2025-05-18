@@ -63,7 +63,7 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Updated custom colors for the new theme
+				// Custom colors for the theme with direct hex values
 				climbup: {
 					background: '#FEF9E1',
 					component: '#E5D0AC',
@@ -72,11 +72,11 @@ export default {
 					'heading-light': '#A31D1D99',
 					'text-light': '#6D232399',
 				},
-				// Adding neon colors
+				// Updated neon colors to match our color palette
 				neon: {
-					yellow: '#FBBF24',  // amber-400
-					teal: '#2DD4BF',   // teal-400
-					orange: '#FB923C',  // orange-400
+					yellow: '#A31D1D',  // Using heading color
+					teal: '#6D2323',    // Using text color
+					orange: '#E5D0AC',  // Using component color
 				}
 			},
 			fontFamily: {

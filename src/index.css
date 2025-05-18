@@ -118,7 +118,7 @@
   }
   
   .gradient-text-primary {
-    @apply gradient-text bg-gradient-to-r from-climbup-heading to-climbup-text;
+    @apply gradient-text bg-gradient-to-r from-[#A31D1D] to-[#6D2323];
   }
   
   .neon-border {
@@ -130,31 +130,31 @@
   }
   
   .text-primary {
-    @apply text-climbup-heading;
+    @apply text-[#A31D1D];
   }
   
   .text-secondary {
-    @apply text-climbup-text;
+    @apply text-[#6D2323];
   }
   
   .warm-shadow {
-    filter: drop-shadow(0 0 5px theme('colors.climbup.heading'));
+    filter: drop-shadow(0 0 5px #A31D1D);
   }
   
   .gradient-card {
-    @apply bg-climbup-component backdrop-blur-md border border-climbup-text/30 rounded-xl transition-all hover:shadow-lg;
+    @apply bg-[#E5D0AC] backdrop-blur-md border border-[#6D2323]/30 rounded-xl transition-all hover:shadow-lg;
   }
   
   .gradient-button {
-    @apply relative overflow-hidden border border-climbup-heading px-6 py-3 rounded-md font-medium transition-all duration-300 hover:brightness-110 hover:shadow-[0_0_15px_currentColor] bg-gradient-to-r from-climbup-heading to-climbup-text text-climbup-background;
+    @apply relative overflow-hidden border border-[#A31D1D] px-6 py-3 rounded-md font-medium transition-all duration-300 hover:brightness-110 hover:shadow-[0_0_15px_currentColor] bg-gradient-to-r from-[#A31D1D] to-[#6D2323] text-[#FEF9E1];
   }
   
   .secondary-button {
-    @apply bg-climbup-component text-climbup-text border border-climbup-text/30 font-medium py-2 px-6 rounded-md transition-all hover:bg-climbup-component/80 hover:border-climbup-text;
+    @apply bg-[#E5D0AC] text-[#6D2323] border border-[#6D2323]/30 font-medium py-2 px-6 rounded-md transition-all hover:bg-[#E5D0AC]/80 hover:border-[#6D2323];
   }
 
   .navbar {
-    @apply fixed top-0 left-0 right-0 backdrop-blur-xl bg-climbup-component/80 border-b border-climbup-text/20 z-50;
+    @apply fixed top-0 left-0 right-0 backdrop-blur-xl bg-[#E5D0AC]/80 border-b border-[#6D2323]/20 z-50;
   }
 
   /* Game card designs */
@@ -163,15 +163,15 @@
   }
 
   .game-card-primary {
-    @apply border border-climbup-heading/60 hover:shadow-[0_0_15px_theme(colors.climbup.heading)];
+    @apply border border-[#A31D1D]/60 hover:shadow-[0_0_15px_#A31D1D];
   }
 
   .game-card-secondary {
-    @apply border border-climbup-text/60 hover:shadow-[0_0_15px_theme(colors.climbup.text)];
+    @apply border border-[#6D2323]/60 hover:shadow-[0_0_15px_#6D2323];
   }
 
   .glass-card {
-    @apply backdrop-blur-md bg-climbup-component/90 border border-climbup-text/20 rounded-xl;
+    @apply backdrop-blur-md bg-[#E5D0AC]/90 border border-[#6D2323]/20 rounded-xl;
   }
 }
 

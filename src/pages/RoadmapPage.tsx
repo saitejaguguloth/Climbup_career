@@ -620,7 +620,7 @@ const RoadmapPage = () => {
                     
                     <div className="mb-6">
                       <h3 className="font-bold mb-3">Join Community</h3>
-                      <Button className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white" onClick={handleJoinGroup}>
+                      <Button onClick={handleJoinGroup} className="w-full bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white rounded-3xl px-[17px]">
                         <MessageCircle className="mr-2 h-4 w-4" />
                         Join {selectedGoal} Group
                       </Button>
@@ -645,11 +645,11 @@ const RoadmapPage = () => {
                     <div className="flex justify-between items-center mb-6">
                       <h2 className="text-2xl font-bold">{selectedGoal} Roadmap</h2>
                       <div className="flex space-x-2">
-                        <Button variant="outline" size="sm" onClick={handleDownloadPDF}>
+                        <Button variant="outline" size="sm" onClick={handleDownloadPDF} className="rounded-3xl">
                           <Download className="mr-1 h-4 w-4" />
                           PDF
                         </Button>
-                        <Button variant="outline" size="sm" onClick={handleShareRoadmap}>
+                        <Button variant="outline" size="sm" onClick={handleShareRoadmap} className="rounded-3xl">
                           <Share className="mr-1 h-4 w-4" />
                           Share
                         </Button>

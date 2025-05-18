@@ -3,13 +3,13 @@ import React from "react";
 import { cn } from "@/lib/utils";
 
 interface NeonIconProps extends React.HTMLAttributes<HTMLDivElement> {
-  color?: "yellow" | "teal" | "orange";
+  color?: "primary" | "secondary";
   size?: "sm" | "md" | "lg";
   children: React.ReactNode;
 }
 
 export const NeonIcon = ({
-  color = "yellow",
+  color = "primary",
   size = "md",
   className,
   children,
@@ -22,9 +22,8 @@ export const NeonIcon = ({
   };
 
   const colorClasses = {
-    yellow: "text-neon-yellow neon-shadow-yellow",
-    teal: "text-neon-teal neon-shadow-teal",
-    orange: "text-neon-orange neon-shadow-orange",
+    primary: "text-climbup-heading warm-shadow",
+    secondary: "text-climbup-text warm-shadow",
   };
 
   return (
@@ -39,19 +38,19 @@ export const NeonIcon = ({
     >
       {children}
       <div className="absolute inset-0 opacity-40 blur-md rounded-full" style={{
-        backgroundColor: color === "yellow" ? "#ECD06F20" : color === "teal" ? "#49c5b620" : "#FF652F20"
+        backgroundColor: color === "primary" ? "#A31D1D20" : "#6D232320"
       }}></div>
     </div>
   );
 };
 
 interface NeonTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
-  color?: "yellow" | "teal" | "orange";
+  color?: "primary" | "secondary";
   size?: "sm" | "md" | "lg" | "xl" | "2xl";
 }
 
 export const NeonTitle = ({
-  color = "yellow",
+  color = "primary",
   size = "lg",
   className,
   children,
@@ -66,9 +65,8 @@ export const NeonTitle = ({
   };
 
   const colorClasses = {
-    yellow: "text-neon-yellow neon-shadow-yellow",
-    teal: "text-neon-teal neon-shadow-teal",
-    orange: "text-neon-orange neon-shadow-orange",
+    primary: "text-climbup-heading warm-shadow",
+    secondary: "text-climbup-text warm-shadow",
   };
 
   return (
@@ -87,13 +85,13 @@ export const NeonTitle = ({
 };
 
 interface NeonButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  color?: "yellow" | "teal" | "orange";
+  color?: "primary" | "secondary";
   variant?: "solid" | "outline";
   size?: "sm" | "md" | "lg";
 }
 
 export const NeonButton = ({
-  color = "yellow",
+  color = "primary",
   variant = "outline",
   size = "md",
   className,
@@ -107,17 +105,13 @@ export const NeonButton = ({
   };
 
   const colorVariantClasses = {
-    yellow: {
-      solid: "bg-neon-yellow/20 text-neon-yellow border-neon-yellow",
-      outline: "bg-transparent text-neon-yellow border-neon-yellow",
+    primary: {
+      solid: "bg-climbup-heading/20 text-climbup-heading border-climbup-heading",
+      outline: "bg-transparent text-climbup-heading border-climbup-heading",
     },
-    teal: {
-      solid: "bg-neon-teal/20 text-neon-teal border-neon-teal",
-      outline: "bg-transparent text-neon-teal border-neon-teal",
-    },
-    orange: {
-      solid: "bg-neon-orange/20 text-neon-orange border-neon-orange",
-      outline: "bg-transparent text-neon-orange border-neon-orange",
+    secondary: {
+      solid: "bg-climbup-text/20 text-climbup-text border-climbup-text",
+      outline: "bg-transparent text-climbup-text border-climbup-text",
     },
   };
 
@@ -138,27 +132,26 @@ export const NeonButton = ({
 };
 
 interface NeonCardProps extends React.HTMLAttributes<HTMLDivElement> {
-  color?: "yellow" | "teal" | "orange";
+  color?: "primary" | "secondary";
   hoverEffect?: boolean;
 }
 
 export const NeonCard = ({
-  color = "yellow",
+  color = "primary",
   hoverEffect = true,
   className,
   children,
   ...props
 }: NeonCardProps) => {
   const colorClasses = {
-    yellow: "border-neon-yellow/40 hover:shadow-[0_0_15px_theme(colors.neon.yellow)]",
-    teal: "border-neon-teal/40 hover:shadow-[0_0_15px_theme(colors.neon.teal)]",
-    orange: "border-neon-orange/40 hover:shadow-[0_0_15px_theme(colors.neon.orange)]",
+    primary: "border-climbup-heading/40 hover:shadow-[0_0_15px_theme(colors.climbup.heading)]",
+    secondary: "border-climbup-text/40 hover:shadow-[0_0_15px_theme(colors.climbup.text)]",
   };
 
   return (
     <div
       className={cn(
-        "bg-black/30 backdrop-blur-sm border rounded-xl p-5 transition-all duration-300",
+        "bg-climbup-component/90 backdrop-blur-sm border rounded-xl p-5 transition-all duration-300",
         hoverEffect && colorClasses[color],
         className
       )}
@@ -170,12 +163,12 @@ export const NeonCard = ({
 };
 
 interface NeonDividerProps extends React.HTMLAttributes<HTMLDivElement> {
-  color?: "yellow" | "teal" | "orange";
+  color?: "primary" | "secondary";
   width?: "full" | "3/4" | "1/2" | "1/4";
 }
 
 export const NeonDivider = ({
-  color = "yellow",
+  color = "primary",
   width = "full",
   className,
   ...props
@@ -188,9 +181,8 @@ export const NeonDivider = ({
   };
 
   const colorClasses = {
-    yellow: "bg-neon-yellow shadow-[0_0_5px_theme(colors.neon.yellow)]",
-    teal: "bg-neon-teal shadow-[0_0_5px_theme(colors.neon.teal)]",
-    orange: "bg-neon-orange shadow-[0_0_5px_theme(colors.neon.orange)]",
+    primary: "bg-climbup-heading shadow-[0_0_5px_theme(colors.climbup.heading)]",
+    secondary: "bg-climbup-text shadow-[0_0_5px_theme(colors.climbup.text)]",
   };
 
   return (

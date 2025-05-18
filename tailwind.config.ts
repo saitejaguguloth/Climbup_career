@@ -64,15 +64,13 @@ export default {
 					ring: 'hsl(var(--sidebar-ring))'
 				},
 				// Updated custom colors for the new theme
-				neon: {
-					yellow: '#ECD06F',
-					teal: '#49c5b6',
-				},
 				climbup: {
-					teal: '#49c5b6',
-					yellow: '#ECD06F',
-					'soft-teal': '#49c5b620',
-					'soft-yellow': '#ECD06F20',
+					background: '#FEF9E1',
+					component: '#E5D0AC',
+					heading: '#A31D1D',
+					text: '#6D2323',
+					'heading-light': '#A31D1D99',
+					'text-light': '#6D232399',
 				},
 			},
 			fontFamily: {
@@ -160,12 +158,12 @@ export default {
 				'neon-trace': 'neon-trace 3s linear infinite',
 			},
 			backgroundImage: {
-				'gradient-hero': 'linear-gradient(135deg, #49c5b620 0%, #ECD06F20 100%)',
-				'gradient-card': 'linear-gradient(135deg, #49c5b620 0%, #ECD06F20 100%)',
-				'gradient-cta': 'linear-gradient(135deg, #49c5b6 0%, #ECD06F 100%)',
-				'dark-texture': 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'4\' height=\'4\' viewBox=\'0 0 4 4\'%3E%3Cpath fill=\'%23ECD06F\' fill-opacity=\'0.05\' d=\'M1 3h1v1H1V3zm2-2h1v1H3V1z\'%3E%3C/path%3E%3C/svg%3E")',
-				'gradient-main': 'linear-gradient(135deg, #49c5b630 0%, #ECD06F30 100%)',
-				'neon-glow': 'radial-gradient(circle, rgba(73,197,182,0.2) 0%, rgba(236,208,111,0.1) 50%, rgba(0,0,0,0) 100%)',
+				'gradient-hero': 'linear-gradient(135deg, #A31D1D20 0%, #6D232320 100%)',
+				'gradient-card': 'linear-gradient(135deg, #A31D1D10 0%, #6D232310 100%)',
+				'gradient-cta': 'linear-gradient(135deg, #A31D1D 0%, #6D2323 100%)',
+				'dark-texture': 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'4\' height=\'4\' viewBox=\'0 0 4 4\'%3E%3Cpath fill=\'%236D2323\' fill-opacity=\'0.05\' d=\'M1 3h1v1H1V3zm2-2h1v1H3V1z\'%3E%3C/path%3E%3C/svg%3E")',
+				'gradient-main': 'linear-gradient(135deg, #A31D1D20 0%, #6D232320 100%)',
+				'pattern-dots': 'radial-gradient(circle, #6D232330 1px, transparent 1px)',
 			},
 			transitionDelay: {
 				'2000': '2000ms',
@@ -176,4 +174,3 @@ export default {
 	},
 	plugins: [require("tailwindcss-animate")],
 } satisfies Config;
-

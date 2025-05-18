@@ -141,39 +141,39 @@ const QuizPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-hero py-16">
-      {/* Background blurry elements */}
+    <div className="min-h-screen py-16">
+      {/* Background pattern elements */}
       <div className="absolute inset-0 overflow-hidden -z-10">
-        <div className="absolute top-0 left-0 w-64 h-64 bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-        <div className="absolute top-0 right-0 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-        <div className="absolute bottom-0 left-1/3 w-80 h-80 bg-indigo-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-3000"></div>
-        <div className="absolute -bottom-20 right-1/4 w-96 h-96 bg-emerald-400 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-4000"></div>
+        <div className="absolute top-0 left-0 w-64 h-64 bg-climbup-heading rounded-full opacity-5"></div>
+        <div className="absolute top-0 right-0 w-72 h-72 bg-climbup-text rounded-full opacity-5"></div>
+        <div className="absolute bottom-0 left-1/3 w-80 h-80 bg-climbup-component rounded-full opacity-10"></div>
+        <div className="absolute -bottom-20 right-1/4 w-96 h-96 bg-climbup-heading rounded-full opacity-5"></div>
       </div>
       
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 text-center">
-            Career Discovery <span className="gradient-text">Quiz</span>
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 text-center text-climbup-heading">
+            Career Discovery <span className="bg-gradient-to-r from-climbup-heading to-climbup-text text-transparent bg-clip-text">Quiz</span>
           </h1>
           
           {!showResults ? (
-            <div className="bg-white/80 backdrop-blur-md rounded-2xl shadow-lg p-6 md:p-10 mt-8 animate-fade-in">
+            <div className="bg-climbup-component/90 backdrop-blur-md rounded-2xl shadow-lg p-6 md:p-10 mt-8 animate-fade-in border border-climbup-text/20">
               <div className="mb-8">
-                <div className="flex justify-between mb-2">
+                <div className="flex justify-between mb-2 text-climbup-text">
                   <span className="text-sm font-medium">Question {currentQuestionIndex + 1} of {questions.length}</span>
                   <span className="text-sm font-medium">{Math.round(progress)}%</span>
                 </div>
-                <Progress value={progress} className="h-2 bg-gray-100" />
+                <Progress value={progress} className="h-2 bg-climbup-component [&>div]:bg-climbup-heading" />
               </div>
               
-              <h2 className="text-2xl font-bold mb-6">{currentQuestion.question}</h2>
+              <h2 className="text-2xl font-bold mb-6 text-climbup-heading">{currentQuestion.question}</h2>
               
               <div className="space-y-3">
                 {currentQuestion.options.map((option, index) => (
                   <button
                     key={index}
                     onClick={() => handleAnswerSelect(option)}
-                    className="w-full p-4 text-left rounded-lg border border-gray-200 hover:border-climbup-blue hover:bg-climbup-blue/5 transition-colors"
+                    className="w-full p-4 text-left rounded-lg border border-climbup-text/30 hover:border-climbup-heading hover:bg-climbup-heading/5 transition-colors text-climbup-text"
                   >
                     {option}
                   </button>
@@ -185,6 +185,7 @@ const QuizPage = () => {
                   <Button 
                     variant="outline" 
                     onClick={() => setCurrentQuestionIndex(currentQuestionIndex - 1)}
+                    className="border-climbup-text text-climbup-text hover:bg-climbup-text/20"
                   >
                     Back to Previous Question
                   </Button>
@@ -192,24 +193,24 @@ const QuizPage = () => {
               )}
             </div>
           ) : (
-            <div className="bg-white/80 backdrop-blur-md rounded-2xl shadow-lg p-6 md:p-10 mt-8 animate-fade-in">
-              <h2 className="text-2xl font-bold mb-6 text-center">Your Career Matches</h2>
-              <p className="text-gray-600 mb-8 text-center">
+            <div className="bg-climbup-component/90 backdrop-blur-md rounded-2xl shadow-lg p-6 md:p-10 mt-8 animate-fade-in border border-climbup-text/20">
+              <h2 className="text-2xl font-bold mb-6 text-center text-climbup-heading">Your Career Matches</h2>
+              <p className="text-climbup-text mb-8 text-center">
                 Based on your answers, here are career paths that might be a good fit for you.
               </p>
               
               <div className="space-y-6">
                 {results.map((result, index) => (
-                  <div key={index} className="p-4 rounded-lg border border-gray-200 hover:border-climbup-blue transition-colors">
+                  <div key={index} className="p-4 rounded-lg border border-climbup-text/30 hover:border-climbup-heading transition-colors bg-climbup-component/50">
                     <div className="flex justify-between items-center mb-2">
-                      <h3 className="font-bold text-lg">{result.career}</h3>
-                      <span className="text-sm font-medium text-climbup-blue">{result.match}% Match</span>
+                      <h3 className="font-bold text-lg text-climbup-heading">{result.career}</h3>
+                      <span className="text-sm font-medium text-climbup-text">{result.match}% Match</span>
                     </div>
-                    <p className="text-gray-600 mb-4">{result.description}</p>
+                    <p className="text-climbup-text mb-4">{result.description}</p>
                     <div className="flex justify-end">
                       <Button 
                         size="sm" 
-                        className="gradient-button" 
+                        className="bg-gradient-to-r from-climbup-heading to-climbup-text text-climbup-background" 
                         onClick={() => handleViewRoadmap(result.path)}
                       >
                         View Roadmap <ArrowRight size={16} className="ml-2" />
@@ -220,7 +221,11 @@ const QuizPage = () => {
               </div>
               
               <div className="mt-8 text-center">
-                <Button variant="outline" onClick={handleReset}>
+                <Button 
+                  variant="outline" 
+                  onClick={handleReset}
+                  className="border-climbup-heading text-climbup-heading hover:bg-climbup-heading/20"
+                >
                   Retake Quiz
                 </Button>
               </div>

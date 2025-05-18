@@ -98,7 +98,7 @@ const Navbar = () => {
     <nav className="navbar">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         <Link to="/" className="flex items-center">
-          <h1 className="font-display text-2xl font-bold tracking-wider gradient-text-yellow">ClimbUp</h1>
+          <h1 className="font-display text-2xl font-bold tracking-wider text-climbup-heading">ClimbUp</h1>
         </Link>
 
         {/* Desktop Navigation Menu */}
@@ -106,7 +106,7 @@ const Navbar = () => {
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="text-neon-yellow hover:text-neon-teal">Key Features</NavigationMenuTrigger>
+                <NavigationMenuTrigger className="text-climbup-text hover:text-climbup-heading">Key Features</NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="grid gap-3 p-4 w-[400px] grid-cols-2 glass-card">
                     {menuItems.slice(0, 6).map((item) => (
@@ -115,8 +115,8 @@ const Navbar = () => {
                           <Link
                             to={item.url}
                             className={cn(
-                              "flex items-center space-x-2 rounded-md px-3 py-2 hover:bg-neon-teal/20",
-                              location.pathname === item.url ? "bg-neon-teal/20 text-neon-yellow" : "text-neon-yellow"
+                              "flex items-center space-x-2 rounded-md px-3 py-2 hover:bg-climbup-heading/20",
+                              location.pathname === item.url ? "bg-climbup-heading/20 text-climbup-text" : "text-climbup-text"
                             )}
                           >
                             <item.icon className="h-4 w-4" />
@@ -129,7 +129,7 @@ const Navbar = () => {
                 </NavigationMenuContent>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="text-neon-yellow hover:text-neon-teal">Tools</NavigationMenuTrigger>
+                <NavigationMenuTrigger className="text-climbup-text hover:text-climbup-heading">Tools</NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="grid gap-3 p-4 w-[400px] grid-cols-2 glass-card">
                     {menuItems.slice(6, 12).map((item) => (
@@ -138,8 +138,8 @@ const Navbar = () => {
                           <Link
                             to={item.url}
                             className={cn(
-                              "flex items-center space-x-2 rounded-md px-3 py-2 hover:bg-neon-teal/20",
-                              location.pathname === item.url ? "bg-neon-teal/20 text-neon-yellow" : "text-neon-yellow"
+                              "flex items-center space-x-2 rounded-md px-3 py-2 hover:bg-climbup-heading/20",
+                              location.pathname === item.url ? "bg-climbup-heading/20 text-climbup-text" : "text-climbup-text"
                             )}
                           >
                             <item.icon className="h-4 w-4" />
@@ -159,25 +159,25 @@ const Navbar = () => {
           {isAuthenticated ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="rounded-full h-10 w-10 p-0 border-2 border-neon-teal">
-                  <span className="font-medium text-neon-teal">{getUserInitials()}</span>
+                <Button variant="outline" className="rounded-full h-10 w-10 p-0 border-2 border-climbup-heading">
+                  <span className="font-medium text-climbup-heading">{getUserInitials()}</span>
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end" className="w-56 glass-card">
                 <DropdownMenuLabel>
                   <div className="flex flex-col">
-                    <span className="text-neon-yellow">{user?.firstName} {user?.lastName}</span>
-                    <span className="text-xs text-neon-yellow/70 font-normal">{user?.email}</span>
+                    <span className="text-climbup-heading">{user?.firstName} {user?.lastName}</span>
+                    <span className="text-xs text-climbup-text/70 font-normal">{user?.email}</span>
                   </div>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>
-                  <Link to="/profile" className="cursor-pointer text-neon-teal hover:text-neon-yellow">
+                  <Link to="/profile" className="cursor-pointer text-climbup-text hover:text-climbup-heading">
                     <User className="mr-2 h-4 w-4" />
                     <span>Profile</span>
                   </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-neon-teal hover:text-neon-yellow">
+                <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-climbup-text hover:text-climbup-heading">
                   <LogOut className="mr-2 h-4 w-4" />
                   <span>Logout</span>
                 </DropdownMenuItem>
@@ -185,10 +185,10 @@ const Navbar = () => {
             </DropdownMenu>
           ) : (
             <>
-              <Button variant="ghost" asChild className="text-neon-yellow hover:text-neon-teal hover:bg-neon-yellow/10">
+              <Button variant="ghost" asChild className="text-climbup-text hover:text-climbup-heading hover:bg-climbup-component/80">
                 <Link to="/login">Login</Link>
               </Button>
-              <Button className="gradient-button" asChild>
+              <Button className="bg-gradient-to-r from-climbup-heading to-climbup-text text-climbup-background" asChild>
                 <Link to="/login?signup=true">Sign Up</Link>
               </Button>
             </>
@@ -196,7 +196,7 @@ const Navbar = () => {
         </div>
 
         {/* Mobile Navigation Toggle */}
-        <button className="md:hidden text-neon-yellow" onClick={toggleMenu}>
+        <button className="md:hidden text-climbup-heading" onClick={toggleMenu}>
           {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
@@ -209,7 +209,7 @@ const Navbar = () => {
               <Link 
                 key={item.title}
                 to={item.url} 
-                className="py-2 flex items-center space-x-2 text-neon-yellow hover:text-neon-teal transition-colors"
+                className="py-2 flex items-center space-x-2 text-climbup-text hover:text-climbup-heading transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >
                 <item.icon className="h-4 w-4" />
@@ -220,24 +220,24 @@ const Navbar = () => {
               {isAuthenticated ? (
                 <>
                   <div className="flex items-center space-x-2 py-2">
-                    <div className="h-8 w-8 rounded-full bg-neon-teal/20 flex items-center justify-center">
-                      <span className="font-medium text-neon-teal">{getUserInitials()}</span>
+                    <div className="h-8 w-8 rounded-full bg-climbup-heading/20 flex items-center justify-center">
+                      <span className="font-medium text-climbup-heading">{getUserInitials()}</span>
                     </div>
                     <div className="flex flex-col">
-                      <span className="font-medium text-neon-yellow">{user?.firstName} {user?.lastName}</span>
-                      <span className="text-xs text-neon-yellow/70">{user?.email}</span>
+                      <span className="font-medium text-climbup-heading">{user?.firstName} {user?.lastName}</span>
+                      <span className="text-xs text-climbup-text/70">{user?.email}</span>
                     </div>
                   </div>
                   <Button 
                     variant="outline" 
                     asChild 
-                    className="text-neon-teal border-neon-teal hover:bg-neon-teal/20"
+                    className="text-climbup-text border-climbup-text hover:bg-climbup-text/20"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     <Link to="/profile">My Profile</Link>
                   </Button>
                   <Button 
-                    className="w-full border border-neon-yellow text-neon-yellow hover:bg-neon-yellow/20" 
+                    className="w-full border border-climbup-heading text-climbup-heading hover:bg-climbup-heading/20" 
                     variant="outline" 
                     onClick={() => {
                       handleLogout();
@@ -250,7 +250,7 @@ const Navbar = () => {
                 </>
               ) : (
                 <>
-                  <Button variant="outline" asChild className="text-neon-yellow border-neon-yellow hover:bg-neon-yellow/20">
+                  <Button variant="outline" asChild className="text-climbup-heading border-climbup-heading hover:bg-climbup-heading/20">
                     <Link 
                       to="/login"
                       onClick={() => setIsMenuOpen(false)}
@@ -258,7 +258,7 @@ const Navbar = () => {
                       Login
                     </Link>
                   </Button>
-                  <Button className="gradient-button w-full" asChild>
+                  <Button className="bg-gradient-to-r from-climbup-heading to-climbup-text text-climbup-background w-full" asChild>
                     <Link 
                       to="/login?signup=true"
                       onClick={() => setIsMenuOpen(false)}

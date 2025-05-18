@@ -9,7 +9,7 @@ const NavigationMenu = React.forwardRef<React.ElementRef<typeof NavigationMenuPr
   ...props
 }, ref) => <NavigationMenuPrimitive.Root ref={ref} className={cn("relative z-10 flex max-w-max flex-1 items-center justify-center", className)} {...props}>
     {children}
-    <NavigationMenuViewport className="rounded-md" />
+    <NavigationMenuViewport className="rounded-xl" />
   </NavigationMenuPrimitive.Root>);
 NavigationMenu.displayName = NavigationMenuPrimitive.Root.displayName;
 const NavigationMenuList = React.forwardRef<React.ElementRef<typeof NavigationMenuPrimitive.List>, React.ComponentPropsWithoutRef<typeof NavigationMenuPrimitive.List>>(({

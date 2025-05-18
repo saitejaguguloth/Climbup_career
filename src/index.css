@@ -5,81 +5,81 @@
 
 @layer base {
   :root {
-    --background: 0 0% 10%; /* Dark background */
+    --background: 0 0% 0%; /* Black background */
     --foreground: 52 80% 68%; /* Neon yellow */
 
-    --card: 0 0% 13%;
+    --card: 0 0% 3%;
     --card-foreground: 52 80% 68%; /* Neon yellow */
 
-    --popover: 0 0% 13%;
+    --popover: 0 0% 3%;
     --popover-foreground: 52 80% 68%; /* Neon yellow */
 
     --primary: 52 80% 68%; /* Neon yellow */
-    --primary-foreground: 0 0% 10%;
+    --primary-foreground: 0 0% 0%;
 
     --secondary: 172 48% 53%; /* Neon teal */
-    --secondary-foreground: 0 0% 10%;
+    --secondary-foreground: 0 0% 0%;
 
-    --muted: 0 0% 20%;
+    --muted: 0 0% 5%;
     --muted-foreground: 52 80% 68%; /* Neon yellow at 70% opacity */
 
-    --accent: 17 100% 60%; /* Neon orange */
-    --accent-foreground: 0 0% 10%;
+    --accent: 172 48% 53%; /* Neon teal */
+    --accent-foreground: 0 0% 0%;
 
-    --destructive: 17 100% 60%; /* Neon orange */
-    --destructive-foreground: 0 0% 10%;
+    --destructive: 172 48% 53%; /* Neon teal */
+    --destructive-foreground: 0 0% 0%;
 
     --border: 52 80% 68%; /* Neon yellow */
-    --input: 0 0% 20%;
+    --input: 0 0% 5%;
     --ring: 52 80% 68%; /* Neon yellow */
 
     --radius: 0.5rem;
 
-    --sidebar-background: 0 0% 13%;
+    --sidebar-background: 0 0% 0%;
     --sidebar-foreground: 52 80% 68%; /* Neon yellow */
     --sidebar-primary: 172 48% 53%; /* Neon teal */
-    --sidebar-primary-foreground: 0 0% 10%;
-    --sidebar-accent: 0 0% 16%;
+    --sidebar-primary-foreground: 0 0% 0%;
+    --sidebar-accent: 0 0% 3%;
     --sidebar-accent-foreground: 52 80% 68%; /* Neon yellow */
     --sidebar-border: 52 80% 68%; /* Neon yellow */
     --sidebar-ring: 172 48% 53%; /* Neon teal */
   }
 
   .light {
-    --background: 52 80% 98%; /* Light yellow background */
-    --foreground: 0 0% 10%;
+    --background: 52 80% 5%; /* Dark yellow background */
+    --foreground: 52 80% 68%;
 
-    --card: 52 80% 95%; /* Light yellow card */
-    --card-foreground: 0 0% 10%;
+    --card: 52 80% 5%; /* Dark yellow card */
+    --card-foreground: 52 80% 68%;
 
-    --popover: 52 80% 95%; /* Light yellow popover */
-    --popover-foreground: 0 0% 10%;
+    --popover: 52 80% 5%; /* Dark yellow popover */
+    --popover-foreground: 52 80% 68%;
 
     --primary: 172 48% 53%; /* Neon teal */
-    --primary-foreground: 52 80% 98%; /* Light yellow */
+    --primary-foreground: 0 0% 0%;
 
-    --secondary: 17 100% 60%; /* Neon orange */
-    --secondary-foreground: 52 80% 98%; /* Light yellow */
+    --secondary: 52 80% 68%; /* Neon yellow */
+    --secondary-foreground: 0 0% 0%;
 
-    --muted: 52 80% 90%; /* Light yellow muted */
-    --muted-foreground: 0 0% 40%;
+    --muted: 52 80% 10%; /* Dark yellow muted */
+    --muted-foreground: 172 48% 53%; /* Neon teal */
 
     --accent: 52 80% 68%; /* Neon yellow */
-    --accent-foreground: 0 0% 10%;
+    --accent-foreground: 0 0% 0%;
 
-    --destructive: 17 100% 60%; /* Neon orange */
-    --destructive-foreground: 52 80% 98%; /* Light yellow */
+    --destructive: 172 48% 53%; /* Neon teal */
+    --destructive-foreground: 0 0% 0%;
 
     --border: 172 48% 53%; /* Neon teal */
-    --input: 52 80% 85%; /* Light yellow input */
+    --input: 52 80% 15%; /* Dark yellow input */
     --ring: 172 48% 53%; /* Neon teal */
 
-    --sidebar-background: 52 80% 98%; /* Light yellow */
-    --sidebar-foreground: 0 0% 10%;
+    --sidebar-background: 52 80% 5%; /* Dark yellow */
+    --sidebar-foreground: 52 80% 68%;
     --sidebar-primary: 172 48% 53%; /* Neon teal */
-    --sidebar-primary-foreground: 52 80% 98%; /* Light yellow */
-    --sidebar-accent: 52 80% 90%; /* Light yellow */
-    --sidebar-accent-foreground: 0 0% 10%;
+    --sidebar-primary-foreground: 0 0% 0%;
+    --sidebar-accent: 52 80% 10%; /* Dark yellow */
+    --sidebar-accent-foreground: 52 80% 68%;
     --sidebar-border: 172 48% 53%; /* Neon teal */
     --sidebar-ring: 172 48% 53%; /* Neon teal */
   }
@@ -91,7 +91,7 @@
   }
 
   body {
-    @apply bg-background text-foreground bg-dark-texture;
+    @apply bg-black text-foreground bg-dark-texture;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
@@ -107,10 +107,6 @@
   
   .gradient-text-teal {
     @apply gradient-text bg-gradient-to-r from-neon-teal to-neon-teal/70;
-  }
-  
-  .gradient-text-orange {
-    @apply gradient-text bg-gradient-to-r from-neon-orange to-neon-orange/70;
   }
   
   .neon-border {
@@ -129,10 +125,6 @@
     @apply text-neon-teal;
   }
   
-  .neon-orange {
-    @apply text-neon-orange;
-  }
-  
   .neon-shadow-yellow {
     @apply animate-glow-pulse;
     filter: drop-shadow(0 0 5px theme('colors.neon.yellow'));
@@ -141,11 +133,6 @@
   .neon-shadow-teal {
     @apply animate-glow-pulse;
     filter: drop-shadow(0 0 5px theme('colors.neon.teal'));
-  }
-  
-  .neon-shadow-orange {
-    @apply animate-glow-pulse;
-    filter: drop-shadow(0 0 5px theme('colors.neon.orange'));
   }
   
   .gradient-card {
@@ -171,10 +158,6 @@
 
   .game-card-teal {
     @apply border border-neon-teal/60 hover:shadow-[0_0_15px_theme(colors.neon.teal)];
-  }
-
-  .game-card-orange {
-    @apply border border-neon-orange/60 hover:shadow-[0_0_15px_theme(colors.neon.orange)];
   }
 }
 

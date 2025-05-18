@@ -119,7 +119,7 @@ const Navbar = () => {
             <NavigationMenuList>
               <NavigationMenuItem>
                 <NavigationMenuTrigger className="text-climbup-text hover:text-climbup-heading text-sm font-semibold mx-[10px] my-0 rounded-full">Key Features</NavigationMenuTrigger>
-                <NavigationMenuContent>
+                <NavigationMenuContent className="rounded-md">
                   <ul className="grid gap-3 p-4 w-[400px] grid-cols-2 glass-card rounded-full">
                     {menuItems.slice(0, 6).map(item => <li key={item.title}>
                         <NavigationMenuLink asChild>

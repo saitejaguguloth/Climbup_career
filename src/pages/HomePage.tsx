@@ -78,7 +78,7 @@ const HomePage = () => {
       </section>
       
       {/* Top Roadmaps Section */}
-      <section className="py-20 bg-gradient-to-b from-black to-black/80 relative rounded-3xl bg-[#a31d1d]">
+      <section className="bg-gradient-to-b from-black to-black/80 relative rounded-3xl bg-[#a31d1d] py-[9px]">
         <div className="container bg-[transparentA#E5D0ACA] bg-[#e5d0ac] py-[37px] px-[33px] mx-0 rounded-3xl">
           <h2 className="text-3xl font-bold text-center mb-4 text-neon-yellow">Top Roadmaps You Can Explore</h2>
           <p className="text-neon-yellow/80 text-center mb-12 max-w-2xl mx-auto">
@@ -185,7 +185,7 @@ const HomePage = () => {
       {/* Career Quiz Section */}
       <section className="py-20">
         <div className="container mx-auto px-4">
-          <div className="bg-black/80 backdrop-blur-sm rounded-3xl shadow-xl p-8 md:p-12 border border-neon-yellow/50 relative overflow-hidden">
+          <div className="backdrop-blur-sm rounded-3xl shadow-xl p-8 md:p-12 border border-neon-yellow/50 relative overflow-hidden bg-[#e5d0ac]">
             {/* Background gradient circles */}
             <div className="absolute -top-24 -right-24 w-64 h-64 bg-neon-teal/20 rounded-full opacity-60"></div>
             <div className="absolute -bottom-24 -left-24 w-72 h-72 bg-neon-yellow/20 rounded-full opacity-60"></div>

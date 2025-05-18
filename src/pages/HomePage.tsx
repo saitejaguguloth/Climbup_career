@@ -79,7 +79,7 @@ const HomePage = () => {
       
       {/* Top Roadmaps Section */}
       <section className="py-20 bg-gradient-to-b from-black to-black/80 relative rounded-3xl bg-[#a31d1d]">
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-4 bg-[transparentA#E5D0ACA] bg-[#e5d0ac]">
           <h2 className="text-3xl font-bold text-center mb-4 text-neon-yellow">Top Roadmaps You Can Explore</h2>
           <p className="text-neon-yellow/80 text-center mb-12 max-w-2xl mx-auto">
             Discover proven paths to success in these popular career options, with step-by-step guidance from experts.

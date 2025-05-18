@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
@@ -121,28 +122,28 @@ const PlannerPage = () => {
 
   return (
     <div className="min-h-screen py-16 px-4 relative">
-      {/* Background pattern elements */}
+      {/* Background blurry elements */}
       <div className="absolute inset-0 overflow-hidden -z-10">
-        <div className="absolute top-0 left-1/4 w-72 h-72 bg-climbup-heading rounded-full opacity-5"></div>
-        <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-climbup-text rounded-full opacity-5"></div>
-        <div className="absolute top-1/2 left-1/2 w-72 h-72 bg-climbup-component rounded-full opacity-10"></div>
+        <div className="absolute top-0 left-1/4 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+        <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+        <div className="absolute top-1/2 left-1/2 w-72 h-72 bg-emerald-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
       </div>
       
       <div className="container mx-auto max-w-7xl">
         <div className="text-center mb-10">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4 text-climbup-heading">
-            My <span className="bg-gradient-to-r from-climbup-heading to-climbup-text text-transparent bg-clip-text">Planner</span>
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            My <span className="bg-gradient-to-r from-blue-600 to-indigo-600 text-transparent bg-clip-text">Planner</span>
           </h1>
-          <p className="text-lg text-climbup-text max-w-2xl mx-auto">
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Organize your learning journey, track tasks, and never miss important deadlines.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-1 space-y-6">
-            <Card className="bg-climbup-component/90 backdrop-blur shadow-md border-climbup-text/20">
+            <Card className="bg-white/90 backdrop-blur shadow-md">
               <CardHeader>
-                <CardTitle className="flex items-center text-climbup-heading">
+                <CardTitle className="flex items-center">
                   <CalendarIcon className="mr-2 h-5 w-5" /> Calendar
                 </CardTitle>
               </CardHeader>
@@ -151,19 +152,19 @@ const PlannerPage = () => {
                   mode="single"
                   selected={date}
                   onSelect={setDate}
-                  className="rounded-md border bg-climbup-background"
+                  className="rounded-md border bg-white"
                 />
               </CardContent>
               <CardFooter>
-                <Button className="w-full bg-gradient-to-r from-climbup-heading to-climbup-text text-climbup-background">
+                <Button className="w-full bg-gradient-to-r from-blue-600 to-indigo-600">
                   <Plus className="mr-2 h-4 w-4" /> Add New Task
                 </Button>
               </CardFooter>
             </Card>
             
-            <Card className="bg-climbup-component/90 backdrop-blur shadow-md border-climbup-text/20">
+            <Card className="bg-white/90 backdrop-blur shadow-md">
               <CardHeader>
-                <CardTitle className="flex items-center text-climbup-heading">
+                <CardTitle className="flex items-center">
                   <CheckCircle className="mr-2 h-5 w-5" /> Today's Tasks
                 </CardTitle>
               </CardHeader>
@@ -171,9 +172,9 @@ const PlannerPage = () => {
                 {todaysTasks.length > 0 ? (
                   renderTaskList(todaysTasks)
                 ) : (
-                  <div className="text-center py-6 text-climbup-text">
+                  <div className="text-center py-6 text-gray-500">
                     <p>No tasks scheduled for today</p>
-                    <Button variant="outline" size="sm" className="mt-2 border-climbup-heading text-climbup-heading hover:bg-climbup-heading/20">
+                    <Button variant="outline" size="sm" className="mt-2">
                       <Plus className="mr-2 h-4 w-4" /> Add Task
                     </Button>
                   </div>
@@ -183,19 +184,19 @@ const PlannerPage = () => {
           </div>
           
           <div className="lg:col-span-2">
-            <Card className="bg-climbup-component/90 backdrop-blur shadow-md border-climbup-text/20">
+            <Card className="bg-white/90 backdrop-blur shadow-md">
               <CardHeader>
                 <Tabs defaultValue="tasks" className="w-full">
-                  <TabsList className="grid grid-cols-3 mb-4 bg-climbup-component">
-                    <TabsTrigger value="tasks" className="data-[state=active]:bg-climbup-heading data-[state=active]:text-climbup-background">All Tasks</TabsTrigger>
-                    <TabsTrigger value="deadlines" className="data-[state=active]:bg-climbup-heading data-[state=active]:text-climbup-background">Upcoming Deadlines</TabsTrigger>
-                    <TabsTrigger value="completed" className="data-[state=active]:bg-climbup-heading data-[state=active]:text-climbup-background">Completed</TabsTrigger>
+                  <TabsList className="grid grid-cols-3 mb-4">
+                    <TabsTrigger value="tasks">All Tasks</TabsTrigger>
+                    <TabsTrigger value="deadlines">Upcoming Deadlines</TabsTrigger>
+                    <TabsTrigger value="completed">Completed</TabsTrigger>
                   </TabsList>
                 
                   <TabsContent value="tasks">
                     <div className="flex justify-between items-center">
-                      <CardTitle className="text-climbup-heading">All Tasks</CardTitle>
-                      <Button size="sm" className="bg-climbup-heading text-climbup-background hover:bg-climbup-text">
+                      <CardTitle>All Tasks</CardTitle>
+                      <Button size="sm">
                         <Plus className="mr-2 h-4 w-4" /> New Task
                       </Button>
                     </div>
@@ -203,8 +204,8 @@ const PlannerPage = () => {
                   
                   <TabsContent value="deadlines">
                     <div className="flex justify-between items-center">
-                      <CardTitle className="text-climbup-heading">Upcoming Deadlines</CardTitle>
-                      <Badge variant="outline" className="flex items-center bg-climbup-component/50 text-climbup-text">
+                      <CardTitle>Upcoming Deadlines</CardTitle>
+                      <Badge variant="outline" className="flex items-center">
                         <AlertCircle className="mr-1 h-3 w-3" /> 
                         {upcomingDeadlines.length} pending
                       </Badge>
@@ -213,8 +214,8 @@ const PlannerPage = () => {
                   
                   <TabsContent value="completed">
                     <div className="flex justify-between items-center">
-                      <CardTitle className="text-climbup-heading">Completed Tasks</CardTitle>
-                      <Badge variant="outline" className="bg-climbup-component/50 text-climbup-text">
+                      <CardTitle>Completed Tasks</CardTitle>
+                      <Badge variant="outline" className="bg-green-50 text-green-700">
                         <CheckCircle className="mr-1 h-3 w-3" /> 
                         {tasks.filter(t => t.status === "completed").length} done
                       </Badge>
@@ -239,7 +240,7 @@ const PlannerPage = () => {
                 </Tabs>
                 
                 <div className="mt-6 text-center">
-                  <Button variant="outline" className="border-climbup-heading text-climbup-heading hover:bg-climbup-heading/20">Load More</Button>
+                  <Button variant="outline">Load More</Button>
                 </div>
               </CardContent>
             </Card>

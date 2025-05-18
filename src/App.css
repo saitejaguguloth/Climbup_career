@@ -13,10 +13,10 @@
   transition: filter 300ms;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 2em #A31D1Daa);
+  filter: drop-shadow(0 0 2em #ECD06Faa);
 }
 .logo.react:hover {
-  filter: drop-shadow(0 0 2em #6D2323aa);
+  filter: drop-shadow(0 0 2em #49c5b6aa);
 }
 
 @keyframes logo-spin {
@@ -36,24 +36,19 @@
 
 .card {
   padding: 2em;
-  background: rgba(229, 208, 172, 0.8);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(109, 35, 35, 0.2);
-  border-radius: 10px;
 }
 
 .read-the-docs {
-  color: #A31D1D;
+  color: #888;
 }
 
-/* Custom text effect */
-.accent-text {
-  text-shadow: 0 0 5px currentColor, 0 0 10px currentColor;
+/* Custom neon text effect */
+.neon-text {
+  text-shadow: 0 0 5px currentColor, 0 0 10px currentColor, 0 0 20px currentColor;
   letter-spacing: 2px;
-  color: #A31D1D;
 }
 
-.accent-box {
+.neon-box {
   box-shadow: 0 0 5px currentColor, 0 0 10px currentColor;
 }
 
@@ -68,7 +63,7 @@
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(163, 29, 29, 0.2),
+    rgba(255, 255, 255, 0.1),
     transparent
   );
   transition: 0.5s;
@@ -77,32 +72,4 @@
 
 .game-card:hover::before {
   left: 100%;
-}
-
-/* Gradient background animations */
-.animated-gradient {
-  background: linear-gradient(-45deg, #A31D1D40, #E5D0AC40, #6D232330, #FEF9E130);
-  background-size: 400% 400%;
-  animation: gradient 15s ease infinite;
-}
-
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-/* Modern glass card effect */
-.glass-effect {
-  background: rgba(229, 208, 172, 0.8);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(109, 35, 35, 0.2);
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
 }

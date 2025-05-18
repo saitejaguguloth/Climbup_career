@@ -3,13 +3,13 @@ import React from "react";
 import { cn } from "@/lib/utils";
 
 interface NeonIconProps extends React.HTMLAttributes<HTMLDivElement> {
-  color?: "primary" | "secondary" | "yellow" | "teal" | "orange";
+  color?: "yellow" | "teal" | "orange";
   size?: "sm" | "md" | "lg";
   children: React.ReactNode;
 }
 
 export const NeonIcon = ({
-  color = "primary",
+  color = "yellow",
   size = "md",
   className,
   children,
@@ -22,11 +22,9 @@ export const NeonIcon = ({
   };
 
   const colorClasses = {
-    primary: "text-[#A31D1D] warm-shadow",
-    secondary: "text-[#6D2323] warm-shadow",
-    yellow: "text-[#A31D1D] warm-shadow", // Using heading color
-    teal: "text-[#6D2323] warm-shadow",   // Using text color
-    orange: "text-[#E5D0AC] warm-shadow"  // Using component color
+    yellow: "text-neon-yellow neon-shadow-yellow",
+    teal: "text-neon-teal neon-shadow-teal",
+    orange: "text-neon-orange neon-shadow-orange",
   };
 
   return (
@@ -41,24 +39,19 @@ export const NeonIcon = ({
     >
       {children}
       <div className="absolute inset-0 opacity-40 blur-md rounded-full" style={{
-        backgroundColor: 
-          color === "primary" ? "#A31D1D20" : 
-          color === "secondary" ? "#6D232320" :
-          color === "yellow" ? "#A31D1D20" :   // Using heading color
-          color === "teal" ? "#6D232320" :     // Using text color
-          color === "orange" ? "#E5D0AC20" : "#6D232320" // Using component color
+        backgroundColor: color === "yellow" ? "#ECD06F20" : color === "teal" ? "#49c5b620" : "#FF652F20"
       }}></div>
     </div>
   );
 };
 
 interface NeonTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
-  color?: "primary" | "secondary" | "yellow" | "teal" | "orange";
+  color?: "yellow" | "teal" | "orange";
   size?: "sm" | "md" | "lg" | "xl" | "2xl";
 }
 
 export const NeonTitle = ({
-  color = "primary",
+  color = "yellow",
   size = "lg",
   className,
   children,
@@ -73,11 +66,9 @@ export const NeonTitle = ({
   };
 
   const colorClasses = {
-    primary: "text-[#A31D1D] warm-shadow",
-    secondary: "text-[#6D2323] warm-shadow",
-    yellow: "text-[#A31D1D] warm-shadow", // Using heading color
-    teal: "text-[#6D2323] warm-shadow",   // Using text color
-    orange: "text-[#E5D0AC] warm-shadow"  // Using component color
+    yellow: "text-neon-yellow neon-shadow-yellow",
+    teal: "text-neon-teal neon-shadow-teal",
+    orange: "text-neon-orange neon-shadow-orange",
   };
 
   return (
@@ -96,13 +87,13 @@ export const NeonTitle = ({
 };
 
 interface NeonButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  color?: "primary" | "secondary" | "yellow" | "teal" | "orange";
+  color?: "yellow" | "teal" | "orange";
   variant?: "solid" | "outline";
   size?: "sm" | "md" | "lg";
 }
 
 export const NeonButton = ({
-  color = "primary",
+  color = "yellow",
   variant = "outline",
   size = "md",
   className,
@@ -116,26 +107,18 @@ export const NeonButton = ({
   };
 
   const colorVariantClasses = {
-    primary: {
-      solid: "bg-[#A31D1D]/20 text-[#A31D1D] border-[#A31D1D]",
-      outline: "bg-transparent text-[#A31D1D] border-[#A31D1D]",
-    },
-    secondary: {
-      solid: "bg-[#6D2323]/20 text-[#6D2323] border-[#6D2323]",
-      outline: "bg-transparent text-[#6D2323] border-[#6D2323]",
-    },
     yellow: {
-      solid: "bg-[#A31D1D]/20 text-[#A31D1D] border-[#A31D1D]", // Using heading color
-      outline: "bg-transparent text-[#A31D1D] border-[#A31D1D]", // Using heading color
+      solid: "bg-neon-yellow/20 text-neon-yellow border-neon-yellow",
+      outline: "bg-transparent text-neon-yellow border-neon-yellow",
     },
     teal: {
-      solid: "bg-[#6D2323]/20 text-[#6D2323] border-[#6D2323]", // Using text color
-      outline: "bg-transparent text-[#6D2323] border-[#6D2323]", // Using text color
+      solid: "bg-neon-teal/20 text-neon-teal border-neon-teal",
+      outline: "bg-transparent text-neon-teal border-neon-teal",
     },
     orange: {
-      solid: "bg-[#E5D0AC]/20 text-[#A31D1D] border-[#E5D0AC]", // Using component color with heading text
-      outline: "bg-transparent text-[#A31D1D] border-[#E5D0AC]", // Using component color with heading text
-    }
+      solid: "bg-neon-orange/20 text-neon-orange border-neon-orange",
+      outline: "bg-transparent text-neon-orange border-neon-orange",
+    },
   };
 
   return (
@@ -155,29 +138,27 @@ export const NeonButton = ({
 };
 
 interface NeonCardProps extends React.HTMLAttributes<HTMLDivElement> {
-  color?: "primary" | "secondary" | "yellow" | "teal" | "orange";
+  color?: "yellow" | "teal" | "orange";
   hoverEffect?: boolean;
 }
 
 export const NeonCard = ({
-  color = "primary",
+  color = "yellow",
   hoverEffect = true,
   className,
   children,
   ...props
 }: NeonCardProps) => {
   const colorClasses = {
-    primary: "border-[#A31D1D]/40 hover:shadow-[0_0_15px_#A31D1D]",
-    secondary: "border-[#6D2323]/40 hover:shadow-[0_0_15px_#6D2323]",
-    yellow: "border-[#A31D1D]/40 hover:shadow-[0_0_15px_#A31D1D]", // Using heading color
-    teal: "border-[#6D2323]/40 hover:shadow-[0_0_15px_#6D2323]",   // Using text color
-    orange: "border-[#E5D0AC]/40 hover:shadow-[0_0_15px_#E5D0AC]", // Using component color
+    yellow: "border-neon-yellow/40 hover:shadow-[0_0_15px_theme(colors.neon.yellow)]",
+    teal: "border-neon-teal/40 hover:shadow-[0_0_15px_theme(colors.neon.teal)]",
+    orange: "border-neon-orange/40 hover:shadow-[0_0_15px_theme(colors.neon.orange)]",
   };
 
   return (
     <div
       className={cn(
-        "bg-[#E5D0AC]/90 backdrop-blur-sm border rounded-xl p-5 transition-all duration-300",
+        "bg-black/30 backdrop-blur-sm border rounded-xl p-5 transition-all duration-300",
         hoverEffect && colorClasses[color],
         className
       )}
@@ -189,12 +170,12 @@ export const NeonCard = ({
 };
 
 interface NeonDividerProps extends React.HTMLAttributes<HTMLDivElement> {
-  color?: "primary" | "secondary" | "yellow" | "teal" | "orange";
+  color?: "yellow" | "teal" | "orange";
   width?: "full" | "3/4" | "1/2" | "1/4";
 }
 
 export const NeonDivider = ({
-  color = "primary",
+  color = "yellow",
   width = "full",
   className,
   ...props
@@ -207,11 +188,9 @@ export const NeonDivider = ({
   };
 
   const colorClasses = {
-    primary: "bg-[#A31D1D] shadow-[0_0_5px_#A31D1D]",
-    secondary: "bg-[#6D2323] shadow-[0_0_5px_#6D2323]",
-    yellow: "bg-[#A31D1D] shadow-[0_0_5px_#A31D1D]", // Using heading color
-    teal: "bg-[#6D2323] shadow-[0_0_5px_#6D2323]",   // Using text color
-    orange: "bg-[#E5D0AC] shadow-[0_0_5px_#E5D0AC]", // Using component color
+    yellow: "bg-neon-yellow shadow-[0_0_5px_theme(colors.neon.yellow)]",
+    teal: "bg-neon-teal shadow-[0_0_5px_theme(colors.neon.teal)]",
+    orange: "bg-neon-orange shadow-[0_0_5px_theme(colors.neon.orange)]",
   };
 
   return (

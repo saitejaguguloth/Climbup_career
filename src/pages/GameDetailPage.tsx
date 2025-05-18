@@ -1,6 +1,7 @@
+
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { ArrowLeft, Award, Clock, PlayCircle, ChevronRight, Star, Trophy, Users, Zap, ChevronDown, Gamepad } from 'lucide-react';
+import { ArrowLeft, Award, Clock, PlayCircle, ChevronRight, Star, Trophy, Users, Zap, ChevronDown } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -169,7 +170,7 @@ const GameDetailPage = () => {
           {/* Related games */}
           <NeonCard color="orange" className="mt-6">
             <div className="flex items-center mb-4">
-              <Gamepad className="h-5 w-5 mr-2 text-neon-orange" />
+              <Gamepad2 className="h-5 w-5 mr-2 text-neon-orange" />
               <h3 className="font-display text-lg text-neon-orange">Related Games</h3>
             </div>
             

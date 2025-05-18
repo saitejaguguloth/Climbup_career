@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -63,21 +62,21 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Custom colors for the theme with direct hex values
-				climbup: {
-					background: '#FEF9E1',
-					component: '#E5D0AC',
-					heading: '#A31D1D',
-					text: '#6D2323',
-					'heading-light': '#A31D1D99',
-					'text-light': '#6D232399',
-				},
-				// Updated neon colors to match our color palette
+				// Custom colors for the new theme
 				neon: {
-					yellow: '#A31D1D',  // Using heading color
-					teal: '#6D2323',    // Using text color
-					orange: '#E5D0AC',  // Using component color
-				}
+					yellow: '#ECD06F',
+					teal: '#49c5b6',
+					orange: '#FF652F',
+					purple: '#9b87f5',
+				},
+				climbup: {
+					blue: '#6a98f0',
+					purple: '#9b87f5',
+					orange: '#f97316',
+					'soft-purple': '#e5deff',
+					'soft-peach': '#fde1d3',
+					'soft-blue': '#d3e4fd',
+				},
 			},
 			fontFamily: {
 				sans: ['Inter', 'sans-serif'],
@@ -164,12 +163,10 @@ export default {
 				'neon-trace': 'neon-trace 3s linear infinite',
 			},
 			backgroundImage: {
-				'gradient-hero': 'linear-gradient(135deg, #A31D1D20 0%, #6D232320 100%)',
-				'gradient-card': 'linear-gradient(135deg, #A31D1D10 0%, #6D232310 100%)',
-				'gradient-cta': 'linear-gradient(135deg, #A31D1D 0%, #6D2323 100%)',
-				'dark-texture': 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'4\' height=\'4\' viewBox=\'0 0 4 4\'%3E%3Cpath fill=\'%236D2323\' fill-opacity=\'0.05\' d=\'M1 3h1v1H1V3zm2-2h1v1H3V1z\'%3E%3C/path%3E%3C/svg%3E")',
-				'gradient-main': 'linear-gradient(135deg, #A31D1D20 0%, #6D232320 100%)',
-				'pattern-dots': 'radial-gradient(circle, #6D232330 1px, transparent 1px)',
+				'gradient-hero': 'linear-gradient(135deg, #d3e4fd 0%, #e5deff 100%)',
+				'gradient-card': 'linear-gradient(135deg, rgba(249,115,22,0.2) 0%, rgba(155,135,245,0.2) 100%)',
+				'gradient-cta': 'linear-gradient(135deg, #6a98f0 0%, #9b87f5 100%)',
+				'dark-texture': 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'4\' height=\'4\' viewBox=\'0 0 4 4\'%3E%3Cpath fill=\'%23ffffff\' fill-opacity=\'0.05\' d=\'M1 3h1v1H1V3zm2-2h1v1H3V1z\'%3E%3C/path%3E%3C/svg%3E")',
 			},
 			transitionDelay: {
 				'2000': '2000ms',

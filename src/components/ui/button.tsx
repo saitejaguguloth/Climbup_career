@@ -1,3 +1,4 @@
+
 import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
@@ -18,6 +19,10 @@ const buttonVariants = cva(
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
+        // Adding new variants for our neon colors
+        yellow: "bg-amber-400/20 text-amber-400 border border-amber-400/30 hover:bg-amber-400/30",
+        teal: "bg-teal-400/20 text-teal-400 border border-teal-400/30 hover:bg-teal-400/30",
+        orange: "bg-orange-400/20 text-orange-400 border border-orange-400/30 hover:bg-orange-400/30",
       },
       size: {
         default: "h-10 px-4 py-2",

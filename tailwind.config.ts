@@ -72,6 +72,12 @@ export default {
 					'heading-light': '#A31D1D99',
 					'text-light': '#6D232399',
 				},
+				// Adding neon colors
+				neon: {
+					yellow: '#FBBF24',  // amber-400
+					teal: '#2DD4BF',   // teal-400
+					orange: '#FB923C',  // orange-400
+				}
 			},
 			fontFamily: {
 				sans: ['Inter', 'sans-serif'],

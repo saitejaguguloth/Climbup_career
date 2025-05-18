@@ -3,7 +3,7 @@ import React from "react";
 import { cn } from "@/lib/utils";
 
 interface NeonIconProps extends React.HTMLAttributes<HTMLDivElement> {
-  color?: "primary" | "secondary";
+  color?: "primary" | "secondary" | "yellow" | "teal" | "orange";
   size?: "sm" | "md" | "lg";
   children: React.ReactNode;
 }
@@ -24,6 +24,9 @@ export const NeonIcon = ({
   const colorClasses = {
     primary: "text-climbup-heading warm-shadow",
     secondary: "text-climbup-text warm-shadow",
+    yellow: "text-amber-400 warm-shadow",
+    teal: "text-teal-400 warm-shadow",
+    orange: "text-orange-400 warm-shadow"
   };
 
   return (
@@ -38,14 +41,19 @@ export const NeonIcon = ({
     >
       {children}
       <div className="absolute inset-0 opacity-40 blur-md rounded-full" style={{
-        backgroundColor: color === "primary" ? "#A31D1D20" : "#6D232320"
+        backgroundColor: 
+          color === "primary" ? "#A31D1D20" : 
+          color === "secondary" ? "#6D232320" :
+          color === "yellow" ? "#FBBF2420" :
+          color === "teal" ? "#2DD4BF20" :
+          color === "orange" ? "#FB923C20" : "#6D232320"
       }}></div>
     </div>
   );
 };
 
 interface NeonTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {
-  color?: "primary" | "secondary";
+  color?: "primary" | "secondary" | "yellow" | "teal" | "orange";
   size?: "sm" | "md" | "lg" | "xl" | "2xl";
 }
 
@@ -67,6 +75,9 @@ export const NeonTitle = ({
   const colorClasses = {
     primary: "text-climbup-heading warm-shadow",
     secondary: "text-climbup-text warm-shadow",
+    yellow: "text-amber-400 warm-shadow",
+    teal: "text-teal-400 warm-shadow",
+    orange: "text-orange-400 warm-shadow"
   };
 
   return (
@@ -85,7 +96,7 @@ export const NeonTitle = ({
 };
 
 interface NeonButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  color?: "primary" | "secondary";
+  color?: "primary" | "secondary" | "yellow" | "teal" | "orange";
   variant?: "solid" | "outline";
   size?: "sm" | "md" | "lg";
 }
@@ -113,6 +124,18 @@ export const NeonButton = ({
       solid: "bg-climbup-text/20 text-climbup-text border-climbup-text",
       outline: "bg-transparent text-climbup-text border-climbup-text",
     },
+    yellow: {
+      solid: "bg-amber-400/20 text-amber-400 border-amber-400",
+      outline: "bg-transparent text-amber-400 border-amber-400",
+    },
+    teal: {
+      solid: "bg-teal-400/20 text-teal-400 border-teal-400",
+      outline: "bg-transparent text-teal-400 border-teal-400",
+    },
+    orange: {
+      solid: "bg-orange-400/20 text-orange-400 border-orange-400",
+      outline: "bg-transparent text-orange-400 border-orange-400",
+    }
   };
 
   return (
@@ -132,7 +155,7 @@ export const NeonButton = ({
 };
 
 interface NeonCardProps extends React.HTMLAttributes<HTMLDivElement> {
-  color?: "primary" | "secondary";
+  color?: "primary" | "secondary" | "yellow" | "teal" | "orange";
   hoverEffect?: boolean;
 }
 
@@ -146,6 +169,9 @@ export const NeonCard = ({
   const colorClasses = {
     primary: "border-climbup-heading/40 hover:shadow-[0_0_15px_theme(colors.climbup.heading)]",
     secondary: "border-climbup-text/40 hover:shadow-[0_0_15px_theme(colors.climbup.text)]",
+    yellow: "border-amber-400/40 hover:shadow-[0_0_15px_theme(colors.amber.400)]",
+    teal: "border-teal-400/40 hover:shadow-[0_0_15px_theme(colors.teal.400)]",
+    orange: "border-orange-400/40 hover:shadow-[0_0_15px_theme(colors.orange.400)]",
   };
 
   return (
@@ -163,7 +189,7 @@ export const NeonCard = ({
 };
 
 interface NeonDividerProps extends React.HTMLAttributes<HTMLDivElement> {
-  color?: "primary" | "secondary";
+  color?: "primary" | "secondary" | "yellow" | "teal" | "orange";
   width?: "full" | "3/4" | "1/2" | "1/4";
 }
 
@@ -183,6 +209,9 @@ export const NeonDivider = ({
   const colorClasses = {
     primary: "bg-climbup-heading shadow-[0_0_5px_theme(colors.climbup.heading)]",
     secondary: "bg-climbup-text shadow-[0_0_5px_theme(colors.climbup.text)]",
+    yellow: "bg-amber-400 shadow-[0_0_5px_theme(colors.amber.400)]",
+    teal: "bg-teal-400 shadow-[0_0_5px_theme(colors.teal.400)]",
+    orange: "bg-orange-400 shadow-[0_0_5px_theme(colors.orange.400)]",
   };
 
   return (

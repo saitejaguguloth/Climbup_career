@@ -486,7 +486,7 @@ const RoadmapPage = () => {
         <div className="absolute -bottom-20 right-1/4 w-96 h-96 bg-emerald-400 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-4000"></div>
       </div>
       
-      <div className="container mx-auto px-4 relative z-10 bg-[E5D0AC] bg-[#e5d0ac] rounded-3xl">
+      <div className="container mx-auto relative z-10 bg-[E5D0AC] bg-[#e5d0ac] rounded-3xl py-[62px] my-0 px-[34px]">
         <div className="max-w-4xl mx-auto">
           {/* Progress bar */}
           <div className="mb-8 bg-white/70 backdrop-blur-md p-4 rounded-2xl shadow-sm">

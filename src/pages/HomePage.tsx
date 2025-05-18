@@ -257,7 +257,7 @@ const HomePage = () => {
         {/* Decorative elements */}
         <div className="absolute inset-0 overflow-hidden">
           <div className="absolute top-0 right-0 w-64 h-64 bg-neon-teal rounded-full mix-blend-overlay opacity-10"></div>
-          <div className="absolute bottom-0 left-0 w-72 h-72 bg-neon-yellow rounded-full mix-blend-overlay opacity-10"></div>
+          <div className="absolute bottom-0 left-0 w-72 h-72 mix-blend-overlay opacity-10 bg-[#e5d0ac] rounded-3xl py-[21px]"></div>
         </div>
         
         <div className="container mx-auto px-4 text-center relative z-10">

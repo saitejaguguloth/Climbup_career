@@ -91,7 +91,7 @@ const HomePage = () => {
               <div className="h-40 bg-gradient-to-r from-neon-teal to-neon-yellow/70 flex items-center justify-center">
                 <h3 className="font-bold text-2xl text-black">Software Engineer</h3>
               </div>
-              <div className="p-6">
+              <div className="p-6 bg-[#fef9e1]">
                 <ul className="mb-6 space-y-2">
                   <li className="flex items-center text-neon-yellow">
                     <Check size={16} className="text-neon-teal mr-2" />

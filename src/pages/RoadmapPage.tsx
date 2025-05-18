@@ -535,7 +535,7 @@ const RoadmapPage = () => {
                   Select your dream career path
                 </p>
                 
-                <div className="bg-white/80 backdrop-blur-md rounded-3xl shadow-xl p-10 flex flex-col items-center border border-white/50">
+                <div className="backdrop-blur-md rounded-3xl shadow-xl p-10 flex flex-col items-center border border-white/50 bg-[A31D1D] bg-[#a31d1d]">
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full">
                     {careerOptions.map(goal => <button key={goal} onClick={() => setSelectedGoal(goal)} className={`p-4 rounded-xl text-left transition-all flex items-center ${selectedGoal === goal ? "bg-gradient-to-r from-blue-500 to-violet-500 text-white shadow-md" : "bg-white hover:bg-gray-50 text-gray-800 border border-gray-100"}`}>
                         {selectedGoal === goal && <Check className="mr-2 h-4 w-4 text-white" />}
@@ -544,10 +544,10 @@ const RoadmapPage = () => {
                   </div>
                   
                   <div className="flex space-x-4 mt-10">
-                    <Button variant="outline" onClick={() => setCurrentStep(1)} className="border-gray-300">
+                    <Button variant="outline" onClick={() => setCurrentStep(1)} className="border-gray-300 rounded-3xl py-0">
                       Back
                     </Button>
-                    <Button className="bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700 text-white shadow-md" onClick={handleNext} disabled={!selectedGoal}>
+                    <Button onClick={handleNext} disabled={!selectedGoal} className="from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700 text-white shadow-md bg-[E5D0AC] bg-[#e5d0ac] rounded-3xl">
                       Next <ArrowRight className="ml-2" size={16} />
                     </Button>
                   </div>

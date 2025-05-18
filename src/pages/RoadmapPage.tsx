@@ -340,7 +340,7 @@ const RoadmapPage = () => {
             <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex-1">
               <div className="flex justify-between items-center mb-4">
                 <h3 className="font-bold text-xl text-gray-900">{stage.name}</h3>
-                <Button variant={completedSteps[`${stage.name.toLowerCase().replace(/\s+/g, '-')}`] ? "default" : "outline"} size="sm" className={completedSteps[`${stage.name.toLowerCase().replace(/\s+/g, '-')}`] ? "bg-green-600" : "text-xs"} onClick={() => handleMarkAsDone(`${stage.name.toLowerCase().replace(/\s+/g, '-')}`)}>
+                <Button variant={completedSteps[`${stage.name.toLowerCase().replace(/\s+/g, '-')}`] ? "default" : "outline"} size="sm" onClick={() => handleMarkAsDone(`${stage.name.toLowerCase().replace(/\s+/g, '-')}`)} className="rounded-3xl my-0 text-base bg-[E5D0AC] bg-[#e5d0ac] py-[7px] px-[24px] font-light">
                   <Check className="mr-1 h-4 w-4" />
                   {completedSteps[`${stage.name.toLowerCase().replace(/\s+/g, '-')}`] ? "Completed" : "Mark as Done"}
                 </Button>
@@ -463,11 +463,11 @@ const RoadmapPage = () => {
                 
                 {/* Discussion buttons */}
                 <div className="flex space-x-2 mt-4 pt-4 border-t border-gray-100">
-                  <Button size="sm" variant="outline" className="text-xs flex items-center" onClick={() => setGroupChatOpen(true)}>
+                  <Button size="sm" variant="outline" onClick={() => setGroupChatOpen(true)} className="text-xs flex items-center rounded-3xl">
                     <User className="mr-1 h-4 w-4" />
                     Ask a Mentor
                   </Button>
-                  <Button size="sm" variant="outline" className="text-xs flex items-center" onClick={() => setGroupChatOpen(true)}>
+                  <Button size="sm" variant="outline" onClick={() => setGroupChatOpen(true)} className="text-xs flex items-center rounded-3xl">
                     <MessageCircle className="mr-1 h-4 w-4" />
                     Discuss
                   </Button>
@@ -660,19 +660,19 @@ const RoadmapPage = () => {
                     
                     {/* Action buttons */}
                     <div className="mt-10 flex flex-wrap gap-3 justify-center">
-                      <Button className="bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700 text-white" onClick={handleSaveRoadmap}>
+                      <Button onClick={handleSaveRoadmap} className="bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700 text-white bg-[#e5d0ac] rounded-3xl">
                         <Save className="mr-2 h-4 w-4" />
                         Save Roadmap
                       </Button>
-                      <Button variant="outline" onClick={handleDownloadPDF}>
+                      <Button variant="outline" onClick={handleDownloadPDF} className="rounded-3xl">
                         <Download className="mr-2 h-4 w-4" />
                         Download PDF
                       </Button>
-                      <Button variant="outline" onClick={handleCustomize}>
+                      <Button variant="outline" onClick={handleCustomize} className="rounded-3xl">
                         <Pencil className="mr-2 h-4 w-4" />
                         Customize
                       </Button>
-                      <Button variant="outline" onClick={handleShareRoadmap}>
+                      <Button variant="outline" onClick={handleShareRoadmap} className="rounded-3xl">
                         <Share className="mr-2 h-4 w-4" />
                         Share
                       </Button>
@@ -684,13 +684,13 @@ const RoadmapPage = () => {
               <div className="mt-10 text-center">
                 <p className="text-gray-600 mb-4">Not what you're looking for?</p>
                 <div className="flex flex-wrap gap-4 justify-center">
-                  <Button variant="outline" onClick={() => setCurrentStep(1)}>
+                  <Button variant="outline" onClick={() => setCurrentStep(1)} className="rounded-3xl">
                     Start Over
                   </Button>
-                  <Button variant="outline" onClick={() => navigate("/quiz")}>
+                  <Button variant="outline" onClick={() => navigate("/quiz")} className="rounded-3xl">
                     Take Career Quiz
                   </Button>
-                  <Button variant="outline" onClick={handleViewAllRoadmaps}>
+                  <Button variant="outline" onClick={handleViewAllRoadmaps} className="rounded-3xl">
                     Browse All Roadmaps
                   </Button>
                 </div>

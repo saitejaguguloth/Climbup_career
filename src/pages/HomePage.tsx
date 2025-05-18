@@ -255,9 +255,9 @@ const HomePage = () => {
       {/* CTA Section */}
       <section className="py-20 bg-gradient-to-r from-neon-teal/20 to-neon-yellow/20 text-neon-yellow relative">
         {/* Decorative elements */}
-        <div className="absolute inset-0 overflow-hidden bg-[tA] bg-[#e5d0ac] rounded-3xl py-[24px]">
+        <div className="absolute inset-0 overflow-hidden bg-[tA] bg-[#e5d0ac] rounded-2xl py-[42px]">
           <div className="absolute top-0 right-0 w-64 h-64 bg-neon-teal rounded-full mix-blend-overlay opacity-10"></div>
-          <div className="absolute bottom-0 left-0 w-72 h-72 mix-blend-overlay opacity-10 bg-[#e5d0ac] rounded-3xl py-[21px]"></div>
+          <div className="absolute bottom-0 left-0 w-72 h-72 mix-blend-overlay opacity-10 py-[21px] bg-[#a31d1d] rounded-full"></div>
         </div>
         
         <div className="container mx-auto px-4 text-center relative z-10">

@@ -164,6 +164,8 @@ export default {
 				'gradient-card': 'linear-gradient(135deg, #49c5b620 0%, #ECD06F20 100%)',
 				'gradient-cta': 'linear-gradient(135deg, #49c5b6 0%, #ECD06F 100%)',
 				'dark-texture': 'url("data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' width=\'4\' height=\'4\' viewBox=\'0 0 4 4\'%3E%3Cpath fill=\'%23ECD06F\' fill-opacity=\'0.05\' d=\'M1 3h1v1H1V3zm2-2h1v1H3V1z\'%3E%3C/path%3E%3C/svg%3E")',
+				'gradient-main': 'linear-gradient(135deg, #49c5b630 0%, #ECD06F30 100%)',
+				'neon-glow': 'radial-gradient(circle, rgba(73,197,182,0.2) 0%, rgba(236,208,111,0.1) 50%, rgba(0,0,0,0) 100%)',
 			},
 			transitionDelay: {
 				'2000': '2000ms',
@@ -174,3 +176,4 @@ export default {
 	},
 	plugins: [require("tailwindcss-animate")],
 } satisfies Config;
+

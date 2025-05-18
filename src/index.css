@@ -5,22 +5,22 @@
 
 @layer base {
   :root {
-    --background: 0 0% 0%; /* Black background */
+    --background: 172 48% 10%; /* Dark teal background base */
     --foreground: 52 80% 68%; /* Neon yellow */
 
-    --card: 0 0% 3%;
+    --card: 172 48% 15%;
     --card-foreground: 52 80% 68%; /* Neon yellow */
 
-    --popover: 0 0% 3%;
+    --popover: 172 48% 15%;
     --popover-foreground: 52 80% 68%; /* Neon yellow */
 
     --primary: 52 80% 68%; /* Neon yellow */
-    --primary-foreground: 0 0% 0%;
+    --primary-foreground: 172 48% 10%;
 
     --secondary: 172 48% 53%; /* Neon teal */
     --secondary-foreground: 0 0% 0%;
 
-    --muted: 0 0% 5%;
+    --muted: 172 48% 20%;
     --muted-foreground: 52 80% 68%; /* Neon yellow at 70% opacity */
 
     --accent: 172 48% 53%; /* Neon teal */
@@ -30,16 +30,16 @@
     --destructive-foreground: 0 0% 0%;
 
     --border: 52 80% 68%; /* Neon yellow */
-    --input: 0 0% 5%;
+    --input: 172 48% 20%;
     --ring: 52 80% 68%; /* Neon yellow */
 
     --radius: 0.5rem;
 
-    --sidebar-background: 0 0% 0%;
+    --sidebar-background: 172 48% 15%;
     --sidebar-foreground: 52 80% 68%; /* Neon yellow */
     --sidebar-primary: 172 48% 53%; /* Neon teal */
     --sidebar-primary-foreground: 0 0% 0%;
-    --sidebar-accent: 0 0% 3%;
+    --sidebar-accent: 172 48% 20%;
     --sidebar-accent-foreground: 52 80% 68%; /* Neon yellow */
     --sidebar-border: 52 80% 68%; /* Neon yellow */
     --sidebar-ring: 172 48% 53%; /* Neon teal */
@@ -91,7 +91,9 @@
   }
 
   body {
-    @apply bg-black text-foreground bg-dark-texture;
+    @apply bg-gradient-main text-foreground;
+    background-image: radial-gradient(circle at 100% 0%, rgba(73,197,182,0.4) 0%, rgba(236,208,111,0.4) 50%, rgba(73,197,182,0.2) 100%);
+    background-attachment: fixed;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 }
@@ -136,7 +138,7 @@
   }
   
   .gradient-card {
-    @apply bg-black/40 backdrop-blur-md border border-neon-yellow/30 rounded-xl transition-all hover:shadow-lg;
+    @apply bg-gradient-card backdrop-blur-md border border-neon-yellow/30 rounded-xl transition-all hover:shadow-lg;
   }
   
   .gradient-button {
@@ -145,6 +147,10 @@
   
   .secondary-button {
     @apply bg-muted text-neon-yellow border border-neon-yellow/30 font-medium py-2 px-6 rounded-md transition-all hover:bg-muted/80 hover:border-neon-yellow;
+  }
+
+  .navbar {
+    @apply fixed top-0 left-0 right-0 backdrop-blur-xl bg-gradient-to-r from-neon-teal/10 to-neon-yellow/10 border-b border-neon-yellow/20 z-50;
   }
 
   /* Game card designs */
@@ -158,6 +164,10 @@
 
   .game-card-teal {
     @apply border border-neon-teal/60 hover:shadow-[0_0_15px_theme(colors.neon.teal)];
+  }
+
+  .glass-card {
+    @apply backdrop-blur-md bg-gradient-to-r from-neon-teal/5 to-neon-yellow/5 border border-neon-yellow/20 rounded-xl;
   }
 }
 
@@ -181,4 +191,23 @@
       -1px 1px 0 rgba(0,0,0,0.5),
       1px 1px 0 rgba(0,0,0,0.5);
   }
+
+  .bg-gradient-glow {
+    background: radial-gradient(circle, rgba(73,197,182,0.3) 0%, rgba(236,208,111,0.2) 50%, rgba(73,197,182,0.1) 100%);
+    background-size: 200% 200%;
+    animation: gradientShift 10s ease infinite;
+  }
+
+  @keyframes gradientShift {
+    0% {
+      background-position: 0% 0%;
+    }
+    50% {
+      background-position: 100% 100%;
+    }
+    100% {
+      background-position: 0% 0%;
+    }
+  }
 }
+

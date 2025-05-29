@@ -1,12 +1,11 @@
 
 import React, { useState } from 'react';
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Search, Briefcase, TrendingUp, BookOpen } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Search, Briefcase, TrendingUp, BookOpen, Calendar, MapPin, Award } from "lucide-react";
+import { NeonTitle, NeonButton, NeonCard, NeonIcon } from "@/components/ui/neon-elements";
 
 const CareersPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -117,212 +116,237 @@ const CareersPage = () => {
   });
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 py-16">
-      <div className="container mx-auto px-4">
+    <div className="min-h-screen py-16 px-4 relative">
+      {/* Background blurry elements */}
+      <div className="absolute inset-0 overflow-hidden -z-10">
+        <div className="absolute top-0 left-1/4 w-72 h-72 bg-neon-yellow rounded-full mix-blend-overlay filter blur-3xl opacity-5 animate-blob"></div>
+        <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-neon-teal rounded-full mix-blend-overlay filter blur-3xl opacity-5 animate-blob animation-delay-2000"></div>
+        <div className="absolute top-1/2 left-1/2 w-72 h-72 bg-neon-orange rounded-full mix-blend-overlay filter blur-3xl opacity-5 animate-blob animation-delay-4000"></div>
+      </div>
+
+      <div className="container mx-auto max-w-7xl">
         <div className="text-center mb-10">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            Explore <span className="bg-gradient-to-r from-blue-600 to-indigo-600 text-transparent bg-clip-text">Career Paths</span>
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <NeonTitle size="2xl" color="yellow" className="mb-4">
+            Explore <span className="text-neon-teal">Career Paths</span>
+          </NeonTitle>
+          <p className="text-lg text-white/70 max-w-2xl mx-auto">
             Discover various career opportunities and find the perfect path for your skills and interests.
           </p>
         </div>
 
         {/* Search and Filter Section */}
-        <div className="bg-white/80 backdrop-blur-md shadow-md rounded-xl p-6 mb-8">
+        <NeonCard color="yellow" className="mb-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/50" size={18} />
               <Input
                 placeholder="Search careers or companies"
-                className="pl-10"
+                className="pl-10 bg-black/20 border-white/20 text-white placeholder:text-white/50"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
             
             <Select value={selectedCategory} onValueChange={setSelectedCategory}>
-              <SelectTrigger>
+              <SelectTrigger className="bg-black/20 border-white/20 text-white">
                 <SelectValue placeholder="Category" />
               </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Categories</SelectItem>
-                <SelectItem value="technology">Technology</SelectItem>
-                <SelectItem value="data">Data Science</SelectItem>
-                <SelectItem value="marketing">Marketing</SelectItem>
-                <SelectItem value="design">Design</SelectItem>
-                <SelectItem value="operations">Operations</SelectItem>
+              <SelectContent className="bg-black border-white/20">
+                <SelectItem value="all" className="text-white">All Categories</SelectItem>
+                <SelectItem value="technology" className="text-white">Technology</SelectItem>
+                <SelectItem value="data" className="text-white">Data Science</SelectItem>
+                <SelectItem value="marketing" className="text-white">Marketing</SelectItem>
+                <SelectItem value="design" className="text-white">Design</SelectItem>
+                <SelectItem value="operations" className="text-white">Operations</SelectItem>
               </SelectContent>
             </Select>
             
             <Select value={selectedSalary} onValueChange={setSelectedSalary}>
-              <SelectTrigger>
+              <SelectTrigger className="bg-black/20 border-white/20 text-white">
                 <SelectValue placeholder="Salary Range" />
               </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">All Salary Ranges</SelectItem>
-                <SelectItem value="0-10">Below ₹10L</SelectItem>
-                <SelectItem value="10-15">₹10L - ₹15L</SelectItem>
-                <SelectItem value="15+">Above ₹15L</SelectItem>
+              <SelectContent className="bg-black border-white/20">
+                <SelectItem value="all" className="text-white">All Salary Ranges</SelectItem>
+                <SelectItem value="0-10" className="text-white">Below ₹10L</SelectItem>
+                <SelectItem value="10-15" className="text-white">₹10L - ₹15L</SelectItem>
+                <SelectItem value="15+" className="text-white">Above ₹15L</SelectItem>
               </SelectContent>
             </Select>
           </div>
-        </div>
+        </NeonCard>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {/* Main Career Listings */}
           <div className="md:col-span-2">
-            <h2 className="text-2xl font-bold mb-4">Available Careers</h2>
+            <h2 className="text-2xl font-bold mb-4 text-white">Available Careers</h2>
             
             {filteredCareers.length > 0 ? (
               <div className="space-y-6">
                 {filteredCareers.map(career => (
-                  <Card key={career.id} className="hover:shadow-lg transition-shadow">
+                  <NeonCard key={career.id} color="teal" className="transition-all hover:shadow-lg">
                     <CardHeader className="pb-2">
                       <div className="flex justify-between items-start">
                         <div>
-                          <CardTitle className="text-xl">{career.title}</CardTitle>
-                          <CardDescription className="text-base">{career.company} • {career.location}</CardDescription>
+                          <CardTitle className="text-xl text-white">{career.title}</CardTitle>
+                          <CardDescription className="text-base text-white/70 flex items-center">
+                            <Briefcase className="mr-1 h-4 w-4" />
+                            {career.company} • 
+                            <MapPin className="ml-2 mr-1 h-4 w-4" />
+                            {career.location}
+                          </CardDescription>
                         </div>
-                        <div className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium">
+                        <Badge className="bg-neon-yellow/20 text-neon-yellow border-neon-yellow/50">
                           {career.salary}
-                        </div>
+                        </Badge>
                       </div>
                     </CardHeader>
                     
                     <CardContent className="pb-2">
-                      <p className="text-gray-700 mb-4">{career.description}</p>
+                      <p className="text-white/80 mb-4">{career.description}</p>
                       
                       <div className="mb-4">
-                        <p className="text-sm text-gray-600 mb-2">Required Skills:</p>
+                        <p className="text-sm text-white/60 mb-2">Required Skills:</p>
                         <div className="flex flex-wrap gap-2">
                           {career.skills.map((skill, index) => (
-                            <span 
+                            <Badge 
                               key={index} 
-                              className="bg-indigo-50 text-indigo-700 px-2 py-1 rounded-md text-xs"
+                              variant="outline"
+                              className="bg-neon-teal/20 text-neon-teal border-neon-teal/50"
                             >
                               {skill}
-                            </span>
+                            </Badge>
                           ))}
                         </div>
                       </div>
                       
-                      <div className="flex justify-between text-sm text-gray-500">
-                        <span>Experience: {career.experience}</span>
-                        <span>Apply by: {career.applicationDeadline}</span>
+                      <div className="flex justify-between text-sm text-white/60">
+                        <span className="flex items-center">
+                          <Award className="mr-1 h-4 w-4" />
+                          Experience: {career.experience}
+                        </span>
+                        <span className="flex items-center">
+                          <Calendar className="mr-1 h-4 w-4" />
+                          Apply by: {career.applicationDeadline}
+                        </span>
                       </div>
                     </CardContent>
                     
                     <CardFooter className="pt-2">
-                      <Button className="w-full bg-gradient-to-r from-blue-600 to-indigo-600">View Details</Button>
+                      <NeonButton color="teal" className="w-full">View Details</NeonButton>
                     </CardFooter>
-                  </Card>
+                  </NeonCard>
                 ))}
               </div>
             ) : (
-              <div className="bg-white/80 backdrop-blur-md rounded-xl p-8 text-center">
-                <div className="text-gray-400 mb-3">
-                  <Search className="h-12 w-12 mx-auto" />
-                </div>
-                <h3 className="text-xl font-medium mb-2">No careers found</h3>
-                <p className="text-gray-600">
+              <NeonCard color="orange" className="text-center p-8">
+                <NeonIcon color="orange" size="lg" className="mx-auto mb-4">
+                  <Search className="h-12 w-12" />
+                </NeonIcon>
+                <h3 className="text-xl font-medium mb-2 text-white">No careers found</h3>
+                <p className="text-white/70">
                   Try adjusting your search or filter criteria to find more opportunities.
                 </p>
-              </div>
+              </NeonCard>
             )}
           </div>
 
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Career Resources */}
-            <Card className="bg-gradient-to-br from-blue-50 to-indigo-50 border-blue-200">
+            <NeonCard color="yellow">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <BookOpen className="h-5 w-5 text-blue-600" />
+                <CardTitle className="flex items-center gap-2 text-white">
+                  <NeonIcon color="yellow" size="sm">
+                    <BookOpen className="h-5 w-5" />
+                  </NeonIcon>
                   Career Resources
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <ul className="space-y-3">
-                  <li className="flex items-start">
-                    <div className="mr-2 mt-1 bg-blue-100 p-1 rounded-full">
-                      <BookOpen className="h-3 w-3 text-blue-600" />
+                  <li className="flex items-start text-white/80">
+                    <div className="mr-2 mt-1 bg-neon-yellow/20 p-1 rounded-full">
+                      <BookOpen className="h-3 w-3 text-neon-yellow" />
                     </div>
-                    <span className="text-sm text-gray-700">Guide to Software Engineering Careers</span>
+                    <span className="text-sm">Guide to Software Engineering Careers</span>
                   </li>
-                  <li className="flex items-start">
-                    <div className="mr-2 mt-1 bg-blue-100 p-1 rounded-full">
-                      <BookOpen className="h-3 w-3 text-blue-600" />
+                  <li className="flex items-start text-white/80">
+                    <div className="mr-2 mt-1 bg-neon-yellow/20 p-1 rounded-full">
+                      <BookOpen className="h-3 w-3 text-neon-yellow" />
                     </div>
-                    <span className="text-sm text-gray-700">How to Prepare for Technical Interviews</span>
+                    <span className="text-sm">How to Prepare for Technical Interviews</span>
                   </li>
-                  <li className="flex items-start">
-                    <div className="mr-2 mt-1 bg-blue-100 p-1 rounded-full">
-                      <BookOpen className="h-3 w-3 text-blue-600" />
+                  <li className="flex items-start text-white/80">
+                    <div className="mr-2 mt-1 bg-neon-yellow/20 p-1 rounded-full">
+                      <BookOpen className="h-3 w-3 text-neon-yellow" />
                     </div>
-                    <span className="text-sm text-gray-700">Resume Building Masterclass</span>
+                    <span className="text-sm">Resume Building Masterclass</span>
                   </li>
                 </ul>
-                <Button variant="outline" className="w-full mt-4">
+                <NeonButton variant="outline" color="yellow" className="w-full mt-4">
                   View All Resources
-                </Button>
+                </NeonButton>
               </CardContent>
-            </Card>
+            </NeonCard>
             
             {/* Career Trends */}
-            <Card className="bg-gradient-to-br from-purple-50 to-pink-50 border-purple-200">
+            <NeonCard color="teal">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <TrendingUp className="h-5 w-5 text-purple-600" />
+                <CardTitle className="flex items-center gap-2 text-white">
+                  <NeonIcon color="teal" size="sm">
+                    <TrendingUp className="h-5 w-5" />
+                  </NeonIcon>
                   Trending Careers
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <ul className="space-y-3">
                   <li className="flex justify-between items-center">
-                    <span className="text-sm font-medium">Data Scientist</span>
-                    <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">+24%</span>
+                    <span className="text-sm font-medium text-white">Data Scientist</span>
+                    <Badge className="bg-green-500/20 text-green-400 border-green-400">+24%</Badge>
                   </li>
                   <li className="flex justify-between items-center">
-                    <span className="text-sm font-medium">Full-Stack Developer</span>
-                    <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">+18%</span>
+                    <span className="text-sm font-medium text-white">Full-Stack Developer</span>
+                    <Badge className="bg-green-500/20 text-green-400 border-green-400">+18%</Badge>
                   </li>
                   <li className="flex justify-between items-center">
-                    <span className="text-sm font-medium">UX Designer</span>
-                    <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">+15%</span>
+                    <span className="text-sm font-medium text-white">UX Designer</span>
+                    <Badge className="bg-green-500/20 text-green-400 border-green-400">+15%</Badge>
                   </li>
                 </ul>
               </CardContent>
-            </Card>
+            </NeonCard>
             
             {/* Salary Guide */}
-            <Card className="bg-gradient-to-br from-amber-50 to-orange-50 border-amber-200">
+            <NeonCard color="orange">
               <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Briefcase className="h-5 w-5 text-amber-600" />
+                <CardTitle className="flex items-center gap-2 text-white">
+                  <NeonIcon color="orange" size="sm">
+                    <Briefcase className="h-5 w-5" />
+                  </NeonIcon>
                   Salary Guide
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 <ul className="space-y-3">
                   <li className="flex justify-between items-center">
-                    <span className="text-sm font-medium">Entry Level</span>
-                    <span className="text-sm">₹4L - ₹8L</span>
+                    <span className="text-sm font-medium text-white">Entry Level</span>
+                    <span className="text-sm text-white/70">₹4L - ₹8L</span>
                   </li>
                   <li className="flex justify-between items-center">
-                    <span className="text-sm font-medium">Mid Level</span>
-                    <span className="text-sm">₹8L - ₹18L</span>
+                    <span className="text-sm font-medium text-white">Mid Level</span>
+                    <span className="text-sm text-white/70">₹8L - ₹18L</span>
                   </li>
                   <li className="flex justify-between items-center">
-                    <span className="text-sm font-medium">Senior Level</span>
-                    <span className="text-sm">₹18L - ₹35L+</span>
+                    <span className="text-sm font-medium text-white">Senior Level</span>
+                    <span className="text-sm text-white/70">₹18L - ₹35L+</span>
                   </li>
                 </ul>
-                <Button variant="outline" className="w-full mt-4">
+                <NeonButton variant="outline" color="orange" className="w-full mt-4">
                   Compare Salaries
-                </Button>
+                </NeonButton>
               </CardContent>
-            </Card>
+            </NeonCard>
           </div>
         </div>
       </div>

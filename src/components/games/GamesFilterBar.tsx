@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { NeonTitle, NeonButton } from "@/components/ui/neon-elements";
 import { GameCategory } from "@/hooks/use-games-data";
+import { useNavigate } from "react-router-dom";
 
 interface GamesFilterBarProps {
   currentCategory: GameCategory;
@@ -21,6 +22,8 @@ const GamesFilterBar = ({
   setFilterBy,
   totalGames
 }: GamesFilterBarProps) => {
+  const navigate = useNavigate();
+
   const categories = [
     { id: 'all', label: 'All Careers' },
     { id: 'doctor', label: 'Doctor' },
@@ -45,7 +48,7 @@ const GamesFilterBar = ({
               className={`border border-transparent 
                 ${currentCategory === cat.id 
                   ? "bg-white/10 text-white border-white/20" 
-                  : "bg-black/20 hover:border-white/10 hover:bg-black/30"}`}
+                  : "bg-black/20 hover:border-white/10 hover:bg-black/30 text-white"}`}
               size="sm"
             >
               {cat.id === 'all' && <Gamepad2 className="h-4 w-4 mr-1" />}
@@ -57,7 +60,7 @@ const GamesFilterBar = ({
         <div className="flex items-center gap-2">
           <span className="hidden md:inline text-sm text-muted-foreground">Sort by:</span>
           <Select value={filterBy} onValueChange={setFilterBy}>
-            <SelectTrigger className="w-[180px] bg-black/30 border border-white/20">
+            <SelectTrigger className="w-[180px] bg-black/30 border border-white/20 text-white">
               <div className="flex items-center">
                 <Filter className="h-4 w-4 mr-1 text-muted-foreground" />
                 <SelectValue placeholder="Sort by" />
@@ -79,7 +82,11 @@ const GamesFilterBar = ({
           {currentCategory !== 'all' && ` for ${categories.find(c => c.id === currentCategory)?.label}`}
         </p>
         
-        <NeonButton color="teal" size="sm">
+        <NeonButton 
+          color="teal" 
+          size="sm"
+          onClick={() => navigate('/daily-challenges')}
+        >
           <Zap className="h-4 w-4 mr-1" />
           Daily Challenge
         </NeonButton>

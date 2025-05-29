@@ -98,7 +98,9 @@ const Navbar = () => {
     <nav className="w-full bg-black/80 backdrop-blur-md sticky top-0 z-50 border-b border-white/10">
       <div className="container mx-auto px-4 py-3 flex items-center justify-between">
         <Link to="/" className="flex items-center">
-          <span className="font-display text-xl font-bold tracking-wider gradient-text-yellow">ClimbUp</span>
+          <span className="font-display text-2xl font-bold tracking-wider text-neon-yellow neon-shadow-yellow uppercase">
+            ClimbUp
+          </span>
         </Link>
 
         {/* Desktop Navigation Menu */}
@@ -106,7 +108,7 @@ const Navbar = () => {
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-black/30">Key Features</NavigationMenuTrigger>
+                <NavigationMenuTrigger className="bg-black/30 text-white hover:bg-white/10 border border-white/10">Key Features</NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="grid gap-3 p-4 w-[400px] grid-cols-2 bg-black/90 backdrop-blur-md border border-white/10">
                     {menuItems.slice(0, 6).map((item) => (
@@ -115,12 +117,12 @@ const Navbar = () => {
                           <Link
                             to={item.url}
                             className={cn(
-                              "flex items-center space-x-2 rounded-md px-3 py-2 hover:bg-white/10",
-                              location.pathname === item.url ? "bg-white/10" : ""
+                              "flex items-center space-x-2 rounded-md px-3 py-2 hover:bg-white/10 transition-colors",
+                              location.pathname === item.url ? "bg-white/10 text-neon-yellow" : "text-white"
                             )}
                           >
                             <item.icon className="h-4 w-4 text-neon-yellow" />
-                            <span className="text-white">{item.title}</span>
+                            <span>{item.title}</span>
                           </Link>
                         </NavigationMenuLink>
                       </li>
@@ -129,7 +131,7 @@ const Navbar = () => {
                 </NavigationMenuContent>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <NavigationMenuTrigger className="bg-black/30">Tools</NavigationMenuTrigger>
+                <NavigationMenuTrigger className="bg-black/30 text-white hover:bg-white/10 border border-white/10">Tools</NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="grid gap-3 p-4 w-[400px] grid-cols-2 bg-black/90 backdrop-blur-md border border-white/10">
                     {menuItems.slice(6, 12).map((item) => (
@@ -138,12 +140,12 @@ const Navbar = () => {
                           <Link
                             to={item.url}
                             className={cn(
-                              "flex items-center space-x-2 rounded-md px-3 py-2 hover:bg-white/10",
-                              location.pathname === item.url ? "bg-white/10" : ""
+                              "flex items-center space-x-2 rounded-md px-3 py-2 hover:bg-white/10 transition-colors",
+                              location.pathname === item.url ? "bg-white/10 text-neon-yellow" : "text-white"
                             )}
                           >
                             <item.icon className="h-4 w-4 text-neon-yellow" />
-                            <span className="text-white">{item.title}</span>
+                            <span>{item.title}</span>
                           </Link>
                         </NavigationMenuLink>
                       </li>
@@ -159,7 +161,7 @@ const Navbar = () => {
           {isAuthenticated ? (
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" className="rounded-full h-10 w-10 p-0 border-2 border-neon-yellow/50 bg-black/50">
+                <Button variant="outline" className="rounded-full h-10 w-10 p-0 border-2 border-neon-yellow/50 bg-black/50 hover:bg-white/10">
                   <span className="font-medium text-neon-yellow">{getUserInitials()}</span>
                 </Button>
               </DropdownMenuTrigger>
@@ -185,10 +187,10 @@ const Navbar = () => {
             </DropdownMenu>
           ) : (
             <>
-              <Button variant="ghost" className="text-white hover:bg-white/10" asChild>
+              <Button variant="ghost" className="text-white hover:bg-white/10 border border-white/20" asChild>
                 <Link to="/login">Login</Link>
               </Button>
-              <Button className="gradient-button neon-yellow" asChild>
+              <Button className="bg-neon-yellow/20 text-neon-yellow border border-neon-yellow hover:bg-neon-yellow/30 transition-all duration-300" asChild>
                 <Link to="/login?signup=true">Sign Up</Link>
               </Button>
             </>
@@ -257,7 +259,7 @@ const Navbar = () => {
                       Login
                     </Link>
                   </Button>
-                  <Button className="gradient-button neon-yellow w-full" asChild>
+                  <Button className="bg-neon-yellow/20 text-neon-yellow border border-neon-yellow hover:bg-neon-yellow/30 w-full" asChild>
                     <Link 
                       to="/login?signup=true"
                       onClick={() => setIsMenuOpen(false)}

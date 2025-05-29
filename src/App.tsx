@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from "@/components/ui/toaster";
@@ -8,6 +9,8 @@ import GamesPage from "@/pages/GamesPage";
 import GameDetailPage from "@/pages/GameDetailPage";
 import GameLeaderboardPage from "@/pages/GameLeaderboardPage";
 import GamePlayPage from "@/pages/GamePlayPage";
+import GamePlayPartnerPage from "@/pages/GamePlayPartnerPage";
+import DailyChallengesPage from "@/pages/DailyChallengesPage";
 import ChallengesPage from "@/pages/ChallengesPage";
 import ChallengeDetailPage from "@/pages/ChallengeDetailPage";
 import ChallengeLeaderboardPage from "@/pages/ChallengeLeaderboardPage";
@@ -37,6 +40,9 @@ const App: React.FC = () => {
           <Route path="games/:gameType/:gameId" element={<GameDetailPage />} />
           <Route path="games/:gameType/:gameId/play" element={<GamePlayPage />} />
           <Route path="games/:gameType/:gameId/leaderboard" element={<GameLeaderboardPage />} />
+          <Route path="games/play/:gameId" element={<GamePlayPartnerPage />} />
+          <Route path="daily-challenges" element={<DailyChallengesPage />} />
+          <Route path="daily-challenge/:challengeId" element={<GamePlayPartnerPage />} />
           <Route path="challenges" element={<ChallengesPage />} />
           <Route path="challenges/:challengeType/:challengeId" element={<ChallengeDetailPage />} />
           <Route path="challenges/:challengeType/:challengeId/leaderboard" element={<ChallengeLeaderboardPage />} />

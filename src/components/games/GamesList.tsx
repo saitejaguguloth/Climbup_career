@@ -30,6 +30,11 @@ const GamesList = ({ games }: GamesListProps) => {
     }
   };
 
+  const handlePlayGame = (gameId: string) => {
+    // Open game in new tab
+    window.open(`/games/play/${gameId}`, '_blank');
+  };
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       {games.map((game) => (
@@ -43,7 +48,6 @@ const GamesList = ({ games }: GamesListProps) => {
               {game.type === 'arcade' && (
                 <div className={`text-neon-${game.color} animate-glow-pulse`}>
                   <svg width="120" height="120" viewBox="0 0 200 200">
-                    {/* Visual representation based on game type */}
                     <circle cx="100" cy="100" r="30" fill="none" stroke="currentColor" strokeWidth="2" />
                     <circle cx="100" cy="100" r="70" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="10 15" />
                     <path d="M100,30 L100,50 M100,150 L100,170 M30,100 L50,100 M150,100 L170,100" 
@@ -103,7 +107,7 @@ const GamesList = ({ games }: GamesListProps) => {
               <NeonButton
                 color={game.color as "yellow" | "teal" | "orange"}
                 size="sm"
-                onClick={() => navigate(`/games/${game.id}`)}
+                onClick={() => handlePlayGame(game.id)}
                 className="group"
               >
                 <Play className="h-4 w-4 mr-1" /> Play

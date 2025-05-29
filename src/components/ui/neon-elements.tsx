@@ -1,6 +1,7 @@
 
 import React from "react";
 import { cn } from "@/lib/utils";
+import { Slot } from "@radix-ui/react-slot";
 
 interface NeonIconProps extends React.HTMLAttributes<HTMLDivElement> {
   color?: "yellow" | "teal" | "orange";
@@ -90,12 +91,14 @@ interface NeonButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> 
   color?: "yellow" | "teal" | "orange";
   variant?: "solid" | "outline";
   size?: "sm" | "md" | "lg";
+  asChild?: boolean;
 }
 
 export const NeonButton = ({
   color = "yellow",
   variant = "outline",
   size = "md",
+  asChild = false,
   className,
   children,
   ...props
@@ -121,8 +124,10 @@ export const NeonButton = ({
     },
   };
 
+  const Comp = asChild ? Slot : "button";
+
   return (
-    <button
+    <Comp
       className={cn(
         "font-display tracking-wide uppercase font-bold border rounded transition-all duration-300",
         "hover:bg-opacity-30 hover:shadow-[0_0_10px_currentColor]",
@@ -133,7 +138,7 @@ export const NeonButton = ({
       {...props}
     >
       {children}
-    </button>
+    </Comp>
   );
 };
 

@@ -26,13 +26,13 @@ const GamesFilterBar = ({
 
   const categories = [
     { id: 'all', label: 'All Careers' },
-    { id: 'doctor', label: 'Doctor' },
-    { id: 'developer', label: 'Software Developer' },
-    { id: 'ias', label: 'IAS Officer' },
-    { id: 'engineer', label: 'Engineer' },
-    { id: 'designer', label: 'Designer' },
-    { id: 'scientist', label: 'Scientist' },
-    { id: 'entrepreneur', label: 'Entrepreneur' }
+    { id: 'engineering', label: 'Engineering' },
+    { id: 'medical', label: 'Medical' },
+    { id: 'technology', label: 'Technology' },
+    { id: 'business', label: 'Business' },
+    { id: 'design', label: 'Design' },
+    { id: 'science', label: 'Science' },
+    { id: 'government', label: 'Government' }
   ];
   
   return (

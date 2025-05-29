@@ -156,8 +156,7 @@ const GamesList = ({ games }: GamesListProps) => {
               </div>
               <Progress 
                 value={game.progress} 
-                className="h-1 bg-white/10" 
-                indicatorClassName={`bg-neon-${game.color}`}
+                className="h-1 bg-white/10"
               />
               <div className="flex justify-end mt-1">
                 <span className="text-xs text-white/60">{game.completions.toLocaleString()} plays</span>

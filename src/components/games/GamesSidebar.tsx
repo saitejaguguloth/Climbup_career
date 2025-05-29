@@ -57,7 +57,6 @@ const GamesSidebar = () => {
             <Progress 
               value={(userStats.xp / userStats.nextLevelXp) * 100} 
               className="h-1 bg-white/10"
-              indicatorClassName="bg-neon-yellow"
             />
             <div className="flex justify-end mt-1 text-xs text-white/60">
               {userStats.nextLevelXp - userStats.xp} XP needed
@@ -103,7 +102,6 @@ const GamesSidebar = () => {
                 <Progress 
                   value={game.progress} 
                   className="h-1 bg-white/10"
-                  indicatorClassName="bg-white/40"
                 />
               </div>
             </div>
@@ -127,7 +125,6 @@ const GamesSidebar = () => {
               <Progress 
                 value={skill.improvement} 
                 className="h-1 bg-white/10"
-                indicatorClassName="bg-neon-teal"
               />
               <div className="flex justify-between mt-1">
                 <span className="text-xs text-white/60">{skill.games} related games</span>

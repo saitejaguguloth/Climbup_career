@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { ArrowLeft, Award, Clock, PlayCircle, ChevronRight, Star, Trophy, Users, Zap, ChevronDown } from 'lucide-react';
+import { ArrowLeft, Award, Clock, PlayCircle, ChevronRight, Star, Trophy, Users, Zap, ChevronDown, Gamepad2 } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -129,7 +129,6 @@ const GameDetailPage = () => {
               <Progress 
                 value={(gameData.completedLevels / gameData.totalLevels) * 100}
                 className="h-2 bg-white/10"
-                indicatorClassName={`bg-neon-${gameData.color}`}
               />
             </div>
             

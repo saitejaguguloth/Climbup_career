@@ -1,11 +1,10 @@
-
 import React, { useState } from 'react';
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Award, Trophy, Star, Medal, TrendingUp, Users, Clock, Flame, Calendar } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { NeonTitle, NeonButton, NeonCard, NeonIcon } from "@/components/ui/neon-elements";
 
 const LeaderboardPage = () => {
   const [timeframe, setTimeframe] = useState<"weekly" | "monthly" | "allTime">("weekly");
@@ -77,214 +76,208 @@ const LeaderboardPage = () => {
     <div className="min-h-screen py-16 px-4 relative">
       {/* Background blurry elements */}
       <div className="absolute inset-0 overflow-hidden -z-10">
-        <div className="absolute top-0 left-0 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-        <div className="absolute bottom-0 right-0 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-        <div className="absolute top-1/2 left-1/3 w-72 h-72 bg-emerald-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+        <div className="absolute top-0 left-0 w-72 h-72 bg-neon-yellow rounded-full mix-blend-overlay filter blur-3xl opacity-5 animate-blob"></div>
+        <div className="absolute bottom-0 right-0 w-72 h-72 bg-neon-teal rounded-full mix-blend-overlay filter blur-3xl opacity-5 animate-blob animation-delay-2000"></div>
+        <div className="absolute top-1/2 left-1/3 w-72 h-72 bg-neon-orange rounded-full mix-blend-overlay filter blur-3xl opacity-5 animate-blob animation-delay-4000"></div>
       </div>
       
       <div className="container mx-auto max-w-7xl">
         <div className="text-center mb-10">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            <span className="bg-gradient-to-r from-blue-600 to-indigo-600 text-transparent bg-clip-text">Leaderboard</span>
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <NeonTitle size="2xl" color="yellow" className="mb-4">
+            <span className="text-neon-teal">Leaderboard</span>
+          </NeonTitle>
+          <p className="text-lg text-white/70 max-w-2xl mx-auto">
             Compete with peers, track your progress, and climb to the top!
           </p>
         </div>
         
         <div className="flex flex-col lg:flex-row gap-6 mb-10">
-          <Card className="bg-gradient-to-r from-blue-600 to-indigo-600 text-white flex-1">
+          <NeonCard color="yellow" className="flex-1">
             <CardHeader className="pb-2">
-              <CardTitle className="flex items-center text-lg">
-                <Trophy className="mr-2 h-5 w-5" />
+              <CardTitle className="flex items-center text-lg text-white">
+                <NeonIcon color="yellow" size="sm" className="mr-2">
+                  <Trophy className="h-5 w-5" />
+                </NeonIcon>
                 Your Ranking
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex items-center">
                 <div className="mr-4">
-                  <Avatar className="h-16 w-16 border-2 border-white">
+                  <Avatar className="h-16 w-16 border-2 border-neon-yellow">
                     <AvatarImage src={currentUser.avatar} />
                     <AvatarFallback>YOU</AvatarFallback>
                   </Avatar>
                 </div>
                 <div>
-                  <div className="text-4xl font-bold">#{currentUser.rank}</div>
-                  <div className="text-lg opacity-90">{currentUser.name}</div>
-                  <div className="text-sm opacity-80">{currentUser.score} points</div>
+                  <div className="text-4xl font-bold text-neon-yellow">#{currentUser.rank}</div>
+                  <div className="text-lg text-white">{currentUser.name}</div>
+                  <div className="text-sm text-white/70">{currentUser.score} points</div>
                 </div>
               </div>
             </CardContent>
-          </Card>
+          </NeonCard>
 
-          <Card className="bg-white/90 backdrop-blur flex-1">
+          <NeonCard color="orange" className="flex-1">
             <CardHeader className="pb-2">
-              <CardTitle className="flex items-center text-lg">
-                <Flame className="mr-2 h-5 w-5 text-orange-500" />
+              <CardTitle className="flex items-center text-lg text-white">
+                <NeonIcon color="orange" size="sm" className="mr-2">
+                  <Flame className="h-5 w-5" />
+                </NeonIcon>
                 Your Streak
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-4xl font-bold">{currentUser.streak} days</div>
-              <div className="text-sm text-gray-500 mt-1">Keep learning daily to increase your streak!</div>
+              <div className="text-4xl font-bold text-neon-orange">{currentUser.streak} days</div>
+              <div className="text-sm text-white/70 mt-1">Keep learning daily to increase your streak!</div>
               <div className="mt-2">
-                <Button size="sm" className="bg-gradient-to-r from-orange-500 to-red-500">
+                <NeonButton size="sm" color="orange">
                   <Flame className="mr-2 h-4 w-4" /> Continue Streak
-                </Button>
+                </NeonButton>
               </div>
             </CardContent>
-          </Card>
+          </NeonCard>
 
-          <Card className="bg-white/90 backdrop-blur flex-1">
+          <NeonCard color="teal" className="flex-1">
             <CardHeader className="pb-2">
-              <CardTitle className="flex items-center text-lg">
-                <Medal className="mr-2 h-5 w-5 text-yellow-500" />
+              <CardTitle className="flex items-center text-lg text-white">
+                <NeonIcon color="teal" size="sm" className="mr-2">
+                  <Medal className="h-5 w-5" />
+                </NeonIcon>
                 Next Achievement
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="flex items-center">
-                <div className="mr-4 bg-yellow-100 p-3 rounded-full">
-                  <TrendingUp className="h-6 w-6 text-yellow-600" />
-                </div>
+                <NeonIcon color="teal" size="md" className="mr-4">
+                  <TrendingUp className="h-6 w-6" />
+                </NeonIcon>
                 <div>
-                  <div className="font-semibold">Rising Star</div>
-                  <div className="text-sm text-gray-500">Improve your rank by 10 positions</div>
-                  <div className="mt-1 text-xs text-gray-400">75% complete</div>
+                  <div className="font-semibold text-white">Rising Star</div>
+                  <div className="text-sm text-white/70">Improve your rank by 10 positions</div>
+                  <div className="mt-1 text-xs text-white/60">75% complete</div>
                 </div>
               </div>
             </CardContent>
-          </Card>
+          </NeonCard>
         </div>
         
-        <div className="bg-white/90 backdrop-blur shadow-lg rounded-xl p-6 mb-10">
+        <NeonCard color="teal" className="mb-10">
           <div className="flex justify-between items-center flex-wrap gap-4 mb-6">
             <div>
-              <h2 className="text-2xl font-bold flex items-center">
-                <Trophy className="mr-2 h-6 w-6 text-yellow-500" /> Top Performers
+              <h2 className="text-2xl font-bold flex items-center text-white">
+                <NeonIcon color="teal" size="sm" className="mr-2">
+                  <Trophy className="h-6 w-6" />
+                </NeonIcon>
+                Top Performers
               </h2>
             </div>
             
             <div className="flex gap-4">
               <Tabs 
                 value={timeframe} 
-                onValueChange={(value) => setTimeframe(value as "weekly" | "monthly" | "allTime")}
-                className="w-[400px]"
+                onValueChange={(value) => setTimeframe(value as typeof timeframe)}
               >
-                <TabsList className="grid grid-cols-3">
-                  <TabsTrigger value="weekly" className="flex items-center">
-                    <Clock className="mr-1 h-4 w-4" /> Weekly
+                <TabsList className="bg-black/20">
+                  <TabsTrigger value="weekly" className="text-white data-[state=active]:bg-neon-teal/20 data-[state=active]:text-neon-teal">
+                    <Calendar className="w-4 h-4 mr-1" /> Weekly
                   </TabsTrigger>
-                  <TabsTrigger value="monthly" className="flex items-center">
-                    <Calendar className="mr-1 h-4 w-4" /> Monthly
+                  <TabsTrigger value="monthly" className="text-white data-[state=active]:bg-neon-teal/20 data-[state=active]:text-neon-teal">
+                    <Calendar className="w-4 h-4 mr-1" /> Monthly
                   </TabsTrigger>
-                  <TabsTrigger value="allTime" className="flex items-center">
-                    <Star className="mr-1 h-4 w-4" /> All Time
+                  <TabsTrigger value="allTime" className="text-white data-[state=active]:bg-neon-teal/20 data-[state=active]:text-neon-teal">
+                    <Star className="w-4 h-4 mr-1" /> All Time
                   </TabsTrigger>
                 </TabsList>
               </Tabs>
             </div>
           </div>
           
-          <div className="flex flex-col lg:flex-row gap-6">
+          {/* Top 3 Users */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
             {topThree.map((user, index) => (
-              <Card 
-                key={user.rank} 
-                className={`flex-1 border-t-4 ${
-                  index === 0 
-                    ? "border-t-yellow-400" 
-                    : index === 1 
-                      ? "border-t-gray-400" 
-                      : "border-t-amber-700"
-                }`}
-              >
-                <CardHeader className="pb-2 text-center">
-                  <div className="flex justify-center mb-2">
-                    <div className={`rounded-full p-2 ${
-                      index === 0 
-                        ? "bg-yellow-100" 
-                        : index === 1 
-                          ? "bg-gray-100" 
-                          : "bg-amber-100"
-                    }`}>
-                      <Trophy className={`h-6 w-6 ${
-                        index === 0 
-                          ? "text-yellow-600" 
-                          : index === 1 
-                            ? "text-gray-600" 
-                            : "text-amber-700"
-                      }`} />
-                    </div>
-                  </div>
-                  <CardTitle className="text-lg">Rank #{user.rank}</CardTitle>
-                </CardHeader>
-                <CardContent className="text-center">
-                  <Avatar className="h-20 w-20 mx-auto mb-2 border-2 border-gray-200">
+              <div key={user.rank} className={`text-center ${
+                index === 0 ? 'order-2 md:order-1' : 
+                index === 1 ? 'order-1 md:order-2' : 
+                'order-3'
+              }`}>
+                <div className={`relative mb-4 ${
+                  index === 0 ? 'transform md:scale-110' : ''
+                }`}>
+                  <Avatar className={`mx-auto ${
+                    index === 0 ? 'h-24 w-24 border-4 border-amber-400' : 
+                    index === 1 ? 'h-20 w-20 border-4 border-gray-400' : 
+                    'h-20 w-20 border-4 border-amber-700'
+                  }`}>
                     <AvatarImage src={user.avatar} />
-                    <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
+                    <AvatarFallback>{user.name.substring(0, 2)}</AvatarFallback>
                   </Avatar>
-                  <div className="font-bold text-xl">{user.name}</div>
-                  <div className="text-gray-500 text-sm">{user.college}</div>
-                  <div className="mt-2 text-lg font-semibold">{user.score} points</div>
-                  <div className="mt-1 flex items-center justify-center text-sm">
-                    <Flame className="mr-1 h-4 w-4 text-orange-500" />
-                    <span>{user.streak} day streak</span>
+                  <div className={`absolute -top-2 -right-2 w-8 h-8 rounded-full flex items-center justify-center font-bold ${
+                    index === 0 ? 'bg-amber-400 text-black' : 
+                    index === 1 ? 'bg-gray-400 text-white' : 
+                    'bg-amber-700 text-white'
+                  }`}>
+                    {user.rank}
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+                <h3 className="font-semibold text-white">{user.name}</h3>
+                <p className="text-sm text-white/70">{user.college}</p>
+                <div className="mt-2">
+                  <div className="text-2xl font-bold text-neon-yellow">{user.score.toLocaleString()}</div>
+                  <div className="text-sm text-white/60">points</div>
+                </div>
+                <div className="flex items-center justify-center mt-2">
+                  <Flame className="w-4 h-4 text-orange-400 mr-1" />
+                  <span className="text-sm text-orange-400">{user.streak} day streak</span>
+                </div>
+              </div>
             ))}
           </div>
           
-          <div className="mt-8">
-            <div className="rounded-lg overflow-hidden bg-white">
-              {remainingUsers.map((user, index) => (
-                <div 
-                  key={user.rank}
-                  className={`flex items-center p-4 ${index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}`}
-                >
-                  <div className="w-12 text-center font-bold text-lg">#{user.rank}</div>
-                  <Avatar className="h-10 w-10 ml-2">
-                    <AvatarImage src={user.avatar} />
-                    <AvatarFallback>{user.name.charAt(0)}</AvatarFallback>
-                  </Avatar>
-                  <div className="ml-4 flex-grow">
-                    <div className="font-semibold">{user.name}</div>
-                    <div className="text-sm text-gray-500">{user.college}</div>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <div className="text-right">
-                      <div className="font-semibold">{user.score}</div>
-                      <div className="text-xs text-gray-500">points</div>
-                    </div>
-                    <Badge variant="outline" className="flex items-center whitespace-nowrap">
-                      <Flame className="mr-1 h-3 w-3 text-orange-500" />
-                      {user.streak} days
-                    </Badge>
-                  </div>
-                </div>
-              ))}
-            </div>
+          {/* Remaining Users Table */}
+          <div className="overflow-x-auto">
+            <table className="w-full">
+              <thead>
+                <tr className="border-b border-white/20">
+                  <th className="text-left py-3 text-white">Rank</th>
+                  <th className="text-left py-3 text-white">Student</th>
+                  <th className="text-right py-3 text-white">Score</th>
+                  <th className="text-right py-3 text-white">Streak</th>
+                </tr>
+              </thead>
+              <tbody>
+                {remainingUsers.map((user) => (
+                  <tr key={user.rank} className="hover:bg-white/5 border-b border-white/10">
+                    <td className="py-3">
+                      <span className="font-medium text-white">#{user.rank}</span>
+                    </td>
+                    <td className="py-3">
+                      <div className="flex items-center">
+                        <Avatar className="h-10 w-10 mr-3">
+                          <AvatarImage src={user.avatar} />
+                          <AvatarFallback>{user.name.substring(0, 2)}</AvatarFallback>
+                        </Avatar>
+                        <div>
+                          <div className="font-medium text-white">{user.name}</div>
+                          <div className="text-sm text-white/60">{user.college}</div>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="text-right py-3">
+                      <span className="font-semibold text-white">{user.score.toLocaleString()}</span>
+                    </td>
+                    <td className="text-right py-3">
+                      <div className="flex items-center justify-end">
+                        <Flame className="w-4 h-4 text-orange-400 mr-1" />
+                        <span className="text-orange-400">{user.streak}</span>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
-          
-          <div className="mt-6 text-center">
-            <Button variant="outline">View Full Leaderboard</Button>
-          </div>
-        </div>
-        
-        <Card className="bg-gradient-to-r from-blue-600 to-purple-600 text-white p-6">
-          <div className="flex flex-col md:flex-row items-center justify-between gap-6">
-            <div>
-              <h3 className="text-2xl font-bold mb-2">Join Campus Competitions</h3>
-              <p className="opacity-90">
-                Compete with students from your college and earn special badges and rewards.
-              </p>
-            </div>
-            <Button variant="secondary" className="whitespace-nowrap">
-              <Users className="mr-2 h-4 w-4" />
-              Find Campus Events
-            </Button>
-          </div>
-        </Card>
+        </NeonCard>
       </div>
     </div>
   );

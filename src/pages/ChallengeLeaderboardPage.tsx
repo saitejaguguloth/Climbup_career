@@ -1,11 +1,10 @@
-
 import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Trophy, Users, Star } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { NeonTitle, NeonButton, NeonCard, NeonIcon } from "@/components/ui/neon-elements";
 
 const ChallengeLeaderboardPage = () => {
   const { challengeId, challengeType } = useParams();
@@ -85,202 +84,215 @@ const ChallengeLeaderboardPage = () => {
   };
 
   return (
-    <div className="container mx-auto py-8 px-4">
-      {/* Back button */}
-      <Button 
-        variant="ghost" 
-        className="mb-6 flex items-center gap-2" 
-        onClick={() => navigate(`/challenges/${challengeType}/${challengeId}`)}
-      >
-        <ArrowLeft className="h-4 w-4" />
-        Back to Challenge
-      </Button>
-      
-      <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-        {/* Leaderboard sidebar */}
-        <div className="lg:col-span-1">
-          <Card className="bg-white/80 backdrop-blur shadow-lg">
-            <CardHeader>
-              <div className="mb-2">
-                <Badge variant="outline" className="bg-indigo-100 text-indigo-800 mb-2">
-                  {challengeType?.toUpperCase()}
-                </Badge>
-              </div>
-              <CardTitle className="text-xl">{getChallengeTitle()}</CardTitle>
-              <CardDescription>
-                Challenge Leaderboard
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="bg-gradient-to-r from-amber-50 to-amber-100 p-4 rounded-lg border border-amber-200">
-                <div className="flex items-center gap-3">
-                  <div className="bg-amber-200 p-2 rounded-full">
-                    <Trophy className="h-4 w-4 text-amber-600" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold">Your Ranking</h3>
-                    <p className="text-sm text-amber-800">
-                      You're currently <span className="font-bold">#4</span> on the leaderboard
-                    </p>
+    <div className="min-h-screen py-8 px-4 relative">
+      {/* Background blurry elements */}
+      <div className="absolute inset-0 overflow-hidden -z-10">
+        <div className="absolute top-0 left-0 w-64 h-64 bg-neon-yellow rounded-full mix-blend-overlay filter blur-3xl opacity-5 animate-blob"></div>
+        <div className="absolute top-0 right-0 w-72 h-72 bg-neon-teal rounded-full mix-blend-overlay filter blur-3xl opacity-5 animate-blob animation-delay-2000"></div>
+        <div className="absolute bottom-0 left-1/3 w-80 h-80 bg-neon-orange rounded-full mix-blend-overlay filter blur-3xl opacity-5 animate-blob animation-delay-3000"></div>
+      </div>
+
+      <div className="container mx-auto">
+        {/* Back button */}
+        <NeonButton 
+          variant="outline"
+          color="yellow"
+          className="mb-6 flex items-center gap-2" 
+          onClick={() => navigate(`/challenges/${challengeType}/${challengeId}`)}
+        >
+          <ArrowLeft className="h-4 w-4" />
+          Back to Challenge
+        </NeonButton>
+        
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
+          {/* Leaderboard sidebar */}
+          <div className="lg:col-span-1">
+            <NeonCard color="yellow">
+              <CardHeader>
+                <div className="mb-2">
+                  <Badge variant="outline" className="bg-neon-yellow/20 text-neon-yellow border-neon-yellow/50 mb-2">
+                    {challengeType?.toUpperCase()}
+                  </Badge>
+                </div>
+                <CardTitle className="text-xl text-white">{getChallengeTitle()}</CardTitle>
+                <CardDescription className="text-white/70">
+                  Challenge Leaderboard
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="bg-gradient-to-r from-amber-900/50 to-amber-800/50 p-4 rounded-lg border border-amber-500/50">
+                  <div className="flex items-center gap-3">
+                    <NeonIcon color="yellow" size="sm">
+                      <Trophy className="h-4 w-4" />
+                    </NeonIcon>
+                    <div>
+                      <h3 className="font-semibold text-white">Your Ranking</h3>
+                      <p className="text-sm text-amber-300">
+                        You're currently <span className="font-bold">#4</span> on the leaderboard
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </div>
-              
-              <div className="pt-2">
-                <h3 className="font-medium mb-2">Challenge Stats</h3>
-                <ul className="space-y-2 text-sm">
-                  <li className="flex justify-between">
-                    <span className="text-gray-600">Participants</span>
-                    <span className="font-medium">432</span>
-                  </li>
-                  <li className="flex justify-between">
-                    <span className="text-gray-600">Average Score</span>
-                    <span className="font-medium">78%</span>
-                  </li>
-                  <li className="flex justify-between">
-                    <span className="text-gray-600">Average Time</span>
-                    <span className="font-medium">42m 15s</span>
-                  </li>
-                </ul>
-              </div>
-              
-              <div className="pt-4">
-                <Button 
-                  variant="outline"
-                  className="w-full flex items-center gap-2"
-                  onClick={() => navigate("/challenges")}
-                >
-                  <Users className="h-4 w-4" />
-                  All Challenges
-                </Button>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-        
-        {/* Leaderboard main area */}
-        <div className="lg:col-span-3">
-          <Card className="bg-white/80 backdrop-blur shadow-lg">
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-2xl flex items-center gap-2">
-                  <Trophy className="h-5 w-5 text-amber-500" />
-                  Leaderboard
-                </CardTitle>
-                <Badge variant="outline" className="bg-blue-100 text-blue-800">
-                  Updated 5 min ago
-                </Badge>
-              </div>
-              <CardDescription>
-                Top performers for this challenge
-              </CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="border-b">
-                      <th className="text-left pb-3 pl-2">Rank</th>
-                      <th className="text-left pb-3">Player</th>
-                      <th className="text-right pb-3">Score</th>
-                      <th className="text-right pb-3">Time</th>
-                      <th className="text-right pb-3 pr-2">Level</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {leaderboardData.map((player, index) => (
-                      <tr 
-                        key={player.id} 
-                        className={`hover:bg-gray-50 ${
-                          index < 3 ? "bg-amber-50" : ""
-                        }`}
-                      >
-                        <td className="py-3 pl-2">
-                          {index === 0 && (
-                            <div className="flex items-center justify-center w-6 h-6 bg-amber-400 text-white rounded-full">
-                              1
-                            </div>
-                          )}
-                          {index === 1 && (
-                            <div className="flex items-center justify-center w-6 h-6 bg-gray-400 text-white rounded-full">
-                              2
-                            </div>
-                          )}
-                          {index === 2 && (
-                            <div className="flex items-center justify-center w-6 h-6 bg-amber-700 text-white rounded-full">
-                              3
-                            </div>
-                          )}
-                          {index > 2 && (
-                            <div className="flex items-center justify-center w-6 h-6 text-gray-600">
-                              {index + 1}
-                            </div>
-                          )}
-                        </td>
-                        <td className="py-3">
-                          <div className="flex items-center gap-3">
-                            <Avatar>
-                              <AvatarImage src={player.avatar} alt={player.name} />
-                              <AvatarFallback>{player.name.substring(0, 2)}</AvatarFallback>
-                            </Avatar>
-                            <span className="font-medium">{player.name}</span>
-                            {index === 3 && (
-                              <Badge variant="outline" className="bg-blue-100 text-blue-800 text-xs">
-                                You
-                              </Badge>
-                            )}
-                          </div>
-                        </td>
-                        <td className="text-right py-3">
-                          <div className="font-semibold">{player.score}%</div>
-                        </td>
-                        <td className="text-right py-3">
-                          {player.completionTime}
-                        </td>
-                        <td className="text-right py-3 pr-2">
-                          <div className="flex items-center justify-end gap-1">
-                            <Star className="h-4 w-4 text-amber-500 fill-amber-500" />
-                            <span>{player.level}</span>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </CardContent>
-          </Card>
+                
+                <div className="pt-2">
+                  <h3 className="font-medium mb-2 text-white">Challenge Stats</h3>
+                  <ul className="space-y-2 text-sm">
+                    <li className="flex justify-between">
+                      <span className="text-white/70">Participants</span>
+                      <span className="font-medium text-white">432</span>
+                    </li>
+                    <li className="flex justify-between">
+                      <span className="text-white/70">Average Score</span>
+                      <span className="font-medium text-white">78%</span>
+                    </li>
+                    <li className="flex justify-between">
+                      <span className="text-white/70">Average Time</span>
+                      <span className="font-medium text-white">42m 15s</span>
+                    </li>
+                  </ul>
+                </div>
+                
+                <div className="pt-4">
+                  <NeonButton 
+                    variant="outline"
+                    color="teal"
+                    className="w-full flex items-center gap-2"
+                    onClick={() => navigate("/challenges")}
+                  >
+                    <Users className="h-4 w-4" />
+                    All Challenges
+                  </NeonButton>
+                </div>
+              </CardContent>
+            </NeonCard>
+          </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-            <Card className="bg-gradient-to-r from-blue-50 to-indigo-50 border-blue-100">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-lg">Top Score</CardTitle>
+          {/* Leaderboard main area */}
+          <div className="lg:col-span-3">
+            <NeonCard color="teal">
+              <CardHeader>
+                <div className="flex items-center justify-between">
+                  <CardTitle className="text-2xl flex items-center text-white">
+                    <NeonIcon color="teal" size="sm" className="mr-3">
+                      <Trophy className="h-5 w-5" />
+                    </NeonIcon>
+                    Leaderboard
+                  </CardTitle>
+                  <Badge variant="outline" className="bg-blue-500/20 text-blue-400 border-blue-400">
+                    Updated 5 min ago
+                  </Badge>
+                </div>
+                <CardDescription className="text-white/70">
+                  Top performers for this challenge
+                </CardDescription>
               </CardHeader>
               <CardContent>
-                <div className="text-3xl font-bold">98%</div>
-                <p className="text-sm text-gray-600">Alex Johnson</p>
+                <div className="overflow-x-auto">
+                  <table className="w-full">
+                    <thead>
+                      <tr className="border-b border-white/20">
+                        <th className="text-left pb-3 pl-2 text-white">Rank</th>
+                        <th className="text-left pb-3 text-white">Player</th>
+                        <th className="text-right pb-3 text-white">Score</th>
+                        <th className="text-right pb-3 text-white">Time</th>
+                        <th className="text-right pb-3 pr-2 text-white">Level</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {leaderboardData.map((player, index) => (
+                        <tr 
+                          key={player.id} 
+                          className={`hover:bg-white/5 ${
+                            index < 3 ? "bg-amber-500/10" : ""
+                          }`}
+                        >
+                          <td className="py-3 pl-2">
+                            {index === 0 && (
+                              <div className="flex items-center justify-center w-6 h-6 bg-amber-400 text-black rounded-full">
+                                1
+                              </div>
+                            )}
+                            {index === 1 && (
+                              <div className="flex items-center justify-center w-6 h-6 bg-gray-400 text-white rounded-full">
+                                2
+                              </div>
+                            )}
+                            {index === 2 && (
+                              <div className="flex items-center justify-center w-6 h-6 bg-amber-700 text-white rounded-full">
+                                3
+                              </div>
+                            )}
+                            {index > 2 && (
+                              <div className="flex items-center justify-center w-6 h-6 text-white/70">
+                                {index + 1}
+                              </div>
+                            )}
+                          </td>
+                          <td className="py-3">
+                            <div className="flex items-center gap-3">
+                              <Avatar>
+                                <AvatarImage src={player.avatar} alt={player.name} />
+                                <AvatarFallback>{player.name.substring(0, 2)}</AvatarFallback>
+                              </Avatar>
+                              <span className="font-medium text-white">{player.name}</span>
+                              {index === 3 && (
+                                <Badge variant="outline" className="bg-blue-500/20 text-blue-400 border-blue-400 text-xs">
+                                  You
+                                </Badge>
+                              )}
+                            </div>
+                          </td>
+                          <td className="text-right py-3">
+                            <div className="font-semibold text-white">{player.score}%</div>
+                          </td>
+                          <td className="text-right py-3 text-white">
+                            {player.completionTime}
+                          </td>
+                          <td className="text-right py-3 pr-2">
+                            <div className="flex items-center justify-end gap-1">
+                              <Star className="h-4 w-4 text-amber-500 fill-amber-500" />
+                              <span className="text-white">{player.level}</span>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </CardContent>
-            </Card>
+            </NeonCard>
             
-            <Card className="bg-gradient-to-r from-green-50 to-emerald-50 border-green-100">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-lg">Fastest Time</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-bold">28:45</div>
-                <p className="text-sm text-gray-600">Alex Johnson</p>
-              </CardContent>
-            </Card>
-            
-            <Card className="bg-gradient-to-r from-purple-50 to-pink-50 border-purple-100">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-lg">Most Improved</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <div className="text-3xl font-bold">+15%</div>
-                <p className="text-sm text-gray-600">James Brown</p>
-              </CardContent>
-            </Card>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+              <NeonCard color="yellow">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-lg text-white">Top Score</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-3xl font-bold text-neon-yellow">98%</div>
+                  <p className="text-sm text-white/70">Alex Johnson</p>
+                </CardContent>
+              </NeonCard>
+              
+              <NeonCard color="teal">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-lg text-white">Fastest Time</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-3xl font-bold text-neon-teal">28:45</div>
+                  <p className="text-sm text-white/70">Alex Johnson</p>
+                </CardContent>
+              </NeonCard>
+              
+              <NeonCard color="orange">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-lg text-white">Most Improved</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <div className="text-3xl font-bold text-neon-orange">+15%</div>
+                  <p className="text-sm text-white/70">James Brown</p>
+                </CardContent>
+              </NeonCard>
+            </div>
           </div>
         </div>
       </div>

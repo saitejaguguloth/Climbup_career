@@ -1,6 +1,4 @@
-
 import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { 
@@ -12,6 +10,7 @@ import {
 } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Star, MessageCircle } from "lucide-react";
+import { NeonTitle, NeonButton, NeonCard } from "@/components/ui/neon-elements";
 
 interface Mentor {
   id: number;
@@ -131,98 +130,98 @@ const MentorsPage = () => {
     <div className="min-h-screen py-16 relative">
       {/* Background blurry elements */}
       <div className="absolute inset-0 overflow-hidden -z-10">
-        <div className="absolute top-0 left-0 w-64 h-64 bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-        <div className="absolute top-0 right-0 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-        <div className="absolute bottom-0 left-1/3 w-80 h-80 bg-indigo-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-3000"></div>
+        <div className="absolute top-0 left-0 w-64 h-64 bg-neon-yellow rounded-full mix-blend-overlay filter blur-3xl opacity-5 animate-blob"></div>
+        <div className="absolute top-0 right-0 w-72 h-72 bg-neon-teal rounded-full mix-blend-overlay filter blur-3xl opacity-5 animate-blob animation-delay-2000"></div>
+        <div className="absolute bottom-0 left-1/3 w-80 h-80 bg-neon-orange rounded-full mix-blend-overlay filter blur-3xl opacity-5 animate-blob animation-delay-3000"></div>
       </div>
       
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold mb-3 text-center">
-            Connect with <span className="gradient-text">Expert Mentors</span>
-          </h1>
-          <p className="text-xl text-gray-600 text-center mb-10">
+          <NeonTitle size="2xl" color="yellow" className="text-center mb-3">
+            Connect with <span className="text-neon-teal">Expert Mentors</span>
+          </NeonTitle>
+          <p className="text-xl text-white/70 text-center mb-10">
             Get personalized guidance from professionals in your field of interest
           </p>
           
           {/* Search and Filters */}
-          <div className="bg-white/80 backdrop-blur-md rounded-xl shadow-lg p-6 mb-8">
+          <NeonCard color="yellow" className="mb-8">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
-                <Label htmlFor="search">Search Mentors</Label>
+                <Label htmlFor="search" className="text-white">Search Mentors</Label>
                 <Input 
                   id="search" 
                   placeholder="Search by name, role or specialization" 
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="mt-1"
+                  className="mt-1 bg-black/20 border-white/20 text-white placeholder:text-white/50"
                 />
               </div>
               
               <div>
-                <Label htmlFor="specialization">Specialization</Label>
+                <Label htmlFor="specialization" className="text-white">Specialization</Label>
                 <Select value={selectedSpecialization} onValueChange={setSelectedSpecialization}>
-                  <SelectTrigger id="specialization" className="mt-1">
+                  <SelectTrigger id="specialization" className="mt-1 bg-black/20 border-white/20 text-white">
                     <SelectValue placeholder="All Specializations" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">All Specializations</SelectItem>
+                  <SelectContent className="bg-black border-white/20">
+                    <SelectItem value="all" className="text-white">All Specializations</SelectItem>
                     {specializations.map((spec, index) => (
-                      <SelectItem key={index} value={spec}>{spec}</SelectItem>
+                      <SelectItem key={index} value={spec} className="text-white">{spec}</SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
               </div>
               
               <div>
-                <Label htmlFor="availability">Availability</Label>
+                <Label htmlFor="availability" className="text-white">Availability</Label>
                 <Select value={selectedAvailability} onValueChange={setSelectedAvailability}>
-                  <SelectTrigger id="availability" className="mt-1">
+                  <SelectTrigger id="availability" className="mt-1 bg-black/20 border-white/20 text-white">
                     <SelectValue placeholder="Any Time" />
                   </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="all">Any Time</SelectItem>
+                  <SelectContent className="bg-black border-white/20">
+                    <SelectItem value="all" className="text-white">Any Time</SelectItem>
                     {availabilities.map((time, index) => (
-                      <SelectItem key={index} value={time}>{time}</SelectItem>
+                      <SelectItem key={index} value={time} className="text-white">{time}</SelectItem>
                     ))}
                   </SelectContent>
                 </Select>
               </div>
             </div>
-          </div>
+          </NeonCard>
           
           {/* Mentor Cards */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredMentors.map((mentor) => (
-              <div key={mentor.id} className="bg-white/80 backdrop-blur-md rounded-xl overflow-hidden shadow-lg border border-white/10 transition-transform hover:scale-[1.02]">
+              <NeonCard key={mentor.id} color="teal" className="transition-transform hover:scale-[1.02]">
                 <div className="p-6">
                   <div className="flex items-center mb-4">
                     <img 
                       src={mentor.imageUrl} 
                       alt={mentor.name} 
-                      className="w-16 h-16 rounded-full object-cover border-2 border-indigo-400"
+                      className="w-16 h-16 rounded-full object-cover border-2 border-neon-teal"
                     />
                     <div className="ml-4">
-                      <h3 className="font-bold text-lg">{mentor.name}</h3>
-                      <p className="text-gray-600">{mentor.role}</p>
+                      <h3 className="font-bold text-lg text-white">{mentor.name}</h3>
+                      <p className="text-white/70">{mentor.role}</p>
                     </div>
                   </div>
                   
                   <div className="mb-4">
                     <div className="flex items-center mb-2">
                       <Star className="w-4 h-4 text-yellow-500 fill-yellow-500 mr-1" />
-                      <span className="font-medium">{mentor.rating}</span>
-                      <span className="text-gray-500 text-sm ml-2">({mentor.sessions} sessions)</span>
+                      <span className="font-medium text-white">{mentor.rating}</span>
+                      <span className="text-white/60 text-sm ml-2">({mentor.sessions} sessions)</span>
                     </div>
                     
-                    <p className="text-gray-600 text-sm mb-2">{mentor.education}</p>
-                    <p className="text-gray-600 text-sm">{mentor.experience} years of experience</p>
+                    <p className="text-white/70 text-sm mb-2">{mentor.education}</p>
+                    <p className="text-white/70 text-sm">{mentor.experience} years of experience</p>
                   </div>
                   
                   <div className="mb-4">
                     <div className="flex flex-wrap gap-2">
                       {mentor.specialization.map((spec, index) => (
-                        <Badge key={index} variant="secondary" className="bg-indigo-100 text-indigo-800">
+                        <Badge key={index} variant="secondary" className="bg-neon-teal/20 text-neon-teal border-neon-teal/50">
                           {spec}
                         </Badge>
                       ))}
@@ -230,29 +229,29 @@ const MentorsPage = () => {
                   </div>
                   
                   <div className="flex justify-between items-center mt-6">
-                    <div className="flex items-center text-sm text-gray-600">
+                    <div className="flex items-center text-sm text-white/70">
                       <Calendar className="w-4 h-4 mr-1" />
                       <span>{mentor.availability.join(", ")}</span>
                     </div>
                     
                     <div className="space-x-2">
-                      <Button variant="outline" size="sm" className="border-indigo-200 text-indigo-700">
+                      <NeonButton variant="outline" size="sm" color="teal">
                         <MessageCircle className="w-4 h-4 mr-1" /> Message
-                      </Button>
-                      <Button className="bg-gradient-to-r from-blue-600 to-indigo-600" size="sm">
+                      </NeonButton>
+                      <NeonButton size="sm" color="orange">
                         Book Session
-                      </Button>
+                      </NeonButton>
                     </div>
                   </div>
                 </div>
-              </div>
+              </NeonCard>
             ))}
           </div>
           
           {filteredMentors.length === 0 && (
             <div className="text-center p-10">
-              <h3 className="text-2xl font-semibold mb-2">No mentors found</h3>
-              <p className="text-gray-600">Try adjusting your filters or search terms</p>
+              <h3 className="text-2xl font-semibold mb-2 text-white">No mentors found</h3>
+              <p className="text-white/70">Try adjusting your filters or search terms</p>
             </div>
           )}
         </div>

@@ -7,10 +7,10 @@ import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
+import { NeonTitle, NeonButton, NeonCard, NeonIcon } from "@/components/ui/neon-elements";
 
 const PlannerPage = () => {
   const [date, setDate] = useState<Date | undefined>(new Date());
-  const [view, setView] = useState<"calendar" | "tasks" | "deadlines">("calendar");
   
   // Sample tasks for demonstration
   const tasks = [
@@ -73,7 +73,7 @@ const PlannerPage = () => {
     return (
       <div className="space-y-4">
         {taskList.map((task) => (
-          <Card key={task.id} className={`border-l-4 ${
+          <NeonCard key={task.id} color="teal" className={`border-l-4 ${
             task.status === "completed" 
               ? "border-l-green-400" 
               : task.priority === "High" 
@@ -85,10 +85,10 @@ const PlannerPage = () => {
             <CardHeader className="pb-2">
               <div className="flex justify-between items-start">
                 <div>
-                  <CardTitle className={`text-base ${task.status === "completed" ? "line-through text-gray-500" : ""}`}>
+                  <CardTitle className={`text-base text-white ${task.status === "completed" ? "line-through text-gray-500" : ""}`}>
                     {task.title}
                   </CardTitle>
-                  <CardDescription>{task.category}</CardDescription>
+                  <CardDescription className="text-white/70">{task.category}</CardDescription>
                 </div>
                 <Badge variant={
                   task.priority === "High" 
@@ -102,7 +102,7 @@ const PlannerPage = () => {
               </div>
             </CardHeader>
             <CardFooter className="pt-0 flex justify-between">
-              <div className="flex items-center text-sm text-gray-500">
+              <div className="flex items-center text-sm text-white/70">
                 <CalendarIcon className="mr-1 h-4 w-4" />
                 <span>{format(task.dueDate, "MMM dd, yyyy")}</span>
               </div>
@@ -111,10 +111,10 @@ const PlannerPage = () => {
                   <CheckCircle className="mr-1 h-3 w-3" /> Completed
                 </Badge>
               ) : (
-                <Button variant="outline" size="sm">Mark Complete</Button>
+                <NeonButton variant="outline" size="sm" color="yellow">Mark Complete</NeonButton>
               )}
             </CardFooter>
-          </Card>
+          </NeonCard>
         ))}
       </div>
     );
@@ -124,27 +124,30 @@ const PlannerPage = () => {
     <div className="min-h-screen py-16 px-4 relative">
       {/* Background blurry elements */}
       <div className="absolute inset-0 overflow-hidden -z-10">
-        <div className="absolute top-0 left-1/4 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-        <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-        <div className="absolute top-1/2 left-1/2 w-72 h-72 bg-emerald-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+        <div className="absolute top-0 left-1/4 w-72 h-72 bg-neon-yellow rounded-full mix-blend-overlay filter blur-3xl opacity-5 animate-blob"></div>
+        <div className="absolute bottom-0 right-1/4 w-72 h-72 bg-neon-teal rounded-full mix-blend-overlay filter blur-3xl opacity-5 animate-blob animation-delay-2000"></div>
+        <div className="absolute top-1/2 left-1/2 w-72 h-72 bg-neon-orange rounded-full mix-blend-overlay filter blur-3xl opacity-5 animate-blob animation-delay-4000"></div>
       </div>
       
       <div className="container mx-auto max-w-7xl">
         <div className="text-center mb-10">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">
-            My <span className="bg-gradient-to-r from-blue-600 to-indigo-600 text-transparent bg-clip-text">Planner</span>
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <NeonTitle size="2xl" color="yellow" className="mb-4">
+            My <span className="text-neon-teal">Planner</span>
+          </NeonTitle>
+          <p className="text-lg text-white/70 max-w-2xl mx-auto">
             Organize your learning journey, track tasks, and never miss important deadlines.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-1 space-y-6">
-            <Card className="bg-white/90 backdrop-blur shadow-md">
+            <NeonCard color="yellow">
               <CardHeader>
-                <CardTitle className="flex items-center">
-                  <CalendarIcon className="mr-2 h-5 w-5" /> Calendar
+                <CardTitle className="flex items-center text-white">
+                  <NeonIcon color="yellow" size="sm" className="mr-2">
+                    <CalendarIcon className="h-5 w-5" />
+                  </NeonIcon>
+                  Calendar
                 </CardTitle>
               </CardHeader>
               <CardContent className="pb-2">
@@ -152,60 +155,63 @@ const PlannerPage = () => {
                   mode="single"
                   selected={date}
                   onSelect={setDate}
-                  className="rounded-md border bg-white"
+                  className="rounded-md border bg-black/20 text-white"
                 />
               </CardContent>
               <CardFooter>
-                <Button className="w-full bg-gradient-to-r from-blue-600 to-indigo-600">
+                <NeonButton color="yellow" className="w-full">
                   <Plus className="mr-2 h-4 w-4" /> Add New Task
-                </Button>
+                </NeonButton>
               </CardFooter>
-            </Card>
+            </NeonCard>
             
-            <Card className="bg-white/90 backdrop-blur shadow-md">
+            <NeonCard color="teal">
               <CardHeader>
-                <CardTitle className="flex items-center">
-                  <CheckCircle className="mr-2 h-5 w-5" /> Today's Tasks
+                <CardTitle className="flex items-center text-white">
+                  <NeonIcon color="teal" size="sm" className="mr-2">
+                    <CheckCircle className="h-5 w-5" />
+                  </NeonIcon>
+                  Today's Tasks
                 </CardTitle>
               </CardHeader>
               <CardContent>
                 {todaysTasks.length > 0 ? (
                   renderTaskList(todaysTasks)
                 ) : (
-                  <div className="text-center py-6 text-gray-500">
+                  <div className="text-center py-6 text-white/70">
                     <p>No tasks scheduled for today</p>
-                    <Button variant="outline" size="sm" className="mt-2">
+                    <NeonButton variant="outline" size="sm" color="teal" className="mt-2">
                       <Plus className="mr-2 h-4 w-4" /> Add Task
-                    </Button>
+                    </NeonButton>
                   </div>
                 )}
               </CardContent>
-            </Card>
+            </NeonCard>
           </div>
           
           <div className="lg:col-span-2">
-            <Card className="bg-white/90 backdrop-blur shadow-md">
+            <NeonCard color="orange">
               <CardHeader>
                 <Tabs defaultValue="tasks" className="w-full">
-                  <TabsList className="grid grid-cols-3 mb-4">
-                    <TabsTrigger value="tasks">All Tasks</TabsTrigger>
-                    <TabsTrigger value="deadlines">Upcoming Deadlines</TabsTrigger>
-                    <TabsTrigger value="completed">Completed</TabsTrigger>
+                  <TabsList className="grid grid-cols-3 mb-4 bg-black/20">
+                    <TabsTrigger value="tasks" className="text-white data-[state=active]:bg-neon-orange/20 data-[state=active]:text-neon-orange">All Tasks</TabsTrigger>
+                    <TabsTrigger value="deadlines" className="text-white data-[state=active]:bg-neon-orange/20 data-[state=active]:text-neon-orange">Upcoming Deadlines</TabsTrigger>
+                    <TabsTrigger value="completed" className="text-white data-[state=active]:bg-neon-orange/20 data-[state=active]:text-neon-orange">Completed</TabsTrigger>
                   </TabsList>
                 
                   <TabsContent value="tasks">
                     <div className="flex justify-between items-center">
-                      <CardTitle>All Tasks</CardTitle>
-                      <Button size="sm">
+                      <CardTitle className="text-white">All Tasks</CardTitle>
+                      <NeonButton size="sm" color="orange">
                         <Plus className="mr-2 h-4 w-4" /> New Task
-                      </Button>
+                      </NeonButton>
                     </div>
                   </TabsContent>
                   
                   <TabsContent value="deadlines">
                     <div className="flex justify-between items-center">
-                      <CardTitle>Upcoming Deadlines</CardTitle>
-                      <Badge variant="outline" className="flex items-center">
+                      <CardTitle className="text-white">Upcoming Deadlines</CardTitle>
+                      <Badge variant="outline" className="flex items-center bg-red-500/20 text-red-400 border-red-400">
                         <AlertCircle className="mr-1 h-3 w-3" /> 
                         {upcomingDeadlines.length} pending
                       </Badge>
@@ -214,8 +220,8 @@ const PlannerPage = () => {
                   
                   <TabsContent value="completed">
                     <div className="flex justify-between items-center">
-                      <CardTitle>Completed Tasks</CardTitle>
-                      <Badge variant="outline" className="bg-green-50 text-green-700">
+                      <CardTitle className="text-white">Completed Tasks</CardTitle>
+                      <Badge variant="outline" className="bg-green-500/20 text-green-400 border-green-400">
                         <CheckCircle className="mr-1 h-3 w-3" /> 
                         {tasks.filter(t => t.status === "completed").length} done
                       </Badge>
@@ -240,10 +246,10 @@ const PlannerPage = () => {
                 </Tabs>
                 
                 <div className="mt-6 text-center">
-                  <Button variant="outline">Load More</Button>
+                  <NeonButton variant="outline" color="orange">Load More</NeonButton>
                 </div>
               </CardContent>
-            </Card>
+            </NeonCard>
           </div>
         </div>
       </div>

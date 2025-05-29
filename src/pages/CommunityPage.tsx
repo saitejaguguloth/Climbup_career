@@ -1,10 +1,9 @@
-
 import React, { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { MessageCircle, Heart, Bookmark, Share, Search } from "lucide-react";
+import { NeonTitle, NeonButton, NeonCard } from "@/components/ui/neon-elements";
 
 interface Post {
   id: number;
@@ -161,46 +160,46 @@ const CommunityPage = () => {
     <div className="min-h-screen py-16 relative">
       {/* Background blurry elements */}
       <div className="absolute inset-0 overflow-hidden -z-10">
-        <div className="absolute top-0 left-0 w-64 h-64 bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-        <div className="absolute top-0 right-0 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-        <div className="absolute bottom-0 left-1/3 w-80 h-80 bg-indigo-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-3000"></div>
+        <div className="absolute top-0 left-0 w-64 h-64 bg-neon-yellow rounded-full mix-blend-overlay filter blur-3xl opacity-5 animate-blob"></div>
+        <div className="absolute top-0 right-0 w-72 h-72 bg-neon-teal rounded-full mix-blend-overlay filter blur-3xl opacity-5 animate-blob animation-delay-2000"></div>
+        <div className="absolute bottom-0 left-1/3 w-80 h-80 bg-neon-orange rounded-full mix-blend-overlay filter blur-3xl opacity-5 animate-blob animation-delay-3000"></div>
       </div>
       
       <div className="container mx-auto px-4">
         <div className="max-w-5xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold mb-3 text-center">
-            ClimbUp <span className="gradient-text">Community</span>
-          </h1>
-          <p className="text-xl text-gray-600 text-center mb-10">
+          <NeonTitle size="2xl" color="yellow" className="text-center mb-3">
+            ClimbUp <span className="text-neon-teal">Community</span>
+          </NeonTitle>
+          <p className="text-xl text-white/70 text-center mb-10">
             Connect with other students, share knowledge, and find answers
           </p>
           
           {/* Community Actions */}
           <div className="flex flex-col md:flex-row gap-4 mb-8">
             <div className="flex-1 relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-white/50 w-5 h-5" />
               <Input 
                 placeholder="Search discussions" 
-                className="pl-10"
+                className="pl-10 bg-black/20 border-white/20 text-white placeholder:text-white/50"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
-            <Button className="bg-gradient-to-r from-blue-600 to-indigo-600">
+            <NeonButton color="yellow">
               <MessageCircle className="w-4 h-4 mr-2" /> Start a Discussion
-            </Button>
+            </NeonButton>
           </div>
           
           {/* Category Tabs */}
           <Tabs defaultValue="all" className="mb-8" onValueChange={setActiveCategory}>
-            <TabsList className="w-full overflow-x-auto flex justify-start p-1 bg-white/60 backdrop-blur-md rounded-lg">
-              <TabsTrigger value="all" className="flex-1">All Topics</TabsTrigger>
-              <TabsTrigger value="engineering" className="flex-1">Engineering</TabsTrigger>
-              <TabsTrigger value="medical" className="flex-1">Medical</TabsTrigger>
-              <TabsTrigger value="coding" className="flex-1">Coding</TabsTrigger>
-              <TabsTrigger value="management" className="flex-1">Management</TabsTrigger>
-              <TabsTrigger value="government" className="flex-1">Government</TabsTrigger>
-              <TabsTrigger value="creative" className="flex-1">Creative</TabsTrigger>
+            <TabsList className="w-full overflow-x-auto flex justify-start p-1 bg-black/20 backdrop-blur-md rounded-lg">
+              <TabsTrigger value="all" className="flex-1 text-white data-[state=active]:bg-neon-yellow/20 data-[state=active]:text-neon-yellow">All Topics</TabsTrigger>
+              <TabsTrigger value="engineering" className="flex-1 text-white data-[state=active]:bg-neon-yellow/20 data-[state=active]:text-neon-yellow">Engineering</TabsTrigger>
+              <TabsTrigger value="medical" className="flex-1 text-white data-[state=active]:bg-neon-yellow/20 data-[state=active]:text-neon-yellow">Medical</TabsTrigger>
+              <TabsTrigger value="coding" className="flex-1 text-white data-[state=active]:bg-neon-yellow/20 data-[state=active]:text-neon-yellow">Coding</TabsTrigger>
+              <TabsTrigger value="management" className="flex-1 text-white data-[state=active]:bg-neon-yellow/20 data-[state=active]:text-neon-yellow">Management</TabsTrigger>
+              <TabsTrigger value="government" className="flex-1 text-white data-[state=active]:bg-neon-yellow/20 data-[state=active]:text-neon-yellow">Government</TabsTrigger>
+              <TabsTrigger value="creative" className="flex-1 text-white data-[state=active]:bg-neon-yellow/20 data-[state=active]:text-neon-yellow">Creative</TabsTrigger>
             </TabsList>
             
             {/* Posts for each category */}
@@ -221,13 +220,13 @@ const CommunityPage = () => {
                       <PostCard key={post.id} post={post} toggleLike={toggleLike} toggleBookmark={toggleBookmark} />
                     ))
                   ) : (
-                    <div className="text-center p-10 bg-white/80 backdrop-blur-md rounded-xl">
-                      <h3 className="text-xl font-medium mb-2">No discussions found</h3>
-                      <p className="text-gray-600 mb-6">Be the first to start a discussion in this category!</p>
-                      <Button className="bg-gradient-to-r from-blue-600 to-indigo-600">
+                    <NeonCard color="teal" className="text-center p-10">
+                      <h3 className="text-xl font-medium mb-2 text-white">No discussions found</h3>
+                      <p className="text-white/70 mb-6">Be the first to start a discussion in this category!</p>
+                      <NeonButton color="yellow">
                         <MessageCircle className="w-4 h-4 mr-2" /> Start a Discussion
-                      </Button>
-                    </div>
+                      </NeonButton>
+                    </NeonCard>
                   )}
                 </div>
               </TabsContent>
@@ -248,7 +247,7 @@ interface PostCardProps {
 
 const PostCard: React.FC<PostCardProps> = ({ post, toggleLike, toggleBookmark }) => {
   return (
-    <div className="bg-white/80 backdrop-blur-md rounded-xl shadow-md p-6 transition-all hover:shadow-lg">
+    <NeonCard color="teal" className="transition-all hover:shadow-lg">
       <div className="flex items-center mb-4">
         <img 
           src={post.author.avatar} 
@@ -256,35 +255,35 @@ const PostCard: React.FC<PostCardProps> = ({ post, toggleLike, toggleBookmark })
           className="w-10 h-10 rounded-full object-cover"
         />
         <div className="ml-3">
-          <h4 className="font-medium">{post.author.name}</h4>
-          <p className="text-sm text-gray-500">{post.author.role} • {post.timestamp}</p>
+          <h4 className="font-medium text-white">{post.author.name}</h4>
+          <p className="text-sm text-white/60">{post.author.role} • {post.timestamp}</p>
         </div>
       </div>
       
-      <h3 className="text-xl font-bold mb-2">{post.title}</h3>
-      <p className="text-gray-700 mb-3 line-clamp-3">{post.content}</p>
+      <h3 className="text-xl font-bold mb-2 text-white">{post.title}</h3>
+      <p className="text-white/80 mb-3 line-clamp-3">{post.content}</p>
       
       <div className="mb-4">
         <div className="flex flex-wrap gap-2">
           {post.tags.map((tag, index) => (
-            <Badge key={index} variant="outline" className="text-xs bg-gray-50">
+            <Badge key={index} variant="outline" className="text-xs bg-white/10 border-white/20 text-white/80">
               #{tag}
             </Badge>
           ))}
         </div>
       </div>
       
-      <div className="flex justify-between pt-4 border-t border-gray-100">
+      <div className="flex justify-between pt-4 border-t border-white/20">
         <div className="flex space-x-4">
           <button 
-            className={`flex items-center space-x-1 ${post.isLiked ? 'text-red-500' : 'text-gray-500'} hover:text-red-500 transition-colors`}
+            className={`flex items-center space-x-1 ${post.isLiked ? 'text-red-400' : 'text-white/70'} hover:text-red-400 transition-colors`}
             onClick={() => toggleLike(post.id)}
           >
-            <Heart className={`w-4 h-4 ${post.isLiked ? 'fill-red-500' : ''}`} />
+            <Heart className={`w-4 h-4 ${post.isLiked ? 'fill-red-400' : ''}`} />
             <span>{post.likes}</span>
           </button>
           
-          <button className="flex items-center space-x-1 text-gray-500 hover:text-blue-600 transition-colors">
+          <button className="flex items-center space-x-1 text-white/70 hover:text-blue-400 transition-colors">
             <MessageCircle className="w-4 h-4" />
             <span>{post.comments}</span>
           </button>
@@ -292,18 +291,18 @@ const PostCard: React.FC<PostCardProps> = ({ post, toggleLike, toggleBookmark })
         
         <div className="flex space-x-3">
           <button 
-            className={`${post.isBookmarked ? 'text-indigo-600' : 'text-gray-500'} hover:text-indigo-600 transition-colors`}
+            className={`${post.isBookmarked ? 'text-indigo-400' : 'text-white/70'} hover:text-indigo-400 transition-colors`}
             onClick={() => toggleBookmark(post.id)}
           >
-            <Bookmark className={`w-4 h-4 ${post.isBookmarked ? 'fill-indigo-600' : ''}`} />
+            <Bookmark className={`w-4 h-4 ${post.isBookmarked ? 'fill-indigo-400' : ''}`} />
           </button>
           
-          <button className="text-gray-500 hover:text-blue-600 transition-colors">
+          <button className="text-white/70 hover:text-blue-400 transition-colors">
             <Share className="w-4 h-4" />
           </button>
         </div>
       </div>
-    </div>
+    </NeonCard>
   );
 };
 

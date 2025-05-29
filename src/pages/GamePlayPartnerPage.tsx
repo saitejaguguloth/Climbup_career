@@ -1,4 +1,3 @@
-
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft, Check, Clock, XCircle, Trophy, Award, Flag, Star } from "lucide-react";
@@ -369,7 +368,6 @@ const GamePlayPartnerPage = () => {
                 <Progress 
                   value={(currentQuestion / gameData.questions.length) * 100}
                   className="h-1 bg-white/10"
-                  indicatorClassName={`bg-neon-${gameData.color}`}
                 />
               </div>
             </NeonCard>

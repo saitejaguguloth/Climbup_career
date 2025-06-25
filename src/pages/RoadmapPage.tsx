@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate, Link, useParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -20,6 +19,7 @@ import {
 import ShareDialog from "@/components/ShareDialog";
 import GroupChat from "@/components/GroupChat";
 import LearningDialog from "@/components/LearningDialog";
+import { NeonCard, NeonButton, NeonTitle } from "@/components/ui/neon-elements";
 
 const RoadmapPage = () => {
   const navigate = useNavigate();
@@ -380,7 +380,7 @@ const RoadmapPage = () => {
                 <h5 className="font-medium text-gray-700 mb-1">Stream Options:</h5>
                 <div className="flex flex-wrap gap-2">
                   {pathInfo.streamOptions.map((stream, i) => (
-                    <span key={i} className="bg-blue-50 text-blue-700 text-xs px-2 py-1 rounded">
+                    <span key={i} className="bg-black/70 border border-blue-500 text-blue-200 text-xs px-2 py-1 rounded">
                       {stream}
                     </span>
                   ))}
@@ -394,7 +394,7 @@ const RoadmapPage = () => {
                 <h5 className="font-medium text-gray-700 mb-2">Entrance Exams:</h5>
                 <div className="space-y-3">
                   {pathInfo.entranceExams.map((exam, i) => (
-                    <div key={i} className="bg-violet-50 p-3 rounded-md">
+                    <div key={i} className="bg-black/70 border border-violet-500 p-3 rounded-md text-violet-200">
                       <div className="font-medium text-violet-800">{exam.name}</div>
                       <div className="grid grid-cols-1 gap-1 mt-1 text-xs text-violet-700">
                         <div className="flex items-center">
@@ -426,7 +426,7 @@ const RoadmapPage = () => {
                       <div className="text-sm font-medium text-gray-700">{option.tier} Tier:</div>
                       <div className="flex flex-wrap gap-1 mt-1">
                         {option.examples.map((college, j) => (
-                          <span key={j} className="bg-emerald-50 text-emerald-700 text-xs px-2 py-1 rounded">
+                          <span key={j} className="bg-black/70 border border-emerald-500 text-emerald-200 text-xs px-2 py-1 rounded">
                             <School className="inline h-3 w-3 mr-1" /> {college}
                           </span>
                         ))}
@@ -455,29 +455,21 @@ const RoadmapPage = () => {
                 <div className="w-1 h-full bg-gradient-to-b from-blue-500 to-violet-500 mt-2 rounded-full"></div>
               )}
             </div>
-            <div className="bg-white p-6 rounded-xl border border-gray-100 shadow-sm flex-1">
+            <NeonCard color={index === 0 ? "teal" : index === 1 ? "yellow" : "orange"} className="flex-1 p-6">
               <div className="flex justify-between items-center mb-4">
-                <h3 className="font-bold text-xl text-gray-900">{stage.name}</h3>
-                <Button 
-                  variant={completedSteps[`${stage.name.toLowerCase().replace(/\s+/g, '-')}`] ? "default" : "outline"} 
-                  size="sm" 
+                <h3 className="font-bold text-xl text-white">{stage.name}</h3>
+                <NeonButton 
+                  variant={completedSteps[`${stage.name.toLowerCase().replace(/\s+/g, '-')}`] ? "solid" : "outline"}
+                  color={completedSteps[`${stage.name.toLowerCase().replace(/\s+/g, '-')}`] ? "teal" : "yellow"}
+                  size="sm"
                   className={completedSteps[`${stage.name.toLowerCase().replace(/\s+/g, '-')}`] ? "bg-green-600" : "text-xs"}
                   onClick={() => handleMarkAsDone(`${stage.name.toLowerCase().replace(/\s+/g, '-')}`)}
                 >
                   <Check className="mr-1 h-4 w-4" />
                   {completedSteps[`${stage.name.toLowerCase().replace(/\s+/g, '-')}`] ? "Completed" : "Mark as Done"}
-                </Button>
+                </NeonButton>
               </div>
-              
-              <p className="text-gray-700 mb-4">
-                {stage.description || (
-                  <>
-                    {index === 0 && "Build core knowledge and skills needed for your journey"}
-                    {index === 1 && "Deepen knowledge and begin to specialize in your field"}
-                    {index === 2 && "Master skills and prepare for industry"}
-                  </>
-                )}
-              </p>
+              <p className="mb-4 text-blue-200 font-medium">{stage.description}</p>
               
               <div className="space-y-6">
                 {/* Entrance Exams if available */}
@@ -487,7 +479,7 @@ const RoadmapPage = () => {
                       <Target className="mr-2 h-4 w-4" />
                       Entrance Exams
                     </h4>
-                    <div className="bg-violet-50 p-3 rounded-md">
+                    <div className="bg-black/70 border border-violet-500 p-3 rounded-md text-violet-200">
                       <ul className="space-y-2">
                         {stage.examInfo.exams.map((exam, examIndex) => (
                           <li key={examIndex} className="text-violet-800">
@@ -523,7 +515,7 @@ const RoadmapPage = () => {
                     </h4>
                     <div className="flex flex-wrap gap-2">
                       {stage.colleges.map((college, collegeIndex) => (
-                        <span key={collegeIndex} className="bg-emerald-50 text-emerald-700 text-xs px-2 py-1 rounded">
+                        <span key={collegeIndex} className="bg-black/70 border border-emerald-500 text-emerald-200 text-xs px-2 py-1 rounded">
                           {college}
                         </span>
                       ))}
@@ -540,7 +532,7 @@ const RoadmapPage = () => {
                     </h4>
                     <div className="flex flex-wrap gap-2">
                       {stage.alternativePaths.map((path, pathIndex) => (
-                        <span key={pathIndex} className="bg-amber-50 text-amber-700 text-xs px-2 py-1 rounded">
+                        <span key={pathIndex} className="bg-black/70 border border-amber-500 text-amber-200 text-xs px-2 py-1 rounded">
                           {path}
                         </span>
                       ))}
@@ -575,9 +567,7 @@ const RoadmapPage = () => {
                               href={link.url} 
                               target="_blank" 
                               rel="noopener noreferrer" 
-                              className={`text-xs ${link.type === "Premium" 
-                                ? "bg-violet-50 text-violet-700" 
-                                : "bg-blue-50 text-blue-700"} px-2 py-1 rounded flex items-center`}
+                              className={`text-xs bg-black/70 border border-blue-500 text-blue-200 px-2 py-1 rounded flex items-center`}
                             >
                               {link.type === "YouTube" && (
                                 <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1"><path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17"></path><path d="m10 15 5-3-5-3z"></path></svg>
@@ -608,7 +598,7 @@ const RoadmapPage = () => {
                   </h4>
                   <div className="flex flex-wrap gap-2">
                     {stage.skills.map((skill, skillIndex) => (
-                      <span key={skillIndex} className="bg-emerald-100 text-emerald-800 text-xs font-medium px-2 py-1 rounded">
+                      <span key={skillIndex} className="bg-black/70 border border-emerald-500 text-emerald-200 text-xs font-medium px-2 py-1 rounded">
                         {skill}
                       </span>
                     ))}
@@ -623,7 +613,7 @@ const RoadmapPage = () => {
                   </h4>
                   <div className="flex flex-wrap gap-2">
                     {stage.projects.map((project, projectIndex) => (
-                      <span key={projectIndex} className="bg-violet-100 text-violet-800 text-xs font-medium px-2 py-1 rounded">
+                      <span key={projectIndex} className="bg-black/70 border border-violet-500 text-violet-200 text-xs font-medium px-2 py-1 rounded">
                         {project}
                       </span>
                     ))}
@@ -655,7 +645,7 @@ const RoadmapPage = () => {
                   </Button>
                 </div>
               </div>
-            </div>
+            </NeonCard>
           </div>
         ))}
       </div>
@@ -663,135 +653,129 @@ const RoadmapPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-indigo-50 py-16 relative">
+    <div className="min-h-screen bg-black/90 py-16 relative text-white">
       {/* Blurry background elements */}
       <div className="absolute inset-0 overflow-hidden -z-10">
-        <div className="absolute top-0 left-0 w-64 h-64 bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-        <div className="absolute top-0 right-0 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-        <div className="absolute bottom-0 left-1/3 w-80 h-80 bg-indigo-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-3000"></div>
-        <div className="absolute -bottom-20 right-1/4 w-96 h-96 bg-emerald-400 rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-4000"></div>
+        <div className="absolute top-0 left-0 w-64 h-64 bg-neon-yellow rounded-full mix-blend-overlay filter blur-3xl opacity-10 animate-blob"></div>
+        <div className="absolute top-0 right-0 w-72 h-72 bg-neon-teal rounded-full mix-blend-overlay filter blur-3xl opacity-10 animate-blob animation-delay-2000"></div>
+        <div className="absolute bottom-0 left-1/3 w-80 h-80 bg-neon-orange rounded-full mix-blend-overlay filter blur-3xl opacity-10 animate-blob animation-delay-3000"></div>
+        <div className="absolute -bottom-20 right-1/4 w-96 h-96 bg-emerald-400 rounded-full mix-blend-overlay filter blur-3xl opacity-10 animate-blob animation-delay-4000"></div>
       </div>
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto">
           {/* Progress bar */}
-          <div className="mb-8 bg-white/70 backdrop-blur-md p-4 rounded-2xl shadow-sm">
+          <NeonCard color="yellow" className="mb-8 p-4 rounded-2xl shadow-sm">
             <div className="flex justify-between text-sm font-medium mb-2">
               <span>Select Education</span>
               <span>Select Career</span>
               <span>View Roadmap</span>
             </div>
             <Progress value={progress} className="h-2" />
-          </div>
+          </NeonCard>
           
           {currentStep === 1 && (
             <div className="animate-fade-in">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-center">
-                Build Your <span className="gradient-text">Roadmap</span>
-              </h1>
-              
+              <NeonTitle size="2xl" color="yellow" className="mb-6 text-center">
+                Build Your <span className="text-neon-teal">Roadmap</span>
+              </NeonTitle>
               <div className="mt-8">
                 <h2 className="text-3xl font-bold mb-3 text-center">I am a...</h2>
                 <p className="text-gray-600 text-center mb-10">
                   Select your current education level to begin your journey
                 </p>
-                
-                <div className="bg-white/80 backdrop-blur-md rounded-3xl shadow-xl p-10 flex flex-col items-center border border-white/50">
+                <NeonCard color="teal" className="rounded-3xl shadow-xl p-10 flex flex-col items-center border border-white/50">
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full">
                     {educationLevels.map((level) => (
-                      <button
+                      <NeonButton
                         key={level}
+                        color={selectedEducation === level ? "yellow" : "teal"}
+                        variant={selectedEducation === level ? "solid" : "outline"}
+                        className="w-full mb-2"
                         onClick={() => setSelectedEducation(level)}
-                        className={`p-4 rounded-xl text-left transition-all flex items-center ${
-                          selectedEducation === level
-                            ? "bg-gradient-to-r from-blue-500 to-violet-500 text-white shadow-md"
-                            : "bg-white hover:bg-gray-50 text-gray-800 border border-gray-100"
-                        }`}
                       >
                         {selectedEducation === level && (
-                          <Check className="mr-2 h-4 w-4 text-white" />
+                          <Check className="mr-2 h-4 w-4" />
                         )}
                         {level}
-                      </button>
+                      </NeonButton>
                     ))}
                   </div>
-                  
-                  <Button 
-                    className="mt-10 bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700 text-white shadow-md" 
+                  <NeonButton 
+                    color="yellow"
+                    variant="solid"
+                    className="mt-10 w-full"
                     size="lg" 
                     onClick={handleNext}
                     disabled={!selectedEducation}
                   >
                     Next <ArrowRight className="ml-2" size={16} />
-                  </Button>
-                </div>
+                  </NeonButton>
+                </NeonCard>
               </div>
             </div>
           )}
 
           {currentStep === 2 && (
             <div className="animate-fade-in">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-center">
-                Build Your <span className="gradient-text">Roadmap</span>
-              </h1>
-              
+              <NeonTitle size="2xl" color="yellow" className="mb-6 text-center">
+                Build Your <span className="text-neon-teal">Roadmap</span>
+              </NeonTitle>
               <div className="mt-8">
                 <h2 className="text-3xl font-bold mb-3 text-center">I want to become...</h2>
                 <p className="text-gray-600 text-center mb-10">
                   Select your dream career path
                 </p>
-                
-                <div className="bg-white/80 backdrop-blur-md rounded-3xl shadow-xl p-10 flex flex-col items-center border border-white/50">
+                <NeonCard color="teal" className="rounded-3xl shadow-xl p-10 flex flex-col items-center border border-white/50">
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 w-full">
                     {careerOptions.map((goal) => (
-                      <button
+                      <NeonButton
                         key={goal}
+                        color={selectedGoal === goal ? "yellow" : "teal"}
+                        variant={selectedGoal === goal ? "solid" : "outline"}
+                        className="w-full mb-2"
                         onClick={() => setSelectedGoal(goal)}
-                        className={`p-4 rounded-xl text-left transition-all flex items-center ${
-                          selectedGoal === goal
-                            ? "bg-gradient-to-r from-blue-500 to-violet-500 text-white shadow-md"
-                            : "bg-white hover:bg-gray-50 text-gray-800 border border-gray-100"
-                        }`}
                       >
                         {selectedGoal === goal && (
-                          <Check className="mr-2 h-4 w-4 text-white" />
+                          <Check className="mr-2 h-4 w-4" />
                         )}
                         {goal}
-                      </button>
+                      </NeonButton>
                     ))}
                   </div>
-                  
-                  <div className="flex space-x-4 mt-10">
-                    <Button 
-                      variant="outline" 
+                  <div className="flex space-x-4 mt-10 w-full">
+                    <NeonButton 
+                      color="teal"
+                      variant="outline"
                       onClick={() => setCurrentStep(1)}
-                      className="border-gray-300"
+                      className="w-1/2"
                     >
                       Back
-                    </Button>
-                    <Button 
-                      className="bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700 text-white shadow-md"
+                    </NeonButton>
+                    <NeonButton 
+                      color="yellow"
+                      variant="solid"
+                      className="w-1/2"
                       onClick={handleNext}
                       disabled={!selectedGoal}
                     >
                       Next <ArrowRight className="ml-2" size={16} />
-                    </Button>
+                    </NeonButton>
                   </div>
-                </div>
+                </NeonCard>
               </div>
             </div>
           )}
 
           {currentStep === 3 && (
             <div className="animate-fade-in">
-              <h1 className="text-4xl md:text-5xl font-bold mb-6 text-center">
-                Your <span className="gradient-text">Personalized Roadmap</span>
-              </h1>
-              
+              <NeonTitle size="2xl" color="yellow" className="mb-6 text-center">
+                Your <span className="text-neon-teal">Personalized Roadmap</span>
+              </NeonTitle>
               <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
                 {/* Sidebar */}
                 <div className="lg:col-span-1">
-                  <div className="bg-white/80 backdrop-blur-md rounded-2xl shadow-xl p-6 sticky top-24 border border-white/50">
+                  <NeonCard color="yellow" className="rounded-2xl shadow-xl p-6 sticky top-24 border border-white/50">
                     <div className="mb-6 p-4 border border-gray-100 rounded-lg bg-gray-50/80">
                       <p className="font-medium">Current Level: <span className="text-blue-600">{selectedEducation}</span></p>
                       <p className="font-medium">Career Goal: <span className="text-violet-600">{selectedGoal}</span></p>
@@ -862,30 +846,30 @@ const RoadmapPage = () => {
                     <div>
                       <h3 className="font-bold mb-3">Get the App</h3>
                       <div className="bg-gray-100 p-4 rounded-lg flex flex-col items-center">
-                        <div className="mb-2 bg-white p-2 rounded-lg">
+                        <div className="mb-2 bg-black/80 p-2 rounded-lg">
                           {/* QR Code placeholder */}
                           <div className="w-24 h-24 bg-gray-200 rounded"></div>
                         </div>
                         <span className="text-xs text-gray-500">Scan to continue on mobile</span>
                       </div>
                     </div>
-                  </div>
+                  </NeonCard>
                 </div>
                 
                 {/* Main content */}
                 <div className="lg:col-span-2">
-                  <div id="roadmap-content" className="bg-white/80 backdrop-blur-md rounded-2xl shadow-xl p-6 border border-white/50">
+                  <NeonCard color="teal" className="rounded-2xl shadow-xl p-6 border border-white/50">
                     <div className="flex justify-between items-center mb-6">
-                      <h2 className="text-2xl font-bold">{selectedGoal} Roadmap</h2>
+                      <h2 className="text-2xl font-bold text-white">{selectedGoal} Roadmap</h2>
                       <div className="flex space-x-2">
-                        <Button variant="outline" size="sm" onClick={handleDownloadPDF}>
+                        <NeonButton color="yellow" variant="outline" size="sm" onClick={handleDownloadPDF}>
                           <Download className="mr-1 h-4 w-4" />
                           PDF
-                        </Button>
-                        <Button variant="outline" size="sm" onClick={handleShareRoadmap}>
+                        </NeonButton>
+                        <NeonButton color="yellow" variant="outline" size="sm" onClick={handleShareRoadmap}>
                           <Share className="mr-1 h-4 w-4" />
                           Share
-                        </Button>
+                        </NeonButton>
                       </div>
                     </div>
                     
@@ -893,36 +877,24 @@ const RoadmapPage = () => {
                     
                     {/* Action buttons */}
                     <div className="mt-10 flex flex-wrap gap-3 justify-center">
-                      <Button 
-                        className="bg-gradient-to-r from-blue-600 to-violet-600 hover:from-blue-700 hover:to-violet-700 text-white"
-                        onClick={handleSaveRoadmap}
-                      >
+                      <NeonButton color="yellow" variant="solid" onClick={handleSaveRoadmap}>
                         <Save className="mr-2 h-4 w-4" />
                         Save Roadmap
-                      </Button>
-                      <Button 
-                        variant="outline" 
-                        onClick={handleDownloadPDF}
-                      >
+                      </NeonButton>
+                      <NeonButton color="teal" variant="outline" onClick={handleDownloadPDF}>
                         <Download className="mr-2 h-4 w-4" />
                         Download PDF
-                      </Button>
-                      <Button 
-                        variant="outline"
-                        onClick={handleCustomize}
-                      >
+                      </NeonButton>
+                      <NeonButton color="orange" variant="outline" onClick={handleCustomize}>
                         <Pencil className="mr-2 h-4 w-4" />
                         Customize
-                      </Button>
-                      <Button 
-                        variant="outline"
-                        onClick={handleShareRoadmap}
-                      >
+                      </NeonButton>
+                      <NeonButton color="teal" variant="outline" onClick={handleShareRoadmap}>
                         <Share className="mr-2 h-4 w-4" />
                         Share
-                      </Button>
+                      </NeonButton>
                     </div>
-                  </div>
+                  </NeonCard>
                 </div>
               </div>
               

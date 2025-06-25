@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Toaster } from "@/components/ui/toaster";
@@ -23,6 +22,7 @@ import LeaderboardPage from "@/pages/LeaderboardPage";
 import CareersPage from "@/pages/CareersPage";
 import PortfolioPage from "@/pages/PortfolioPage";
 import LoginPage from "@/pages/LoginPage";
+import DashboardPage from "@/pages/DashboardPage";
 import NotFound from "@/pages/NotFound";
 import Layout from "@/components/Layout";
 import GameRoutes from './components/GameRoutes';
@@ -55,6 +55,7 @@ const App: React.FC = () => {
           <Route path="careers" element={<CareersPage />} />
           <Route path="portfolio" element={<PortfolioPage />} />
           <Route path="login" element={<LoginPage />} />
+          <Route path="dashboard" element={<DashboardPage />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

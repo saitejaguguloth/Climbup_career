@@ -6,6 +6,9 @@ import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { toast } from "@/hooks/use-toast";
 import { Eye, EyeOff, Mail, Lock } from "lucide-react";
+import { auth, googleProvider } from "@/lib/firebase";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, fetchSignInMethodsForEmail } from "firebase/auth";
+import { NeonCard, NeonButton, NeonTitle } from "@/components/ui/neon-elements";
 
 interface UserCredentials {
   email: string;
@@ -18,24 +21,6 @@ interface UserDetails extends UserCredentials {
   userType: string;
   education?: string;
 }
-
-// Mock database for authentication demo
-const MOCK_USERS = [
-  {
-    email: "student@example.com",
-    password: "password123",
-    firstName: "John",
-    lastName: "Doe",
-    userType: "student"
-  },
-  {
-    email: "teacher@example.com",
-    password: "teacher123",
-    firstName: "Jane",
-    lastName: "Smith",
-    userType: "teacher"
-  }
-];
 
 const LoginPage = () => {
   const [searchParams] = useSearchParams();
@@ -92,19 +77,6 @@ const LoginPage = () => {
       userType
     }));
   }, [userType]);
-
-  // Load registered users from localStorage
-  const getRegisteredUsers = (): UserDetails[] => {
-    const usersJson = localStorage.getItem("registeredUsers");
-    return usersJson ? JSON.parse(usersJson) : [];
-  };
-
-  // Save registered users to localStorage
-  const saveRegisteredUser = (user: UserDetails) => {
-    const currentUsers = getRegisteredUsers();
-    const updatedUsers = [...currentUsers, user];
-    localStorage.setItem("registeredUsers", JSON.stringify(updatedUsers));
-  };
 
   // Validation functions
   const validateEmail = (email: string): string => {
@@ -172,122 +144,75 @@ const LoginPage = () => {
   };
 
   // Handle login submission
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Validate form inputs
     const emailError = validateEmail(loginCredentials.email);
     const passwordError = validatePassword(loginCredentials.password);
-    
-    setLoginErrors({
-      email: emailError,
-      password: passwordError
-    });
-    
-    if (emailError || passwordError) {
-      return;
-    }
-    
+    setLoginErrors({ email: emailError, password: passwordError });
+    if (emailError || passwordError) return;
     setIsLoading(true);
-    
-    // Check if email exists in registered users
-    const registeredUsers = getRegisteredUsers();
-    const user = registeredUsers.find(user => user.email === loginCredentials.email);
-    
-    setTimeout(() => {
-      if (!user) {
-        setLoginErrors(prev => ({ ...prev, email: "This email is not registered yet, please choose sign up option" }));
-        setIsLoading(false);
-        return;
-      }
-      
-      if (user.password !== loginCredentials.password) {
-        setLoginErrors(prev => ({ ...prev, password: "Incorrect password" }));
-        setIsLoading(false);
-        return;
-      }
-      
-      // Successful login
-      localStorage.setItem("isAuthenticated", "true");
-      localStorage.setItem("user", JSON.stringify({
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        userType: user.userType,
-        education: user.education
-      }));
-      
-      toast({
-        title: "Welcome back!",
-        description: `Successfully logged in as ${user.firstName}`,
-        variant: "success"
-      });
-      
+    try {
+      await signInWithEmailAndPassword(auth, loginCredentials.email, loginCredentials.password);
+      toast({ title: "Welcome back!", description: `Successfully logged in as ${loginCredentials.email}`, variant: "success" });
       setIsLoading(false);
-      navigate("/", { replace: true });
-    }, 1000);
+      navigate("/dashboard", { replace: true });
+    } catch (error: any) {
+      setIsLoading(false);
+      if (error.code === "auth/user-not-found") {
+        setLoginErrors(prev => ({ ...prev, email: "This email is not registered yet, please choose sign up option" }));
+      } else if (error.code === "auth/wrong-password") {
+        setLoginErrors(prev => ({ ...prev, password: "Incorrect password" }));
+      } else {
+        toast({ title: "Login failed", description: error.message, variant: "destructive" });
+      }
+    }
   };
 
   // Handle sign up submission
-  const handleSignup = (e: React.FormEvent) => {
+  const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Validate form inputs
     const firstNameError = validateName(signupDetails.firstName, "First name");
     const lastNameError = validateName(signupDetails.lastName, "Last name");
     const emailError = validateEmail(signupDetails.email);
     const passwordError = validatePassword(signupDetails.password, true);
-    
-    setSignupErrors({
-      firstName: firstNameError,
-      lastName: lastNameError,
-      email: emailError,
-      password: passwordError
-    });
-    
-    if (firstNameError || lastNameError || emailError || passwordError) {
-      return;
-    }
-    
+    setSignupErrors({ firstName: firstNameError, lastName: lastNameError, email: emailError, password: passwordError });
+    if (firstNameError || lastNameError || emailError || passwordError) return;
     setIsLoading(true);
-    
-    // Check if email is already registered
-    const registeredUsers = getRegisteredUsers();
-    const existingUser = registeredUsers.find(user => user.email === signupDetails.email);
-    
-    setTimeout(() => {
-      if (existingUser) {
+    try {
+      // Check if user already exists
+      const methods = await fetchSignInMethodsForEmail(auth, signupDetails.email);
+      if (methods.length > 0) {
         setSignupErrors(prev => ({ ...prev, email: "This email is already registered, please log in instead" }));
         setIsLoading(false);
         return;
       }
-      
-      // Store the new user in localStorage
-      saveRegisteredUser(signupDetails);
-      
-      localStorage.setItem("isAuthenticated", "true");
-      localStorage.setItem("user", JSON.stringify({
-        firstName: signupDetails.firstName,
-        lastName: signupDetails.lastName,
-        email: signupDetails.email,
-        userType: signupDetails.userType,
-        education: signupDetails.education
-      }));
-      
-      toast({
-        title: "Account created!",
-        description: "Your account has been created successfully",
-        variant: "success"
-      });
-      
+      await createUserWithEmailAndPassword(auth, signupDetails.email, signupDetails.password);
+      toast({ title: "Account created!", description: "Your account has been created successfully", variant: "success" });
       setIsLoading(false);
-      navigate("/", { replace: true });
-    }, 1000);
+      navigate("/dashboard", { replace: true });
+    } catch (error: any) {
+      setIsLoading(false);
+      toast({ title: "Signup failed", description: error.message, variant: "destructive" });
+    }
   };
 
   // Toggle password visibility
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
+  };
+
+  // Add Google Sign-In handler
+  const handleGoogleSignIn = async () => {
+    setIsLoading(true);
+    try {
+      await signInWithPopup(auth, googleProvider);
+      toast({ title: "Welcome!", description: "Signed in with Google", variant: "success" });
+      setIsLoading(false);
+      navigate("/dashboard", { replace: true });
+    } catch (error: any) {
+      setIsLoading(false);
+      toast({ title: "Google Sign-In failed", description: error.message, variant: "destructive" });
+    }
   };
 
   return (
@@ -391,6 +316,7 @@ const LoginPage = () => {
               variant="outline" 
               className="w-full border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 font-medium"
               type="button"
+              onClick={handleGoogleSignIn}
             >
               <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
                 <path
@@ -547,6 +473,7 @@ const LoginPage = () => {
               variant="outline" 
               className="w-full border border-gray-300 bg-white hover:bg-gray-50 text-gray-700 font-medium"
               type="button"
+              onClick={handleGoogleSignIn}
             >
               <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24">
                 <path

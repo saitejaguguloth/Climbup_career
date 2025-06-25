@@ -118,10 +118,124 @@ const RoadmapPage = () => {
             skills: ["Data Visualization", "Model Deployment", "Business Intelligence"]
           }
         ]
+      },
+      "product-manager": {
+        title: "Product Manager Roadmap",
+        description: "Journey to becoming a product manager",
+        estimatedDuration: "8-12 months",
+        steps: [
+          {
+            id: "1",
+            title: "Product Strategy Fundamentals",
+            description: "Learn product strategy and market analysis",
+            duration: "4-6 weeks",
+            skills: ["Market Research", "User Stories", "Product Strategy"]
+          },
+          {
+            id: "2",
+            title: "Technical Understanding",
+            description: "Basic understanding of development process",
+            duration: "6-8 weeks",
+            skills: ["Agile/Scrum", "API Basics", "Database Concepts"]
+          },
+          {
+            id: "3",
+            title: "Analytics & Data",
+            description: "Learn to work with data and metrics",
+            duration: "4-6 weeks",
+            skills: ["Analytics Tools", "A/B Testing", "KPI Definition"]
+          },
+          {
+            id: "4",
+            title: "Leadership & Communication",
+            description: "Develop soft skills and leadership",
+            duration: "6-8 weeks",
+            skills: ["Stakeholder Management", "Presentation Skills", "Team Leadership"]
+          }
+        ]
+      },
+      "ux-designer": {
+        title: "UX/UI Designer Roadmap",
+        description: "Path to becoming a UX/UI designer",
+        estimatedDuration: "6-10 months",
+        steps: [
+          {
+            id: "1",
+            title: "Design Fundamentals",
+            description: "Learn basic design principles",
+            duration: "4-6 weeks",
+            skills: ["Color Theory", "Typography", "Layout Design"]
+          },
+          {
+            id: "2",
+            title: "UX Research & Strategy",
+            description: "Understand user research methods",
+            duration: "6-8 weeks",
+            skills: ["User Research", "Personas", "Journey Mapping"]
+          },
+          {
+            id: "3",
+            title: "Design Tools & Prototyping",
+            description: "Master design tools and prototyping",
+            duration: "6-8 weeks",
+            skills: ["Figma", "Adobe XD", "Prototyping", "Wireframing"]
+          },
+          {
+            id: "4",
+            title: "Portfolio & Testing",
+            description: "Build portfolio and learn usability testing",
+            duration: "4-6 weeks",
+            skills: ["Portfolio Creation", "Usability Testing", "Design Systems"]
+          }
+        ]
       }
     };
 
-    return baseRoadmaps[targetRole] || baseRoadmaps["software-engineer"];
+    // Customize roadmap based on current role
+    const baseRoadmap = baseRoadmaps[targetRole] || baseRoadmaps["software-engineer"];
+    
+    if (currentRole === "student") {
+      // Add foundational steps for students
+      return {
+        ...baseRoadmap,
+        estimatedDuration: `${parseInt(baseRoadmap.estimatedDuration.split('-')[0]) + 2}-${parseInt(baseRoadmap.estimatedDuration.split('-')[1]) + 4} months`,
+        steps: [
+          {
+            id: "0",
+            title: "Academic Foundation",
+            description: "Focus on relevant coursework and build study habits",
+            duration: "2-4 weeks",
+            skills: ["Time Management", "Study Skills", "Academic Planning"]
+          },
+          ...baseRoadmap.steps
+        ]
+      };
+    } else if (currentRole === "career-changer") {
+      // Add transition-specific steps
+      return {
+        ...baseRoadmap,
+        estimatedDuration: `${parseInt(baseRoadmap.estimatedDuration.split('-')[0]) + 3}-${parseInt(baseRoadmap.estimatedDuration.split('-')[1]) + 6} months`,
+        steps: [
+          {
+            id: "0",
+            title: "Career Transition Planning",
+            description: "Plan your career transition and skill gap analysis",
+            duration: "2-3 weeks",
+            skills: ["Career Planning", "Skill Assessment", "Network Building"]
+          },
+          ...baseRoadmap.steps,
+          {
+            id: "final",
+            title: "Job Search & Transition",
+            description: "Prepare for job search in new field",
+            duration: "4-8 weeks",
+            skills: ["Resume Writing", "Interview Prep", "Networking"]
+          }
+        ]
+      };
+    }
+
+    return baseRoadmap;
   };
 
   const handleGenerateRoadmap = () => {

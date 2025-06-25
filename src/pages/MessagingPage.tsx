@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { 
@@ -9,7 +11,6 @@ import {
 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from '@/components/ui/dialog';
-import { NeonTitle, NeonButton, NeonCard } from '@/components/ui/neon-elements';
 
 // Types
 interface Message {
@@ -404,35 +405,28 @@ const MessagingPage = () => {
   };
 
   return (
-    <div className="min-h-screen py-16 relative">
-      {/* Background blurry elements */}
-      <div className="absolute inset-0 overflow-hidden -z-10">
-        <div className="absolute top-0 left-0 w-64 h-64 bg-neon-yellow rounded-full mix-blend-overlay filter blur-3xl opacity-5 animate-blob"></div>
-        <div className="absolute top-0 right-0 w-72 h-72 bg-neon-teal rounded-full mix-blend-overlay filter blur-3xl opacity-5 animate-blob animation-delay-2000"></div>
-        <div className="absolute bottom-0 left-1/3 w-80 h-80 bg-neon-orange rounded-full mix-blend-overlay filter blur-3xl opacity-5 animate-blob animation-delay-3000"></div>
-      </div>
-
-      <div className="container mx-auto px-4">
+    <div className="min-h-screen py-6 px-4 bg-gray-50">
+      <div className="container mx-auto">
         <div className="text-center mb-8">
-          <NeonTitle size="2xl" color="yellow" className="mb-4">
-            Community <span className="text-neon-teal">Messages</span>
-          </NeonTitle>
-          <p className="text-xl text-white/70">Connect with peers and mentors in your learning journey</p>
+          <h1 className="text-3xl font-bold mb-2">
+            Community <span className="bg-gradient-to-r from-blue-600 to-indigo-600 text-transparent bg-clip-text">Messages</span>
+          </h1>
+          <p className="text-gray-600">Connect with peers and mentors in your learning journey</p>
         </div>
         
-        <NeonCard color="teal" className="shadow-lg border-0">
+        <Card className="shadow-lg border-0">
           <div className="grid grid-cols-1 md:grid-cols-3 h-[700px]">
             {/* Sidebar */}
-            <div className="border-r border-white/20 md:col-span-1">
+            <div className="border-r border-gray-200 md:col-span-1">
               <div className="flex flex-col h-full">
-                <div className="p-4 border-b border-white/20">
+                <div className="p-4 border-b border-gray-200">
                   <Tabs defaultValue={activeTab} onValueChange={setActiveTab} className="w-full">
-                    <TabsList className="grid grid-cols-2 w-full bg-black/20 backdrop-blur-md">
-                      <TabsTrigger value="chats" className="flex items-center gap-1 text-white data-[state=active]:bg-neon-yellow/20 data-[state=active]:text-neon-yellow">
+                    <TabsList className="grid grid-cols-2 w-full">
+                      <TabsTrigger value="chats" className="flex items-center gap-1">
                         <MessageSquare className="h-4 w-4" />
                         <span>Chats</span>
                       </TabsTrigger>
-                      <TabsTrigger value="groups" className="flex items-center gap-1 text-white data-[state=active]:bg-neon-yellow/20 data-[state=active]:text-neon-yellow">
+                      <TabsTrigger value="groups" className="flex items-center gap-1">
                         <Users className="h-4 w-4" />
                         <span>Groups</span>
                       </TabsTrigger>
@@ -440,12 +434,12 @@ const MessagingPage = () => {
                   </Tabs>
                 </div>
                 
-                <div className="p-4 border-b border-white/20">
+                <div className="p-4 border-b border-gray-200">
                   <div className="relative">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-white/50 h-4 w-4" />
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-4 w-4" />
                     <Input 
                       placeholder="Search" 
-                      className="pl-10 bg-black/20 border-white/20 text-white placeholder:text-white/50" 
+                      className="pl-10" 
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                     />
@@ -455,32 +449,32 @@ const MessagingPage = () => {
                 <div className="flex-1 overflow-y-auto">
                   <Tabs defaultValue={activeTab} onValueChange={setActiveTab} className="w-full">
                     <TabsContent value="chats" className="mt-0">
-                      <div className="flex justify-between items-center p-4 border-b border-white/20">
-                        <h3 className="font-medium text-white">Recent Chats</h3>
+                      <div className="flex justify-between items-center p-4 border-b border-gray-200">
+                        <h3 className="font-medium">Recent Chats</h3>
                       </div>
                       {filteredGroups
                         .filter(group => !group.isMentorGroup)
                         .map(group => (
                           <div 
                             key={group.id}
-                            className={`flex items-center gap-3 p-4 hover:bg-white/10 cursor-pointer border-b border-white/10 transition-colors ${activeChat === group.id ? 'bg-neon-teal/20' : ''}`}
+                            className={`flex items-center gap-3 p-4 hover:bg-gray-50 cursor-pointer border-b border-gray-100 transition-colors ${activeChat === group.id ? 'bg-blue-50' : ''}`}
                             onClick={() => setActiveChat(group.id)}
                           >
                             <Avatar className="h-12 w-12">
                               <AvatarImage src={group.avatar} />
-                              <AvatarFallback className="bg-neon-yellow/20 text-neon-yellow">{group.name[0]}</AvatarFallback>
+                              <AvatarFallback>{group.name[0]}</AvatarFallback>
                             </Avatar>
                             <div className="flex-1 min-w-0">
                               <div className="flex justify-between">
-                                <h4 className="font-medium truncate text-white">{group.name}</h4>
-                                <span className="text-xs text-white/60">
+                                <h4 className="font-medium truncate">{group.name}</h4>
+                                <span className="text-xs text-gray-500">
                                   {group.lastMessageTime ? formatTime(group.lastMessageTime) : ''}
                                 </span>
                               </div>
-                              <p className="text-sm text-white/70 truncate">{group.lastMessage}</p>
+                              <p className="text-sm text-gray-500 truncate">{group.lastMessage}</p>
                             </div>
                             {group.unread > 0 && (
-                              <span className="bg-neon-orange text-black text-xs rounded-full h-5 min-w-5 flex items-center justify-center font-bold">
+                              <span className="bg-blue-500 text-white text-xs rounded-full h-5 min-w-5 flex items-center justify-center">
                                 {group.unread}
                               </span>
                             )}
@@ -489,52 +483,50 @@ const MessagingPage = () => {
                     </TabsContent>
                     
                     <TabsContent value="groups" className="mt-0">
-                      <div className="flex justify-between items-center p-4 border-b border-white/20">
-                        <h3 className="font-medium text-white">All Groups</h3>
-                        <NeonButton 
+                      <div className="flex justify-between items-center p-4 border-b border-gray-200">
+                        <h3 className="font-medium">All Groups</h3>
+                        <Button 
+                          variant="outline" 
                           size="sm" 
-                          color="yellow"
-                          variant="outline"
                           className="flex items-center gap-1"
                           onClick={handleCreateGroup}
                         >
                           <Plus className="h-4 w-4" />
                           New
-                        </NeonButton>
+                        </Button>
                       </div>
                       {filteredGroups.map(group => (
                         <div 
                           key={group.id}
-                          className={`flex items-center gap-3 p-4 hover:bg-white/10 cursor-pointer border-b border-white/10 transition-colors ${activeChat === group.id ? 'bg-neon-teal/20' : ''}`}
+                          className={`flex items-center gap-3 p-4 hover:bg-gray-50 cursor-pointer border-b border-gray-100 transition-colors ${activeChat === group.id ? 'bg-blue-50' : ''}`}
                           onClick={() => setActiveChat(group.id)}
                         >
                           <Avatar className="h-12 w-12">
                             <AvatarImage src={group.avatar} />
-                            <AvatarFallback className="bg-neon-yellow/20 text-neon-yellow">{group.name[0]}</AvatarFallback>
+                            <AvatarFallback>{group.name[0]}</AvatarFallback>
                           </Avatar>
                           <div className="flex-1 min-w-0">
                             <div className="flex justify-between">
-                              <h4 className="font-medium truncate text-white">
+                              <h4 className="font-medium truncate">
                                 {group.name}
                                 {group.isMentorGroup && (
-                                  <span className="ml-2 text-xs bg-neon-orange/20 text-neon-orange px-2 py-0.5 rounded-full border border-neon-orange/50">Mentor</span>
+                                  <span className="ml-2 text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full">Mentor</span>
                                 )}
                               </h4>
                             </div>
                             <div className="flex flex-wrap gap-1 mt-1">
                               {group.tags?.slice(0, 3).map(tag => (
-                                <span key={tag} className="text-xs bg-white/10 text-white/70 px-1.5 py-0.5 rounded border border-white/20">
+                                <span key={tag} className="text-xs bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded">
                                   {tag}
                                 </span>
                               ))}
                             </div>
-                            <p className="text-xs text-white/60 mt-1">{group.members} members</p>
+                            <p className="text-xs text-gray-500 mt-1">{group.members} members</p>
                           </div>
                           {!messages[group.id] && (
-                            <NeonButton 
-                              variant="outline" 
+                            <Button 
+                              variant="ghost" 
                               size="sm" 
-                              color="teal"
                               className="text-xs"
                               onClick={(e) => {
                                 e.stopPropagation();
@@ -542,10 +534,10 @@ const MessagingPage = () => {
                               }}
                             >
                               Join
-                            </NeonButton>
+                            </Button>
                           )}
                           {group.unread > 0 && (
-                            <span className="bg-neon-orange text-black text-xs rounded-full h-5 min-w-5 flex items-center justify-center font-bold">
+                            <span className="bg-blue-500 text-white text-xs rounded-full h-5 min-w-5 flex items-center justify-center">
                               {group.unread}
                             </span>
                           )}
@@ -562,37 +554,37 @@ const MessagingPage = () => {
               {activeChat ? (
                 <>
                   {/* Chat Header */}
-                  <div className="p-4 border-b border-white/20 flex justify-between items-center">
+                  <div className="p-4 border-b border-gray-200 flex justify-between items-center">
                     <div className="flex items-center gap-3">
                       <Avatar className="h-10 w-10">
                         <AvatarImage src={groups.find(g => g.id === activeChat)?.avatar} />
-                        <AvatarFallback className="bg-neon-yellow/20 text-neon-yellow">{groups.find(g => g.id === activeChat)?.name[0]}</AvatarFallback>
+                        <AvatarFallback>{groups.find(g => g.id === activeChat)?.name[0]}</AvatarFallback>
                       </Avatar>
                       <div>
-                        <h3 className="font-medium text-white">{groups.find(g => g.id === activeChat)?.name}</h3>
-                        <p className="text-xs text-white/60">
+                        <h3 className="font-medium">{groups.find(g => g.id === activeChat)?.name}</h3>
+                        <p className="text-xs text-gray-500">
                           {groups.find(g => g.id === activeChat)?.members} members
                         </p>
                       </div>
                     </div>
                     <div className="flex gap-2">
-                      <NeonButton variant="outline" size="sm" color="teal" title="Voice call">
+                      <Button variant="ghost" size="icon" title="Voice call">
                         <Phone className="h-4 w-4" />
-                      </NeonButton>
-                      <NeonButton variant="outline" size="sm" color="yellow" title="Video call">
+                      </Button>
+                      <Button variant="ghost" size="icon" title="Video call">
                         <Video className="h-4 w-4" />
-                      </NeonButton>
-                      <NeonButton variant="outline" size="sm" color="orange" title="Add members">
+                      </Button>
+                      <Button variant="ghost" size="icon" title="Add members">
                         <UserPlus className="h-4 w-4" />
-                      </NeonButton>
-                      <NeonButton variant="outline" size="sm" color="teal" title="More options">
+                      </Button>
+                      <Button variant="ghost" size="icon" title="More options">
                         <MoreVertical className="h-4 w-4" />
-                      </NeonButton>
+                      </Button>
                     </div>
                   </div>
                   
                   {/* Messages */}
-                  <div className="flex-1 overflow-y-auto p-4 space-y-4">
+                  <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
                     {messages[activeChat] ? (
                       messages[activeChat].map((msg, index, array) => {
                         // Check if we should show a date separator
@@ -603,29 +595,29 @@ const MessagingPage = () => {
                           <React.Fragment key={msg.id}>
                             {showDateHeader && (
                               <div className="flex justify-center my-4">
-                                <span className="px-2 py-1 bg-white/10 text-white/70 text-xs rounded-full border border-white/20">
+                                <span className="px-2 py-1 bg-gray-200 text-gray-600 text-xs rounded-full">
                                   {formatDate(msg.timestamp)}
                                 </span>
                               </div>
                             )}
                             <div className={`flex ${msg.senderId === 'currentUser' ? 'justify-end' : 'justify-start'}`}>
-                              <div className={`max-w-[80%] ${msg.senderId === 'currentUser' ? 'bg-neon-teal/20 text-white border border-neon-teal/50' : 'bg-black/40 text-white border border-white/20'} rounded-lg p-3 backdrop-blur-sm`}>
+                              <div className={`max-w-[80%] ${msg.senderId === 'currentUser' ? 'bg-blue-500 text-white' : 'bg-white'} rounded-lg p-3 shadow-sm`}>
                                 {msg.senderId !== 'currentUser' && (
                                   <div className="flex items-center gap-2 mb-1">
                                     <Avatar className="h-6 w-6">
                                       <AvatarImage src={msg.senderAvatar} />
-                                      <AvatarFallback className="bg-neon-yellow/20 text-neon-yellow text-xs">{msg.senderName[0]}</AvatarFallback>
+                                      <AvatarFallback>{msg.senderName[0]}</AvatarFallback>
                                     </Avatar>
-                                    <span className="text-xs font-medium text-neon-yellow">{msg.senderName}</span>
+                                    <span className="text-xs font-medium">{msg.senderName}</span>
                                   </div>
                                 )}
-                                <p className="text-sm text-white">
+                                <p className={`text-sm ${msg.senderId === 'currentUser' ? 'text-white' : 'text-gray-800'}`}>
                                   {msg.content}
                                 </p>
-                                <div className={`text-xs mt-1 text-right flex items-center justify-end gap-1 ${msg.senderId === 'currentUser' ? 'text-neon-teal' : 'text-white/60'}`}>
+                                <div className={`text-xs mt-1 text-right flex items-center justify-end gap-1 ${msg.senderId === 'currentUser' ? 'text-blue-100' : 'text-gray-500'}`}>
                                   <span>{formatTime(msg.timestamp)}</span>
                                   {msg.senderId === 'currentUser' && (
-                                    <span className="text-neon-yellow">
+                                    <span>
                                       {msg.status === 'sent' && '✓'}
                                       {msg.status === 'delivered' && '✓✓'}
                                       {msg.status === 'read' && '✓✓'}
@@ -638,117 +630,114 @@ const MessagingPage = () => {
                         );
                       })
                     ) : (
-                      <div className="flex flex-col items-center justify-center h-full text-center text-white/70">
-                        <Users className="h-12 w-12 text-neon-teal mb-2" />
-                        <h3 className="font-medium mb-1 text-white">Welcome to {groups.find(g => g.id === activeChat)?.name}</h3>
+                      <div className="flex flex-col items-center justify-center h-full text-center text-gray-500">
+                        <Users className="h-12 w-12 text-gray-300 mb-2" />
+                        <h3 className="font-medium mb-1">Welcome to {groups.find(g => g.id === activeChat)?.name}</h3>
                         <p className="text-sm">Start the conversation by sending a message</p>
                       </div>
                     )}
                   </div>
                   
                   {/* Message Input */}
-                  <div className="p-4 border-t border-white/20">
+                  <div className="p-4 border-t border-gray-200">
                     <div className="flex gap-2">
-                      <NeonButton variant="outline" size="sm" color="yellow" title="Attach file">
+                      <Button variant="ghost" size="icon" title="Attach file">
                         <Paperclip className="h-4 w-4" />
-                      </NeonButton>
-                      <NeonButton variant="outline" size="sm" color="teal" title="Send image">
+                      </Button>
+                      <Button variant="ghost" size="icon" title="Send image">
                         <Image className="h-4 w-4" />
-                      </NeonButton>
+                      </Button>
                       <Input 
                         placeholder="Type a message..." 
-                        className="flex-1 bg-black/20 border-white/20 text-white placeholder:text-white/50"
+                        className="flex-1"
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                         onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                       />
-                      <NeonButton variant="outline" size="sm" color="orange" title="Add emoji">
+                      <Button variant="ghost" size="icon" title="Add emoji">
                         <Smile className="h-4 w-4" />
-                      </NeonButton>
-                      <NeonButton variant="outline" size="sm" color="teal" title="Voice message">
+                      </Button>
+                      <Button variant="ghost" size="icon" title="Voice message">
                         <Mic className="h-4 w-4" />
-                      </NeonButton>
-                      <NeonButton onClick={handleSendMessage} color="yellow">
+                      </Button>
+                      <Button onClick={handleSendMessage} className="bg-blue-500 hover:bg-blue-600">
                         <Send className="h-4 w-4 mr-2" />
                         Send
-                      </NeonButton>
+                      </Button>
                     </div>
                   </div>
                 </>
               ) : (
                 <div className="flex flex-col items-center justify-center h-full text-center p-4">
-                  <div className="bg-neon-teal/20 p-6 rounded-full mb-4 border border-neon-teal/50">
-                    <MessageSquare className="h-12 w-12 text-neon-teal" />
+                  <div className="bg-blue-100 p-6 rounded-full mb-4">
+                    <MessageSquare className="h-12 w-12 text-blue-500" />
                   </div>
-                  <h3 className="text-xl font-semibold mb-2 text-white">Welcome to Community Messages</h3>
-                  <p className="text-white/70 mb-6 max-w-md">
+                  <h3 className="text-xl font-semibold mb-2">Welcome to Community Messages</h3>
+                  <p className="text-gray-500 mb-6 max-w-md">
                     Connect with fellow learners, join specialized groups, and get guidance from mentors.
                   </p>
                   <div className="flex gap-3">
-                    <NeonButton onClick={() => setActiveChat('1')} color="yellow">
+                    <Button onClick={() => setActiveChat('1')}>
                       <MessageSquare className="mr-2 h-4 w-4" />
                       Start Messaging
-                    </NeonButton>
-                    <NeonButton variant="outline" color="teal" onClick={() => setActiveTab('groups')}>
+                    </Button>
+                    <Button variant="outline" onClick={() => setActiveTab('groups')}>
                       <Users className="mr-2 h-4 w-4" />
                       Browse Groups
-                    </NeonButton>
+                    </Button>
                   </div>
                 </div>
               )}
             </div>
           </div>
-        </NeonCard>
+        </Card>
       </div>
 
       {/* Create Group Dialog */}
       <Dialog open={createGroupDialogOpen} onOpenChange={setCreateGroupDialogOpen}>
-        <DialogContent className="sm:max-w-md bg-black/90 border-white/20 text-white">
+        <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle className="text-neon-yellow">Create a New Group</DialogTitle>
-            <DialogDescription className="text-white/70">
+            <DialogTitle>Create a New Group</DialogTitle>
+            <DialogDescription>
               Create a group to discuss topics with peers and mentors
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4">
             <div className="space-y-2">
-              <label htmlFor="group-name" className="text-sm font-medium text-white">Group Name</label>
+              <label htmlFor="group-name" className="text-sm font-medium">Group Name</label>
               <Input 
                 id="group-name" 
                 placeholder="e.g., Machine Learning Study Group" 
-                className="bg-black/20 border-white/20 text-white placeholder:text-white/50"
                 value={newGroupName}
                 onChange={(e) => setNewGroupName(e.target.value)}
               />
             </div>
             <div className="space-y-2">
-              <label htmlFor="group-description" className="text-sm font-medium text-white">Group Description</label>
+              <label htmlFor="group-description" className="text-sm font-medium">Group Description</label>
               <Input 
                 id="group-description" 
                 placeholder="A brief description of your group" 
-                className="bg-black/20 border-white/20 text-white placeholder:text-white/50"
                 value={newGroupDescription}
                 onChange={(e) => setNewGroupDescription(e.target.value)}
               />
             </div>
             <div className="space-y-2">
-              <label htmlFor="group-tags" className="text-sm font-medium text-white">Tags (comma separated)</label>
+              <label htmlFor="group-tags" className="text-sm font-medium">Tags (comma separated)</label>
               <Input 
                 id="group-tags" 
                 placeholder="e.g., python, data-science, beginners" 
-                className="bg-black/20 border-white/20 text-white placeholder:text-white/50"
                 value={newGroupTags}
                 onChange={(e) => setNewGroupTags(e.target.value)}
               />
             </div>
           </div>
           <DialogFooter>
-            <NeonButton variant="outline" color="teal" onClick={() => setCreateGroupDialogOpen(false)}>
+            <Button variant="outline" onClick={() => setCreateGroupDialogOpen(false)}>
               Cancel
-            </NeonButton>
-            <NeonButton color="yellow" onClick={submitNewGroup}>
+            </Button>
+            <Button onClick={submitNewGroup}>
               Create Group
-            </NeonButton>
+            </Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

@@ -45,6 +45,26 @@ const GamesList = ({ games }: GamesListProps) => {
           <div className="h-40 bg-gradient-to-br from-black/60 to-black/10 relative overflow-hidden">
             {/* Game header graphics */}
             <div className="absolute inset-0 flex items-center justify-center opacity-60">
+              {game.type === 'arcade' && (
+                <div className={`text-neon-${game.color} animate-glow-pulse`}>
+                  <svg width="120" height="120" viewBox="0 0 200 200">
+                    <circle cx="100" cy="100" r="30" fill="none" stroke="currentColor" strokeWidth="2" />
+                    <circle cx="100" cy="100" r="70" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="10 15" />
+                    <path d="M100,30 L100,50 M100,150 L100,170 M30,100 L50,100 M150,100 L170,100" 
+                      stroke="currentColor" strokeWidth="2" />
+                  </svg>
+                </div>
+              )}
+              
+              {game.type === 'quiz' && (
+                <div className={`text-neon-${game.color} animate-glow-pulse`}>
+                  <svg width="120" height="120" viewBox="0 0 200 200">
+                    <path d="M100,40 L160,100 L100,160 L40,100 Z" fill="none" stroke="currentColor" strokeWidth="2" />
+                    <circle cx="100" cy="100" r="20" fill="none" stroke="currentColor" strokeWidth="2" />
+                  </svg>
+                </div>
+              )}
+              
               {game.type === 'simulation' && (
                 <div className={`text-neon-${game.color} animate-glow-pulse`}>
                   <svg width="120" height="120" viewBox="0 0 200 200">
@@ -62,26 +82,6 @@ const GamesList = ({ games }: GamesListProps) => {
                     <path d="M50,50 L80,50 L80,80 L50,80 Z M120,50 L150,50 L150,80 L120,80 Z 
                             M50,120 L80,120 L80,150 L50,150 Z M120,120 L150,120 L150,150 L120,150 Z" 
                           fill="none" stroke="currentColor" strokeWidth="2" />
-                  </svg>
-                </div>
-              )}
-
-              {game.type === 'strategy' && (
-                <div className={`text-neon-${game.color} animate-glow-pulse`}>
-                  <svg width="120" height="120" viewBox="0 0 200 200">
-                    <circle cx="100" cy="100" r="30" fill="none" stroke="currentColor" strokeWidth="2" />
-                    <circle cx="100" cy="100" r="70" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="10 15" />
-                    <path d="M100,30 L100,50 M100,150 L100,170 M30,100 L50,100 M150,100 L170,100" 
-                      stroke="currentColor" strokeWidth="2" />
-                  </svg>
-                </div>
-              )}
-
-              {game.type === 'educational' && (
-                <div className={`text-neon-${game.color} animate-glow-pulse`}>
-                  <svg width="120" height="120" viewBox="0 0 200 200">
-                    <path d="M100,40 L160,100 L100,160 L40,100 Z" fill="none" stroke="currentColor" strokeWidth="2" />
-                    <circle cx="100" cy="100" r="20" fill="none" stroke="currentColor" strokeWidth="2" />
                   </svg>
                 </div>
               )}

@@ -12,7 +12,6 @@ import { Slider } from '@/components/ui/slider';
 import { Switch } from '@/components/ui/switch';
 import { FileUp, Plus, Trash2, Download, Share2, Eye, EyeOff, Award, Briefcase, GraduationCap, Code, Palette, Languages, BookOpen } from 'lucide-react';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { NeonTitle, NeonButton, NeonCard, NeonIcon } from '@/components/ui/neon-elements';
 
 const PortfolioPage = () => {
   const [activeTab, setActiveTab] = useState('resume');
@@ -128,46 +127,46 @@ const PortfolioPage = () => {
   };
 
   return (
-    <div className="min-h-screen py-16 relative">
+    <div className="min-h-screen py-16 px-4 relative">
       {/* Background blurry elements */}
       <div className="absolute inset-0 overflow-hidden -z-10">
-        <div className="absolute top-0 right-1/4 w-72 h-72 bg-neon-yellow rounded-full mix-blend-overlay filter blur-3xl opacity-5 animate-blob"></div>
-        <div className="absolute bottom-0 left-1/4 w-72 h-72 bg-neon-teal rounded-full mix-blend-overlay filter blur-3xl opacity-5 animate-blob animation-delay-2000"></div>
-        <div className="absolute top-1/2 left-1/2 w-72 h-72 bg-neon-orange rounded-full mix-blend-overlay filter blur-3xl opacity-5 animate-blob animation-delay-4000"></div>
+        <div className="absolute top-0 left-0 w-72 h-72 bg-blue-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+        <div className="absolute bottom-0 right-0 w-72 h-72 bg-purple-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+        <div className="absolute top-1/2 left-1/3 w-72 h-72 bg-emerald-400 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
       </div>
       
-      <div className="container mx-auto max-w-7xl px-4">
+      <div className="container mx-auto max-w-7xl">
         <div className="text-center mb-10">
-          <NeonTitle size="2xl" color="yellow" className="mb-4">
-            Your <span className="text-neon-teal">Portfolio</span>
-          </NeonTitle>
-          <p className="text-lg text-white/70 max-w-2xl mx-auto">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4">
+            Your <span className="bg-gradient-to-r from-blue-600 to-indigo-600 text-transparent bg-clip-text">Portfolio</span>
+          </h1>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
             Showcase your skills, experience, and projects to potential employers and collaborators.
           </p>
         </div>
         
-        <NeonCard color="teal" className="mb-10">
+        <div className="bg-white/90 backdrop-blur rounded-xl p-6 shadow-lg mb-10">
           <div className="flex flex-col md:flex-row gap-6 items-start">
             <div className="md:w-1/3 flex flex-col items-center text-center">
               <Avatar className="h-32 w-32 mb-4">
                 <AvatarImage src={userData.avatar} />
-                <AvatarFallback className="bg-black/40 text-white text-2xl">{userData.name.charAt(0)}</AvatarFallback>
+                <AvatarFallback>{userData.name.charAt(0)}</AvatarFallback>
               </Avatar>
-              <h2 className="text-2xl font-bold text-white">{userData.name}</h2>
-              <p className="text-white/80 mb-2">{userData.title}</p>
-              <p className="text-sm text-white/60 mb-4">{userData.location}</p>
+              <h2 className="text-2xl font-bold">{userData.name}</h2>
+              <p className="text-gray-600 mb-2">{userData.title}</p>
+              <p className="text-sm text-gray-500 mb-4">{userData.location}</p>
               
               <div className="flex gap-2 mb-6">
-                <NeonButton color="yellow" size="sm">
+                <Button variant="outline" size="sm">
                   <FileUp className="mr-1 h-4 w-4" />
                   Update Photo
-                </NeonButton>
+                </Button>
               </div>
               
-              <div className="w-full flex items-center justify-between mb-4 p-3 bg-black/30 rounded-lg border border-white/20">
+              <div className="w-full flex items-center justify-between mb-4 p-3 bg-gray-50 rounded-lg">
                 <div className="flex items-center">
-                  <div className={`mr-2 h-3 w-3 rounded-full ${isPublic ? 'bg-green-400' : 'bg-gray-400'}`}></div>
-                  <span className="font-medium text-white">{isPublic ? 'Public Profile' : 'Private Profile'}</span>
+                  <div className={`mr-2 h-3 w-3 rounded-full ${isPublic ? 'bg-green-500' : 'bg-gray-400'}`}></div>
+                  <span className="font-medium">{isPublic ? 'Public Profile' : 'Private Profile'}</span>
                 </div>
                 <Switch 
                   checked={isPublic} 
@@ -175,153 +174,145 @@ const PortfolioPage = () => {
                 />
               </div>
               
-              <div className="w-full space-y-2">
-                <NeonButton color="teal" className="w-full">
+              <div className="w-full">
+                <Button className="w-full mb-2">
                   <Download className="mr-2 h-4 w-4" />
                   Download Resume
-                </NeonButton>
-                <NeonButton variant="outline" color="orange" className="w-full">
+                </Button>
+                <Button variant="outline" className="w-full">
                   <Share2 className="mr-2 h-4 w-4" />
                   Share Portfolio
-                </NeonButton>
+                </Button>
               </div>
             </div>
             
             <div className="md:w-2/3">
               <Tabs defaultValue={activeTab} onValueChange={setActiveTab} className="w-full">
-                <TabsList className="grid grid-cols-2 md:grid-cols-4 mb-6 bg-black/30 border border-white/20">
-                  <TabsTrigger value="resume" className="flex items-center gap-1 text-white data-[state=active]:bg-neon-yellow/20 data-[state=active]:text-neon-yellow">
+                <TabsList className="grid grid-cols-2 md:grid-cols-4 mb-6">
+                  <TabsTrigger value="resume" className="flex items-center gap-1">
                     <Briefcase className="h-4 w-4" />
                     <span>Resume</span>
                   </TabsTrigger>
-                  <TabsTrigger value="portfolio" className="flex items-center gap-1 text-white data-[state=active]:bg-neon-yellow/20 data-[state=active]:text-neon-yellow">
+                  <TabsTrigger value="portfolio" className="flex items-center gap-1">
                     <Palette className="h-4 w-4" />
                     <span>Portfolio</span>
                   </TabsTrigger>
-                  <TabsTrigger value="skills" className="flex items-center gap-1 text-white data-[state=active]:bg-neon-yellow/20 data-[state=active]:text-neon-yellow">
+                  <TabsTrigger value="skills" className="flex items-center gap-1">
                     <Code className="h-4 w-4" />
                     <span>Skills</span>
                   </TabsTrigger>
-                  <TabsTrigger value="achievements" className="flex items-center gap-1 text-white data-[state=active]:bg-neon-yellow/20 data-[state=active]:text-neon-yellow">
+                  <TabsTrigger value="achievements" className="flex items-center gap-1">
                     <Award className="h-4 w-4" />
                     <span>Achievements</span>
                   </TabsTrigger>
                 </TabsList>
                 
                 <TabsContent value="resume" className="space-y-6">
-                  <NeonCard color="yellow">
+                  <Card>
                     <CardHeader>
-                      <CardTitle className="flex items-center text-white">
-                        <NeonIcon color="yellow" size="sm" className="mr-2">
-                          <Briefcase className="h-5 w-5" />
-                        </NeonIcon>
+                      <CardTitle className="flex items-center">
+                        <Briefcase className="mr-2 h-5 w-5 text-blue-600" />
                         Professional Experience
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-6">
                       {userData.experience.map((exp) => (
-                        <div key={exp.id} className="border-b border-white/20 pb-4 last:border-0 last:pb-0">
+                        <div key={exp.id} className="border-b pb-4 last:border-0 last:pb-0">
                           <div className="flex justify-between items-start mb-1">
-                            <h3 className="font-semibold text-lg text-white">{exp.role}</h3>
-                            <Badge className="bg-neon-teal/20 text-neon-teal border-neon-teal/50">{exp.duration}</Badge>
+                            <h3 className="font-semibold text-lg">{exp.role}</h3>
+                            <Badge variant="outline">{exp.duration}</Badge>
                           </div>
-                          <p className="text-white/80 mb-2">{exp.company}</p>
-                          <p className="text-sm text-white/60">{exp.description}</p>
+                          <p className="text-gray-600 mb-2">{exp.company}</p>
+                          <p className="text-sm text-gray-500">{exp.description}</p>
                         </div>
                       ))}
-                      <NeonButton variant="outline" color="yellow" className="w-full">
+                      <Button variant="outline" className="w-full">
                         <Plus className="mr-2 h-4 w-4" />
                         Add Experience
-                      </NeonButton>
+                      </Button>
                     </CardContent>
-                  </NeonCard>
+                  </Card>
                   
-                  <NeonCard color="teal">
+                  <Card>
                     <CardHeader>
-                      <CardTitle className="flex items-center text-white">
-                        <NeonIcon color="teal" size="sm" className="mr-2">
-                          <GraduationCap className="h-5 w-5" />
-                        </NeonIcon>
+                      <CardTitle className="flex items-center">
+                        <GraduationCap className="mr-2 h-5 w-5 text-blue-600" />
                         Education
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-6">
                       {userData.education.map((edu) => (
-                        <div key={edu.id} className="border-b border-white/20 pb-4 last:border-0 last:pb-0">
+                        <div key={edu.id} className="border-b pb-4 last:border-0 last:pb-0">
                           <div className="flex justify-between items-start mb-1">
-                            <h3 className="font-semibold text-lg text-white">{edu.degree}</h3>
-                            <Badge className="bg-neon-orange/20 text-neon-orange border-neon-orange/50">{edu.duration}</Badge>
+                            <h3 className="font-semibold text-lg">{edu.degree}</h3>
+                            <Badge variant="outline">{edu.duration}</Badge>
                           </div>
-                          <p className="text-white/80 mb-2">{edu.institution}</p>
-                          <p className="text-sm text-white/60">{edu.description}</p>
+                          <p className="text-gray-600 mb-2">{edu.institution}</p>
+                          <p className="text-sm text-gray-500">{edu.description}</p>
                         </div>
                       ))}
-                      <NeonButton variant="outline" color="teal" className="w-full">
+                      <Button variant="outline" className="w-full">
                         <Plus className="mr-2 h-4 w-4" />
                         Add Education
-                      </NeonButton>
+                      </Button>
                     </CardContent>
-                  </NeonCard>
+                  </Card>
                   
-                  <NeonCard color="orange">
+                  <Card>
                     <CardHeader>
-                      <CardTitle className="flex items-center text-white">
-                        <NeonIcon color="orange" size="sm" className="mr-2">
-                          <Award className="h-5 w-5" />
-                        </NeonIcon>
+                      <CardTitle className="flex items-center">
+                        <Award className="mr-2 h-5 w-5 text-blue-600" />
                         Certifications
                       </CardTitle>
                     </CardHeader>
                     <CardContent className="space-y-6">
                       {userData.certifications.map((cert) => (
-                        <div key={cert.id} className="border-b border-white/20 pb-4 last:border-0 last:pb-0">
+                        <div key={cert.id} className="border-b pb-4 last:border-0 last:pb-0">
                           <div className="flex justify-between items-start mb-1">
-                            <h3 className="font-semibold text-lg text-white">{cert.name}</h3>
-                            <Badge className="bg-neon-yellow/20 text-neon-yellow border-neon-yellow/50">{cert.date}</Badge>
+                            <h3 className="font-semibold text-lg">{cert.name}</h3>
+                            <Badge variant="outline">{cert.date}</Badge>
                           </div>
-                          <p className="text-white/80 mb-2">{cert.issuer}</p>
+                          <p className="text-gray-600 mb-2">{cert.issuer}</p>
                           <a 
                             href={cert.link} 
                             target="_blank" 
                             rel="noopener noreferrer"
-                            className="text-sm text-neon-teal hover:underline"
+                            className="text-sm text-blue-600 hover:underline"
                           >
                             View Certificate
                           </a>
                         </div>
                       ))}
-                      <NeonButton variant="outline" color="orange" className="w-full">
+                      <Button variant="outline" className="w-full">
                         <Plus className="mr-2 h-4 w-4" />
                         Add Certification
-                      </NeonButton>
+                      </Button>
                     </CardContent>
-                  </NeonCard>
+                  </Card>
                 </TabsContent>
                 
                 <TabsContent value="portfolio" className="space-y-6">
-                  <NeonCard color="teal">
+                  <Card>
                     <CardHeader>
-                      <CardTitle className="flex items-center text-white">
-                        <NeonIcon color="teal" size="sm" className="mr-2">
-                          <Code className="h-5 w-5" />
-                        </NeonIcon>
+                      <CardTitle className="flex items-center">
+                        <Code className="mr-2 h-5 w-5 text-blue-600" />
                         Projects
                       </CardTitle>
-                      <CardDescription className="text-white/60">
+                      <CardDescription>
                         Showcase your best work and projects to potential employers
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-6">
                       {userData.projects.map((project) => (
-                        <NeonCard key={project.id} color="yellow" className="border">
+                        <Card key={project.id} className="border">
                           <CardHeader className="pb-2">
-                            <CardTitle className="text-white">{project.title}</CardTitle>
+                            <CardTitle>{project.title}</CardTitle>
                           </CardHeader>
                           <CardContent className="pb-2">
-                            <p className="text-white/80 mb-2">{project.description}</p>
+                            <p className="text-gray-600 mb-2">{project.description}</p>
                             <div className="flex flex-wrap gap-1 mb-2">
                               {project.technologies.map((tech, i) => (
-                                <Badge key={i} className="bg-neon-teal/20 text-neon-teal border-neon-teal/50">
+                                <Badge key={i} variant="secondary" className="bg-blue-100 text-blue-800">
                                   {tech}
                                 </Badge>
                               ))}
@@ -330,39 +321,37 @@ const PortfolioPage = () => {
                               href={project.link} 
                               target="_blank" 
                               rel="noopener noreferrer"
-                              className="text-sm text-neon-orange hover:underline"
+                              className="text-sm text-blue-600 hover:underline"
                             >
                               View Project
                             </a>
                           </CardContent>
                           <CardFooter className="flex justify-end gap-2">
-                            <Button variant="ghost" size="sm" className="text-white/70 hover:text-neon-teal">
+                            <Button variant="ghost" size="sm">
                               <Eye className="h-4 w-4" />
                             </Button>
-                            <Button variant="ghost" size="sm" className="text-white/70 hover:text-red-400">
-                              <Trash2 className="h-4 w-4" />
+                            <Button variant="ghost" size="sm">
+                              <Trash2 className="h-4 w-4 text-red-500" />
                             </Button>
                           </CardFooter>
-                        </NeonCard>
+                        </Card>
                       ))}
-                      <NeonButton variant="outline" color="teal" className="w-full">
+                      <Button variant="outline" className="w-full">
                         <Plus className="mr-2 h-4 w-4" />
                         Add Project
-                      </NeonButton>
+                      </Button>
                     </CardContent>
-                  </NeonCard>
+                  </Card>
                 </TabsContent>
                 
                 <TabsContent value="skills" className="space-y-6">
-                  <NeonCard color="orange">
+                  <Card>
                     <CardHeader>
-                      <CardTitle className="flex items-center text-white">
-                        <NeonIcon color="orange" size="sm" className="mr-2">
-                          <Code className="h-5 w-5" />
-                        </NeonIcon>
+                      <CardTitle className="flex items-center">
+                        <Code className="mr-2 h-5 w-5 text-blue-600" />
                         Technical Skills
                       </CardTitle>
-                      <CardDescription className="text-white/60">
+                      <CardDescription>
                         Rate your proficiency in various technical skills
                       </CardDescription>
                     </CardHeader>
@@ -370,8 +359,8 @@ const PortfolioPage = () => {
                       {userData.skills.map((skill, index) => (
                         <div key={index} className="space-y-2">
                           <div className="flex justify-between">
-                            <Label className="text-white">{skill.name}</Label>
-                            <span className="text-sm font-medium text-neon-yellow">{skill.proficiency}%</span>
+                            <Label>{skill.name}</Label>
+                            <span className="text-sm font-medium">{skill.proficiency}%</span>
                           </div>
                           <Slider
                             defaultValue={[skill.proficiency]}
@@ -382,19 +371,17 @@ const PortfolioPage = () => {
                           />
                         </div>
                       ))}
-                      <NeonButton variant="outline" color="orange" className="w-full">
+                      <Button variant="outline" className="w-full">
                         <Plus className="mr-2 h-4 w-4" />
                         Add Skill
-                      </NeonButton>
+                      </Button>
                     </CardContent>
-                  </NeonCard>
+                  </Card>
                   
-                  <NeonCard color="yellow">
+                  <Card>
                     <CardHeader>
-                      <CardTitle className="flex items-center text-white">
-                        <NeonIcon color="yellow" size="sm" className="mr-2">
-                          <Languages className="h-5 w-5" />
-                        </NeonIcon>
+                      <CardTitle className="flex items-center">
+                        <Languages className="mr-2 h-5 w-5 text-blue-600" />
                         Languages
                       </CardTitle>
                     </CardHeader>
@@ -402,113 +389,109 @@ const PortfolioPage = () => {
                       <div className="space-y-4">
                         <div className="space-y-2">
                           <div className="flex justify-between">
-                            <Label className="text-white">English</Label>
-                            <span className="text-sm font-medium text-neon-teal">Fluent</span>
+                            <Label>English</Label>
+                            <span className="text-sm font-medium">Fluent</span>
                           </div>
-                          <Progress value={95} className="bg-white/10" />
+                          <Progress value={95} />
                         </div>
                         <div className="space-y-2">
                           <div className="flex justify-between">
-                            <Label className="text-white">Hindi</Label>
-                            <span className="text-sm font-medium text-neon-teal">Native</span>
+                            <Label>Hindi</Label>
+                            <span className="text-sm font-medium">Native</span>
                           </div>
-                          <Progress value={100} className="bg-white/10" />
+                          <Progress value={100} />
                         </div>
                         <div className="space-y-2">
                           <div className="flex justify-between">
-                            <Label className="text-white">Spanish</Label>
-                            <span className="text-sm font-medium text-neon-teal">Basic</span>
+                            <Label>Spanish</Label>
+                            <span className="text-sm font-medium">Basic</span>
                           </div>
-                          <Progress value={30} className="bg-white/10" />
+                          <Progress value={30} />
                         </div>
                       </div>
-                      <NeonButton variant="outline" color="yellow" className="w-full mt-6">
+                      <Button variant="outline" className="w-full mt-6">
                         <Plus className="mr-2 h-4 w-4" />
                         Add Language
-                      </NeonButton>
+                      </Button>
                     </CardContent>
-                  </NeonCard>
+                  </Card>
                 </TabsContent>
                 
                 <TabsContent value="achievements" className="space-y-6">
-                  <NeonCard color="teal">
+                  <Card>
                     <CardHeader>
-                      <CardTitle className="flex items-center text-white">
-                        <NeonIcon color="teal" size="sm" className="mr-2">
-                          <Award className="h-5 w-5" />
-                        </NeonIcon>
+                      <CardTitle className="flex items-center">
+                        <Award className="mr-2 h-5 w-5 text-blue-600" />
                         Achievements & Awards
                       </CardTitle>
                     </CardHeader>
                     <CardContent>
                       <div className="space-y-4">
-                        <div className="flex items-start gap-4 p-4 border border-white/20 rounded-lg bg-black/20">
-                          <div className="bg-neon-yellow/20 p-2 rounded-full">
-                            <Award className="h-6 w-6 text-neon-yellow" />
+                        <div className="flex items-start gap-4 p-4 border rounded-lg">
+                          <div className="bg-amber-100 p-2 rounded-full">
+                            <Award className="h-6 w-6 text-amber-600" />
                           </div>
                           <div>
-                            <h3 className="font-semibold text-white">Hackathon Winner</h3>
-                            <p className="text-sm text-white/80">First place at TechCorp Annual Hackathon 2022</p>
-                            <Badge className="mt-2 bg-neon-orange/20 text-neon-orange border-neon-orange/50">2022</Badge>
+                            <h3 className="font-semibold">Hackathon Winner</h3>
+                            <p className="text-sm text-gray-600">First place at TechCorp Annual Hackathon 2022</p>
+                            <Badge variant="outline" className="mt-2">2022</Badge>
                           </div>
                         </div>
                         
-                        <div className="flex items-start gap-4 p-4 border border-white/20 rounded-lg bg-black/20">
-                          <div className="bg-neon-teal/20 p-2 rounded-full">
-                            <Award className="h-6 w-6 text-neon-teal" />
+                        <div className="flex items-start gap-4 p-4 border rounded-lg">
+                          <div className="bg-blue-100 p-2 rounded-full">
+                            <Award className="h-6 w-6 text-blue-600" />
                           </div>
                           <div>
-                            <h3 className="font-semibold text-white">Employee of the Quarter</h3>
-                            <p className="text-sm text-white/80">Recognized for outstanding performance and contributions</p>
-                            <Badge className="mt-2 bg-neon-yellow/20 text-neon-yellow border-neon-yellow/50">Q2 2023</Badge>
+                            <h3 className="font-semibold">Employee of the Quarter</h3>
+                            <p className="text-sm text-gray-600">Recognized for outstanding performance and contributions</p>
+                            <Badge variant="outline" className="mt-2">Q2 2023</Badge>
                           </div>
                         </div>
                         
-                        <div className="flex items-start gap-4 p-4 border border-white/20 rounded-lg bg-black/20">
-                          <div className="bg-neon-orange/20 p-2 rounded-full">
-                            <BookOpen className="h-6 w-6 text-neon-orange" />
+                        <div className="flex items-start gap-4 p-4 border rounded-lg">
+                          <div className="bg-purple-100 p-2 rounded-full">
+                            <BookOpen className="h-6 w-6 text-purple-600" />
                           </div>
                           <div>
-                            <h3 className="font-semibold text-white">Published Article</h3>
-                            <p className="text-sm text-white/80">Technical article published in Dev.to on React performance optimization</p>
-                            <Badge className="mt-2 bg-neon-teal/20 text-neon-teal border-neon-teal/50">2023</Badge>
+                            <h3 className="font-semibold">Published Article</h3>
+                            <p className="text-sm text-gray-600">Technical article published in Dev.to on React performance optimization</p>
+                            <Badge variant="outline" className="mt-2">2023</Badge>
                           </div>
                         </div>
                       </div>
-                      <NeonButton variant="outline" color="teal" className="w-full mt-6">
+                      <Button variant="outline" className="w-full mt-6">
                         <Plus className="mr-2 h-4 w-4" />
                         Add Achievement
-                      </NeonButton>
+                      </Button>
                     </CardContent>
-                  </NeonCard>
+                  </Card>
                 </TabsContent>
               </Tabs>
             </div>
           </div>
-        </NeonCard>
+        </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
-          <NeonCard color="yellow">
+          <Card className="bg-gradient-to-br from-blue-50 to-blue-100 border-blue-200">
             <CardHeader>
-              <CardTitle className="flex items-center text-white">
-                <NeonIcon color="yellow" size="sm" className="mr-2">
-                  <Eye className="h-5 w-5" />
-                </NeonIcon>
+              <CardTitle className="flex items-center">
+                <Eye className="mr-2 h-5 w-5 text-blue-600" />
                 Profile Visibility
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-white/80 mb-4">
+              <p className="text-gray-700 mb-4">
                 Control who can see your portfolio and resume. Make it public to increase your visibility to potential employers.
               </p>
               <div className="flex items-center justify-between">
                 <div className="flex items-center">
                   {isPublic ? (
-                    <Eye className="mr-2 h-5 w-5 text-green-400" />
+                    <Eye className="mr-2 h-5 w-5 text-green-600" />
                   ) : (
-                    <EyeOff className="mr-2 h-5 w-5 text-gray-400" />
+                    <EyeOff className="mr-2 h-5 w-5 text-gray-600" />
                   )}
-                  <span className="font-medium text-white">{isPublic ? 'Public' : 'Private'}</span>
+                  <span className="font-medium">{isPublic ? 'Public' : 'Private'}</span>
                 </div>
                 <Switch 
                   checked={isPublic} 
@@ -516,34 +499,32 @@ const PortfolioPage = () => {
                 />
               </div>
             </CardContent>
-          </NeonCard>
+          </Card>
           
-          <NeonCard color="orange">
+          <Card className="bg-gradient-to-br from-purple-50 to-purple-100 border-purple-200">
             <CardHeader>
-              <CardTitle className="flex items-center text-white">
-                <NeonIcon color="orange" size="sm" className="mr-2">
-                  <Download className="h-5 w-5" />
-                </NeonIcon>
+              <CardTitle className="flex items-center">
+                <Download className="mr-2 h-5 w-5 text-purple-600" />
                 Export Options
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-white/80 mb-4">
+              <p className="text-gray-700 mb-4">
                 Download your portfolio and resume in various formats to share with potential employers.
               </p>
               <div className="flex flex-wrap gap-2">
-                <NeonButton variant="outline" color="orange" size="sm">
+                <Button variant="outline" size="sm" className="border-purple-300 text-purple-800 hover:bg-purple-200">
                   PDF Resume
-                </NeonButton>
-                <NeonButton variant="outline" color="teal" size="sm">
+                </Button>
+                <Button variant="outline" size="sm" className="border-purple-300 text-purple-800 hover:bg-purple-200">
                   Word Document
-                </NeonButton>
-                <NeonButton variant="outline" color="yellow" size="sm">
+                </Button>
+                <Button variant="outline" size="sm" className="border-purple-300 text-purple-800 hover:bg-purple-200">
                   Web Portfolio
-                </NeonButton>
+                </Button>
               </div>
             </CardContent>
-          </NeonCard>
+          </Card>
         </div>
       </div>
     </div>

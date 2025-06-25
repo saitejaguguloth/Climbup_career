@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 
 export interface Game {
@@ -15,9 +16,7 @@ export interface Game {
   color: "yellow" | "teal" | "orange";
 }
 
-export type GameCategory = "all" | "engineering" | "medical" | "technology" | "business" | "design" | "science" | "government";
-
-export const useGamesData = (initialCategory: GameCategory = "all", initialFilter: string = "newest") => {
+export const useGamesData = () => {
   const [games] = useState<Game[]>([
     // Engineering Games
     {
@@ -328,13 +327,7 @@ export const useGamesData = (initialCategory: GameCategory = "all", initialFilte
     }
   ]);
 
-  const [category, setCategory] = useState<GameCategory>(initialCategory);
-  const [filterBy, setFilterBy] = useState(initialFilter);
   const [filteredGames, setFilteredGames] = useState<Game[]>(games);
-
-  useEffect(() => {
-    filterGames({ category: category === "all" ? undefined : category });
-  }, [category, filterBy, games]);
 
   const filterGames = (filters: {
     search?: string;
@@ -364,17 +357,6 @@ export const useGamesData = (initialCategory: GameCategory = "all", initialFilte
       filtered = filtered.filter(game => game.type === filters.type);
     }
 
-    // Apply sorting
-    if (filterBy === "mostPlayed") {
-      filtered = filtered.sort((a, b) => b.completions - a.completions);
-    } else if (filterBy === "difficulty") {
-      const difficultyOrder = { easy: 1, medium: 2, hard: 3 };
-      filtered = filtered.sort((a, b) => difficultyOrder[a.difficulty] - difficultyOrder[b.difficulty]);
-    } else {
-      // newest - sort by xpReward as proxy
-      filtered = filtered.sort((a, b) => b.xpReward - a.xpReward);
-    }
-
     setFilteredGames(filtered);
   };
 
@@ -399,17 +381,12 @@ export const useGamesData = (initialCategory: GameCategory = "all", initialFilte
   };
 
   return {
-    games: filteredGames,
+    games,
     filteredGames,
     filterGames,
     getGameById,
     getGamesByCategory,
     getPopularGames,
-    getRecommendedGames,
-    category,
-    setCategory,
-    filterBy,
-    setFilterBy,
-    totalGames: filteredGames.length
+    getRecommendedGames
   };
 };

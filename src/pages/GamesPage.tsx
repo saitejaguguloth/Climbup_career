@@ -17,7 +17,7 @@ const GamesPage = () => {
     setFilterBy,
     filterBy,
     totalGames
-  } = useGamesData();
+  } = useGamesData('all', 'newest');
   
   return (
     <div className="min-h-screen pb-10">

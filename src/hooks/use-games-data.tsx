@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 
 export interface Game {
@@ -324,6 +323,186 @@ export const useGamesData = () => {
       progress: 38,
       completions: 6890,
       color: "yellow"
+    },
+
+    // Entrepreneur Games
+    {
+      id: "startup-strategist",
+      title: "Startup Strategist",
+      description: "Design and launch a virtual startup. Make critical decisions on funding, marketing, product development, and team building to achieve profitability and growth.",
+      type: "simulation",
+      difficulty: "medium",
+      category: "entrepreneur",
+      skills: ["Business Acumen", "Marketing", "Financial Planning", "Leadership", "Problem Solving"],
+      timeRequired: "45-60 min",
+      xpReward: 300,
+      progress: 65,
+      completions: 12345,
+      color: "yellow"
+    },
+    {
+      id: "marketplace-magnate",
+      title: "Marketplace Magnate",
+      description: "Simulate managing a complex e-commerce platform. Optimize supply chains, customer service, and pricing strategies to dominate the market.",
+      type: "simulation",
+      difficulty: "hard",
+      category: "entrepreneur",
+      skills: ["E-commerce", "Logistics", "Customer Relations", "Data Analysis", "Negotiation"],
+      timeRequired: "60+ min",
+      xpReward: 450,
+      progress: 40,
+      completions: 8765,
+      color: "orange"
+    },
+
+    // Doctor/Healthcare Games
+    {
+      id: "medical-diagnostician",
+      title: "Medical Diagnostician",
+      description: "Analyze patient symptoms, medical history, and lab results to accurately diagnose diseases and recommend treatment plans.",
+      type: "simulation",
+      difficulty: "medium",
+      category: "doctor",
+      skills: ["Critical Thinking", "Anatomy", "Physiology", "Problem Solving", "Data Interpretation"],
+      timeRequired: "30-45 min",
+      xpReward: 280,
+      progress: 70,
+      completions: 15123,
+      color: "teal"
+    },
+    {
+      id: "epidemic-tracker",
+      title: "Epidemic Tracker",
+      description: "Take on the role of a public health professional. Track the spread of infectious diseases, implement containment measures, and develop vaccination strategies to protect the population.",
+      type: "simulation",
+      difficulty: "hard",
+      category: "doctor",
+      skills: ["Epidemiology", "Statistics", "Public Health", "Decision Making", "Resource Management"],
+      timeRequired: "50-70 min",
+      xpReward: 420,
+      progress: 35,
+      completions: 6789,
+      color: "orange"
+    },
+
+    // Software Developer Games
+    {
+      id: "bug-bounty-hunter",
+      title: "Bug Bounty Hunter",
+      description: "Examine lines of code to identify and fix logical errors, security vulnerabilities, and performance bottlenecks in various programming languages.",
+      type: "simulation",
+      difficulty: "medium",
+      category: "developer",
+      skills: ["Debugging", "Coding", "Logic", "Problem Solving", "Attention to Detail"],
+      timeRequired: "25-40 min",
+      xpReward: 270,
+      progress: 75,
+      completions: 20456,
+      color: "teal"
+    },
+    {
+      id: "algorithm-architect",
+      title: "Algorithm Architect",
+      description: "Design and optimize algorithms for complex computational problems, focusing on efficiency, scalability, and correctness.",
+      type: "simulation",
+      difficulty: "hard",
+      category: "developer",
+      skills: ["Algorithms", "Data Structures", "Problem Solving", "Programming", "Optimization"],
+      timeRequired: "45-60 min",
+      xpReward: 400,
+      progress: 55,
+      completions: 10987,
+      color: "orange"
+    },
+
+    // IAS Officer/Public Service Games
+    {
+      id: "policy-maker-sim",
+      title: "Policy Maker Simulator",
+      description: "Draft and implement public policies addressing societal issues. Balance stakeholder interests, resource allocation, and ethical considerations to achieve positive outcomes.",
+      type: "simulation",
+      difficulty: "medium",
+      category: "ias",
+      skills: ["Public Administration", "Governance", "Ethics", "Decision Making", "Stakeholder Management"],
+      timeRequired: "40-55 min",
+      xpReward: 320,
+      progress: 60,
+      completions: 9876,
+      color: "yellow"
+    },
+    {
+      id: "crisis-management-dispatch",
+      title: "Crisis Management Dispatch",
+      description: "Respond to simulated public crises (e.g., natural disasters, civil unrest). Coordinate emergency services, manage public communication, and ensure citizen safety.",
+      type: "simulation",
+      difficulty: "hard",
+      category: "ias",
+      skills: ["Crisis Management", "Leadership", "Resource Allocation", "Communication", "Stress Management"],
+      timeRequired: "60+ min",
+      xpReward: 480,
+      progress: 30,
+      completions: 5432,
+      color: "orange"
+    },
+
+    // Designer Games
+    {
+      id: "user-experience-challenge",
+      title: "User Experience Challenge",
+      description: "Redesign existing interfaces or create new ones based on user feedback and best practices, focusing on usability, accessibility, and aesthetics.",
+      type: "simulation",
+      difficulty: "medium",
+      category: "designer",
+      skills: ["UI/UX Design", "User Research", "Wireframing", "Prototyping", "Empathy"],
+      timeRequired: "30-45 min",
+      xpReward: 260,
+      progress: 72,
+      completions: 18765,
+      color: "teal"
+    },
+    {
+      id: "brand-identity-creator",
+      title: "Brand Identity Creator",
+      description: "Develop a complete brand identity, including logo, color palette, typography, and visual guidelines, for a fictional company or product.",
+      type: "simulation",
+      difficulty: "hard",
+      category: "designer",
+      skills: ["Graphic Design", "Branding", "Creativity", "Visual Communication", "Marketing Principles"],
+      timeRequired: "45-60 min",
+      xpReward: 390,
+      progress: 48,
+      completions: 7654,
+      color: "orange"
+    },
+
+    // Scientist Games
+    {
+      id: "lab-experiment-simulator",
+      title: "Lab Experiment Simulator",
+      description: "Conduct virtual experiments, formulate hypotheses, analyze data, and draw scientific conclusions in a simulated laboratory environment.",
+      type: "simulation",
+      difficulty: "medium",
+      category: "scientist",
+      skills: ["Scientific Method", "Data Analysis", "Hypothesis Testing", "Critical Thinking", "Observation"],
+      timeRequired: "35-50 min",
+      xpReward: 290,
+      progress: 68,
+      completions: 14567,
+      color: "yellow"
+    },
+    {
+      id: "research-grant-quest",
+      title: "Research Grant Quest",
+      description: "Write a compelling research proposal, justify experimental design, and secure virtual funding for a cutting-edge scientific project.",
+      type: "simulation",
+      difficulty: "hard",
+      category: "scientist",
+      skills: ["Scientific Writing", "Research Design", "Grant Writing", "Persuasion", "Budgeting"],
+      timeRequired: "50-70 min",
+      xpReward: 430,
+      progress: 32,
+      completions: 5987,
+      color: "teal"
     }
   ]);
 

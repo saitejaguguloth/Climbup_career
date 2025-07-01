@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
@@ -47,6 +47,8 @@ const MessagingPage = () => {
   const [newGroupName, setNewGroupName] = useState('');
   const [newGroupDescription, setNewGroupDescription] = useState('');
   const [newGroupTags, setNewGroupTags] = useState('');
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const imageInputRef = useRef<HTMLInputElement>(null);
 
   // Mock data for groups
   const [groups, setGroups] = useState<Group[]>([
@@ -404,29 +406,60 @@ const MessagingPage = () => {
     });
   };
 
+  // Add handlers for file/image upload and emoji picker
+  const handleAttachFile = () => {
+    fileInputRef.current?.click();
+  };
+  const handleSendFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || !activeChat) return;
+    toast({ title: 'File upload', description: 'File upload is a demo feature.' });
+  };
+  const handleAttachImage = () => {
+    imageInputRef.current?.click();
+  };
+  const handleSendImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || !activeChat) return;
+    toast({ title: 'Image upload', description: 'Image upload is a demo feature.' });
+  };
+  const handleEmojiPicker = () => {
+    toast({ title: 'Emoji picker', description: 'Emoji picker is a demo feature.' });
+  };
+  const handleVoiceCall = () => {
+    toast({ title: 'Voice Call', description: 'Voice call is a demo feature.' });
+  };
+  const handleVideoCall = () => {
+    toast({ title: 'Video Call', description: 'Video call is a demo feature.' });
+  };
+  const handleAddMembers = () => {
+    toast({ title: 'Add Members', description: 'Add members is a demo feature.' });
+  };
+  const handleMoreOptions = () => {
+    toast({ title: 'More Options', description: 'More options is a demo feature.' });
+  };
+
   return (
-    <div className="min-h-screen py-6 px-4 bg-gray-50">
+    <div className="min-h-screen py-6 px-4 bg-black/90 text-white">
       <div className="container mx-auto">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold mb-2">
-            Community <span className="bg-gradient-to-r from-blue-600 to-indigo-600 text-transparent bg-clip-text">Messages</span>
+          <h1 className="text-3xl font-bold mb-2 text-neon-yellow neon-shadow-yellow">
+            Community <span className="text-neon-teal">Messages</span>
           </h1>
-          <p className="text-gray-600">Connect with peers and mentors in your learning journey</p>
+          <p className="text-neon-teal/80">Connect with peers and mentors in your learning journey</p>
         </div>
         
-        <Card className="shadow-lg border-0">
+        <Card className="shadow-lg border-0 bg-black/80 text-white">
           <div className="grid grid-cols-1 md:grid-cols-3 h-[700px]">
             {/* Sidebar */}
-            <div className="border-r border-gray-200 md:col-span-1">
+            <div className="border-r border-neon-yellow/20 md:col-span-1 bg-black/80">
               <div className="flex flex-col h-full">
                 <div className="p-4 border-b border-gray-200">
                   <Tabs defaultValue={activeTab} onValueChange={setActiveTab} className="w-full">
                     <TabsList className="grid grid-cols-2 w-full">
-                      <TabsTrigger value="chats" className="flex items-center gap-1">
+                      <TabsTrigger value="chats" className="flex items-center gap-1 text-neon-yellow">
                         <MessageSquare className="h-4 w-4" />
                         <span>Chats</span>
                       </TabsTrigger>
-                      <TabsTrigger value="groups" className="flex items-center gap-1">
+                      <TabsTrigger value="groups" className="flex items-center gap-1 text-neon-yellow">
                         <Users className="h-4 w-4" />
                         <span>Groups</span>
                       </TabsTrigger>
@@ -436,10 +469,10 @@ const MessagingPage = () => {
                 
                 <div className="p-4 border-b border-gray-200">
                   <div className="relative">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 h-4 w-4" />
+                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-neon-yellow h-4 w-4" />
                     <Input 
                       placeholder="Search" 
-                      className="pl-10" 
+                      className="pl-10 bg-black/70 text-white border-neon-yellow/20" 
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                     />
@@ -450,14 +483,14 @@ const MessagingPage = () => {
                   <Tabs defaultValue={activeTab} onValueChange={setActiveTab} className="w-full">
                     <TabsContent value="chats" className="mt-0">
                       <div className="flex justify-between items-center p-4 border-b border-gray-200">
-                        <h3 className="font-medium">Recent Chats</h3>
+                        <h3 className="font-medium text-neon-yellow">Recent Chats</h3>
                       </div>
                       {filteredGroups
                         .filter(group => !group.isMentorGroup)
                         .map(group => (
                           <div 
                             key={group.id}
-                            className={`flex items-center gap-3 p-4 hover:bg-gray-50 cursor-pointer border-b border-gray-100 transition-colors ${activeChat === group.id ? 'bg-blue-50' : ''}`}
+                            className={`flex items-center gap-3 p-4 hover:bg-neon-yellow/10 cursor-pointer border-b border-neon-yellow/10 transition-colors ${activeChat === group.id ? 'bg-neon-yellow/10' : ''}`}
                             onClick={() => setActiveChat(group.id)}
                           >
                             <Avatar className="h-12 w-12">
@@ -466,15 +499,15 @@ const MessagingPage = () => {
                             </Avatar>
                             <div className="flex-1 min-w-0">
                               <div className="flex justify-between">
-                                <h4 className="font-medium truncate">{group.name}</h4>
-                                <span className="text-xs text-gray-500">
+                                <h4 className="font-medium truncate text-neon-yellow">{group.name}</h4>
+                                <span className="text-xs text-neon-yellow/70">
                                   {group.lastMessageTime ? formatTime(group.lastMessageTime) : ''}
                                 </span>
                               </div>
-                              <p className="text-sm text-gray-500 truncate">{group.lastMessage}</p>
+                              <p className="text-sm text-neon-teal/80 truncate">{group.lastMessage}</p>
                             </div>
                             {group.unread > 0 && (
-                              <span className="bg-blue-500 text-white text-xs rounded-full h-5 min-w-5 flex items-center justify-center">
+                              <span className="bg-neon-yellow text-black text-xs rounded-full h-5 min-w-5 flex items-center justify-center">
                                 {group.unread}
                               </span>
                             )}
@@ -484,7 +517,7 @@ const MessagingPage = () => {
                     
                     <TabsContent value="groups" className="mt-0">
                       <div className="flex justify-between items-center p-4 border-b border-gray-200">
-                        <h3 className="font-medium">All Groups</h3>
+                        <h3 className="font-medium text-neon-yellow">All Groups</h3>
                         <Button 
                           variant="outline" 
                           size="sm" 
@@ -498,7 +531,7 @@ const MessagingPage = () => {
                       {filteredGroups.map(group => (
                         <div 
                           key={group.id}
-                          className={`flex items-center gap-3 p-4 hover:bg-gray-50 cursor-pointer border-b border-gray-100 transition-colors ${activeChat === group.id ? 'bg-blue-50' : ''}`}
+                          className={`flex items-center gap-3 p-4 hover:bg-neon-yellow/10 cursor-pointer border-b border-neon-yellow/10 transition-colors ${activeChat === group.id ? 'bg-neon-yellow/10' : ''}`}
                           onClick={() => setActiveChat(group.id)}
                         >
                           <Avatar className="h-12 w-12">
@@ -507,27 +540,27 @@ const MessagingPage = () => {
                           </Avatar>
                           <div className="flex-1 min-w-0">
                             <div className="flex justify-between">
-                              <h4 className="font-medium truncate">
+                              <h4 className="font-medium truncate text-neon-yellow">
                                 {group.name}
                                 {group.isMentorGroup && (
-                                  <span className="ml-2 text-xs bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full">Mentor</span>
+                                  <span className="ml-2 text-xs bg-neon-teal/20 text-neon-teal px-2 py-0.5 rounded-full">Mentor</span>
                                 )}
                               </h4>
                             </div>
                             <div className="flex flex-wrap gap-1 mt-1">
                               {group.tags?.slice(0, 3).map(tag => (
-                                <span key={tag} className="text-xs bg-gray-100 text-gray-600 px-1.5 py-0.5 rounded">
+                                <span key={tag} className="text-xs bg-neon-yellow/10 text-neon-yellow px-1.5 py-0.5 rounded">
                                   {tag}
                                 </span>
                               ))}
                             </div>
-                            <p className="text-xs text-gray-500 mt-1">{group.members} members</p>
+                            <p className="text-xs text-neon-teal/80 mt-1">{group.members} members</p>
                           </div>
                           {!messages[group.id] && (
                             <Button 
                               variant="ghost" 
                               size="sm" 
-                              className="text-xs"
+                              className="text-xs text-neon-yellow"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 joinGroup(group.id);
@@ -537,7 +570,7 @@ const MessagingPage = () => {
                             </Button>
                           )}
                           {group.unread > 0 && (
-                            <span className="bg-blue-500 text-white text-xs rounded-full h-5 min-w-5 flex items-center justify-center">
+                            <span className="bg-neon-yellow text-black text-xs rounded-full h-5 min-w-5 flex items-center justify-center">
                               {group.unread}
                             </span>
                           )}
@@ -550,41 +583,41 @@ const MessagingPage = () => {
             </div>
             
             {/* Chat Area */}
-            <div className="md:col-span-2 flex flex-col h-full">
+            <div className="md:col-span-2 flex flex-col h-full bg-black/80">
               {activeChat ? (
                 <>
                   {/* Chat Header */}
-                  <div className="p-4 border-b border-gray-200 flex justify-between items-center">
+                  <div className="p-4 border-b border-neon-yellow/20 flex justify-between items-center bg-black/80">
                     <div className="flex items-center gap-3">
                       <Avatar className="h-10 w-10">
                         <AvatarImage src={groups.find(g => g.id === activeChat)?.avatar} />
                         <AvatarFallback>{groups.find(g => g.id === activeChat)?.name[0]}</AvatarFallback>
                       </Avatar>
                       <div>
-                        <h3 className="font-medium">{groups.find(g => g.id === activeChat)?.name}</h3>
-                        <p className="text-xs text-gray-500">
+                        <h3 className="font-medium text-neon-yellow">{groups.find(g => g.id === activeChat)?.name}</h3>
+                        <p className="text-xs text-neon-teal/80">
                           {groups.find(g => g.id === activeChat)?.members} members
                         </p>
                       </div>
                     </div>
                     <div className="flex gap-2">
-                      <Button variant="ghost" size="icon" title="Voice call">
-                        <Phone className="h-4 w-4" />
+                      <Button variant="ghost" size="icon" title="Voice call" onClick={handleVoiceCall}>
+                        <Phone className="h-4 w-4 text-neon-yellow" />
                       </Button>
-                      <Button variant="ghost" size="icon" title="Video call">
-                        <Video className="h-4 w-4" />
+                      <Button variant="ghost" size="icon" title="Video call" onClick={handleVideoCall}>
+                        <Video className="h-4 w-4 text-neon-yellow" />
                       </Button>
-                      <Button variant="ghost" size="icon" title="Add members">
-                        <UserPlus className="h-4 w-4" />
+                      <Button variant="ghost" size="icon" title="Add members" onClick={handleAddMembers}>
+                        <UserPlus className="h-4 w-4 text-neon-yellow" />
                       </Button>
-                      <Button variant="ghost" size="icon" title="More options">
-                        <MoreVertical className="h-4 w-4" />
+                      <Button variant="ghost" size="icon" title="More options" onClick={handleMoreOptions}>
+                        <MoreVertical className="h-4 w-4 text-neon-yellow" />
                       </Button>
                     </div>
                   </div>
                   
                   {/* Messages */}
-                  <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
+                  <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-black/70">
                     {messages[activeChat] ? (
                       messages[activeChat].map((msg, index, array) => {
                         // Check if we should show a date separator
@@ -595,26 +628,26 @@ const MessagingPage = () => {
                           <React.Fragment key={msg.id}>
                             {showDateHeader && (
                               <div className="flex justify-center my-4">
-                                <span className="px-2 py-1 bg-gray-200 text-gray-600 text-xs rounded-full">
+                                <span className="px-2 py-1 bg-neon-yellow/10 text-neon-yellow text-xs rounded-full">
                                   {formatDate(msg.timestamp)}
                                 </span>
                               </div>
                             )}
                             <div className={`flex ${msg.senderId === 'currentUser' ? 'justify-end' : 'justify-start'}`}>
-                              <div className={`max-w-[80%] ${msg.senderId === 'currentUser' ? 'bg-blue-500 text-white' : 'bg-white'} rounded-lg p-3 shadow-sm`}>
+                              <div className={`max-w-[80%] ${msg.senderId === 'currentUser' ? 'bg-neon-yellow text-black' : 'bg-black/90 text-white'} rounded-lg p-3 shadow-sm border border-neon-yellow/20`}>
                                 {msg.senderId !== 'currentUser' && (
                                   <div className="flex items-center gap-2 mb-1">
                                     <Avatar className="h-6 w-6">
                                       <AvatarImage src={msg.senderAvatar} />
                                       <AvatarFallback>{msg.senderName[0]}</AvatarFallback>
                                     </Avatar>
-                                    <span className="text-xs font-medium">{msg.senderName}</span>
+                                    <span className="text-xs font-medium text-neon-yellow">{msg.senderName}</span>
                                   </div>
                                 )}
-                                <p className={`text-sm ${msg.senderId === 'currentUser' ? 'text-white' : 'text-gray-800'}`}>
+                                <p className={`text-sm ${msg.senderId === 'currentUser' ? 'text-black' : 'text-white'}`}>
                                   {msg.content}
                                 </p>
-                                <div className={`text-xs mt-1 text-right flex items-center justify-end gap-1 ${msg.senderId === 'currentUser' ? 'text-blue-100' : 'text-gray-500'}`}>
+                                <div className={`text-xs mt-1 text-right flex items-center justify-end gap-1 ${msg.senderId === 'currentUser' ? 'text-black/70' : 'text-neon-yellow/70'}`}>
                                   <span>{formatTime(msg.timestamp)}</span>
                                   {msg.senderId === 'currentUser' && (
                                     <span>
@@ -630,8 +663,8 @@ const MessagingPage = () => {
                         );
                       })
                     ) : (
-                      <div className="flex flex-col items-center justify-center h-full text-center text-gray-500">
-                        <Users className="h-12 w-12 text-gray-300 mb-2" />
+                      <div className="flex flex-col items-center justify-center h-full text-center text-neon-yellow/70">
+                        <Users className="h-12 w-12 text-neon-yellow mb-2" />
                         <h3 className="font-medium mb-1">Welcome to {groups.find(g => g.id === activeChat)?.name}</h3>
                         <p className="text-sm">Start the conversation by sending a message</p>
                       </div>
@@ -639,28 +672,30 @@ const MessagingPage = () => {
                   </div>
                   
                   {/* Message Input */}
-                  <div className="p-4 border-t border-gray-200">
+                  <div className="p-4 border-t border-neon-yellow/20 bg-black/80">
                     <div className="flex gap-2">
-                      <Button variant="ghost" size="icon" title="Attach file">
-                        <Paperclip className="h-4 w-4" />
+                      <input type="file" ref={fileInputRef} style={{ display: 'none' }} onChange={handleSendFile} />
+                      <input type="file" accept="image/*" ref={imageInputRef} style={{ display: 'none' }} onChange={handleSendImage} />
+                      <Button variant="ghost" size="icon" title="Attach file" onClick={handleAttachFile}>
+                        <Paperclip className="h-4 w-4 text-neon-yellow" />
                       </Button>
-                      <Button variant="ghost" size="icon" title="Send image">
-                        <Image className="h-4 w-4" />
+                      <Button variant="ghost" size="icon" title="Send image" onClick={handleAttachImage}>
+                        <Image className="h-4 w-4 text-neon-yellow" />
                       </Button>
                       <Input 
                         placeholder="Type a message..." 
-                        className="flex-1"
+                        className="flex-1 bg-black/70 text-white border-neon-yellow/20"
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                         onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
                       />
-                      <Button variant="ghost" size="icon" title="Add emoji">
-                        <Smile className="h-4 w-4" />
+                      <Button variant="ghost" size="icon" title="Add emoji" onClick={handleEmojiPicker}>
+                        <Smile className="h-4 w-4 text-neon-yellow" />
                       </Button>
-                      <Button variant="ghost" size="icon" title="Voice message">
-                        <Mic className="h-4 w-4" />
+                      <Button variant="ghost" size="icon" title="Voice message" onClick={() => toast({ title: 'Voice message', description: 'Voice message is a demo feature.' })}>
+                        <Mic className="h-4 w-4 text-neon-yellow" />
                       </Button>
-                      <Button onClick={handleSendMessage} className="bg-blue-500 hover:bg-blue-600">
+                      <Button onClick={handleSendMessage} className="bg-neon-yellow text-black hover:bg-neon-yellow/80">
                         <Send className="h-4 w-4 mr-2" />
                         Send
                       </Button>
@@ -669,19 +704,19 @@ const MessagingPage = () => {
                 </>
               ) : (
                 <div className="flex flex-col items-center justify-center h-full text-center p-4">
-                  <div className="bg-blue-100 p-6 rounded-full mb-4">
-                    <MessageSquare className="h-12 w-12 text-blue-500" />
+                  <div className="bg-neon-yellow/10 p-6 rounded-full mb-4">
+                    <MessageSquare className="h-12 w-12 text-neon-yellow" />
                   </div>
-                  <h3 className="text-xl font-semibold mb-2">Welcome to Community Messages</h3>
-                  <p className="text-gray-500 mb-6 max-w-md">
+                  <h3 className="text-xl font-semibold mb-2 text-neon-yellow">Welcome to Community Messages</h3>
+                  <p className="text-neon-teal/80 mb-6 max-w-md">
                     Connect with fellow learners, join specialized groups, and get guidance from mentors.
                   </p>
                   <div className="flex gap-3">
-                    <Button onClick={() => setActiveChat('1')}>
+                    <Button onClick={() => setActiveChat('1')} className="bg-neon-yellow text-black hover:bg-neon-yellow/80">
                       <MessageSquare className="mr-2 h-4 w-4" />
                       Start Messaging
                     </Button>
-                    <Button variant="outline" onClick={() => setActiveTab('groups')}>
+                    <Button variant="outline" className="border-neon-yellow/40 text-neon-yellow" onClick={() => setActiveTab('groups')}>
                       <Users className="mr-2 h-4 w-4" />
                       Browse Groups
                     </Button>
@@ -695,47 +730,50 @@ const MessagingPage = () => {
 
       {/* Create Group Dialog */}
       <Dialog open={createGroupDialogOpen} onOpenChange={setCreateGroupDialogOpen}>
-        <DialogContent className="sm:max-w-md">
+        <DialogContent className="sm:max-w-md bg-black/90 text-white border-neon-yellow/20">
           <DialogHeader>
-            <DialogTitle>Create a New Group</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="text-neon-yellow">Create a New Group</DialogTitle>
+            <DialogDescription className="text-neon-teal/80">
               Create a group to discuss topics with peers and mentors
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4">
             <div className="space-y-2">
-              <label htmlFor="group-name" className="text-sm font-medium">Group Name</label>
+              <label htmlFor="group-name" className="text-sm font-medium text-neon-yellow">Group Name</label>
               <Input 
                 id="group-name" 
                 placeholder="e.g., Machine Learning Study Group" 
                 value={newGroupName}
                 onChange={(e) => setNewGroupName(e.target.value)}
+                className="bg-black/80 text-white border-neon-yellow/20"
               />
             </div>
             <div className="space-y-2">
-              <label htmlFor="group-description" className="text-sm font-medium">Group Description</label>
+              <label htmlFor="group-description" className="text-sm font-medium text-neon-yellow">Group Description</label>
               <Input 
                 id="group-description" 
                 placeholder="A brief description of your group" 
                 value={newGroupDescription}
                 onChange={(e) => setNewGroupDescription(e.target.value)}
+                className="bg-black/80 text-white border-neon-yellow/20"
               />
             </div>
             <div className="space-y-2">
-              <label htmlFor="group-tags" className="text-sm font-medium">Tags (comma separated)</label>
+              <label htmlFor="group-tags" className="text-sm font-medium text-neon-yellow">Tags (comma separated)</label>
               <Input 
                 id="group-tags" 
                 placeholder="e.g., python, data-science, beginners" 
                 value={newGroupTags}
                 onChange={(e) => setNewGroupTags(e.target.value)}
+                className="bg-black/80 text-white border-neon-yellow/20"
               />
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setCreateGroupDialogOpen(false)}>
+            <Button variant="outline" className="border-neon-yellow/40 text-neon-yellow" onClick={() => setCreateGroupDialogOpen(false)}>
               Cancel
             </Button>
-            <Button onClick={submitNewGroup}>
+            <Button className="bg-neon-yellow text-black hover:bg-neon-yellow/80" onClick={submitNewGroup}>
               Create Group
             </Button>
           </DialogFooter>

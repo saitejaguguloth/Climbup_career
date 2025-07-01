@@ -1,5 +1,4 @@
-
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { 
   Menu, X, User, LogOut, 
@@ -25,6 +24,7 @@ import {
 } from "@/components/ui/navigation-menu";
 import { toast } from "@/hooks/use-toast";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface User {
   firstName?: string;
@@ -35,43 +35,27 @@ interface User {
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [user, setUser] = useState<User | null>(null);
+  const { user, isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-
-  useEffect(() => {
-    // Check if user is authenticated on component mount
-    const authStatus = localStorage.getItem("isAuthenticated");
-    if (authStatus === "true") {
-      setIsAuthenticated(true);
-      const userData = localStorage.getItem("user");
-      if (userData) {
-        setUser(JSON.parse(userData));
-      }
-    }
-  }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("isAuthenticated");
-    localStorage.removeItem("user");
-    setIsAuthenticated(false);
-    setUser(null);
+    logout();
     toast({
       title: "Logged out",
       description: "You have been successfully logged out"
     });
-    navigate("/", { replace: true });
+    navigate("/signin", { replace: true });
   };
 
   // Get initials for avatar
   const getUserInitials = () => {
-    if (user?.firstName && user?.lastName) {
-      return `${user.firstName[0]}${user.lastName[0]}`.toUpperCase();
+    if (user?.displayName) {
+      return user.displayName.split(' ').map((n: string) => n[0]).join('').toUpperCase();
     } else if (user?.email) {
       return user.email[0].toUpperCase();
     }
@@ -168,7 +152,7 @@ const Navbar = () => {
               <DropdownMenuContent align="end" className="w-56 bg-black/90 backdrop-blur-md border border-white/10">
                 <DropdownMenuLabel>
                   <div className="flex flex-col">
-                    <span className="text-white">{user?.firstName} {user?.lastName}</span>
+                    <span className="text-white">{user?.displayName || user?.email}</span>
                     <span className="text-xs text-white/60 font-normal">{user?.email}</span>
                   </div>
                 </DropdownMenuLabel>
@@ -176,9 +160,16 @@ const Navbar = () => {
                 <DropdownMenuItem asChild>
                   <Link to="/profile" className="cursor-pointer text-white hover:bg-white/10">
                     <User className="mr-2 h-4 w-4 text-neon-yellow" />
-                    <span>Profile</span>
+                    <span>Edit Profile</span>
                   </Link>
                 </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link to="/settings" className="cursor-pointer text-white hover:bg-white/10">
+                    <span className="mr-2">⚙️</span>
+                    <span>Settings</span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuSeparator className="bg-white/10" />
                 <DropdownMenuItem onClick={handleLogout} className="cursor-pointer text-white hover:bg-white/10">
                   <LogOut className="mr-2 h-4 w-4 text-neon-yellow" />
                   <span>Logout</span>
@@ -188,10 +179,10 @@ const Navbar = () => {
           ) : (
             <>
               <Button variant="ghost" className="text-white hover:bg-white/10 border border-white/20" asChild>
-                <Link to="/login">Login</Link>
+                <Link to="/signin">Login</Link>
               </Button>
               <Button className="bg-neon-yellow/20 text-neon-yellow border border-neon-yellow hover:bg-neon-yellow/30 transition-all duration-300" asChild>
-                <Link to="/login?signup=true">Sign Up</Link>
+                <Link to="/signup">Sign Up</Link>
               </Button>
             </>
           )}
@@ -226,7 +217,7 @@ const Navbar = () => {
                       <span className="font-medium text-neon-yellow">{getUserInitials()}</span>
                     </div>
                     <div className="flex flex-col">
-                      <span className="font-medium text-white">{user?.firstName} {user?.lastName}</span>
+                      <span className="font-medium text-white">{user?.displayName || user?.email}</span>
                       <span className="text-xs text-white/60">{user?.email}</span>
                     </div>
                   </div>
@@ -253,7 +244,7 @@ const Navbar = () => {
                 <>
                   <Button variant="outline" className="border-white/10 bg-black/30 text-white hover:bg-white/10" asChild>
                     <Link 
-                      to="/login"
+                      to="/signin"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       Login
@@ -261,7 +252,7 @@ const Navbar = () => {
                   </Button>
                   <Button className="bg-neon-yellow/20 text-neon-yellow border border-neon-yellow hover:bg-neon-yellow/30 w-full" asChild>
                     <Link 
-                      to="/login?signup=true"
+                      to="/signup"
                       onClick={() => setIsMenuOpen(false)}
                     >
                       Sign Up

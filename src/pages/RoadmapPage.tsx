@@ -20,6 +20,7 @@ import ShareDialog from "@/components/ShareDialog";
 import GroupChat from "@/components/GroupChat";
 import LearningDialog from "@/components/LearningDialog";
 import { NeonCard, NeonButton, NeonTitle } from "@/components/ui/neon-elements";
+import { QRCodeCanvas } from 'qrcode.react';
 
 const RoadmapPage = () => {
   const navigate = useNavigate();
@@ -847,8 +848,7 @@ const RoadmapPage = () => {
                       <h3 className="font-bold mb-3">Get the App</h3>
                       <div className="bg-gray-100 p-4 rounded-lg flex flex-col items-center">
                         <div className="mb-2 bg-black/80 p-2 rounded-lg">
-                          {/* QR Code placeholder */}
-                          <div className="w-24 h-24 bg-gray-200 rounded"></div>
+                          <QRCodeCanvas value={window.location.href} size={96} bgColor="#000" fgColor="#fff" />
                         </div>
                         <span className="text-xs text-gray-500">Scan to continue on mobile</span>
                       </div>

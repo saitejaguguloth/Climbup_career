@@ -1,13 +1,24 @@
-
 import { Link } from "react-router-dom";
 import { ArrowRight, Check, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion";
 import { NeonTitle, NeonButton } from "@/components/ui/neon-elements";
+import { useAuth } from "@/contexts/AuthContext";
 
 const HomePage = () => {
+  const { user } = useAuth();
+
   return (
     <div className="flex flex-col w-full min-h-screen bg-background text-foreground">
+      {/* User info banner */}
+      {user && (
+        <div className="w-full bg-neon-yellow/10 text-neon-yellow py-4 px-6 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <span className="font-bold text-lg">Welcome, {user.displayName || user.email}!</span>
+            <span className="text-xs text-neon-yellow/80">{user.email}</span>
+          </div>
+        </div>
+      )}
       {/* Background blurry elements - matching games page */}
       <div className="absolute inset-0 overflow-hidden -z-10">
         <div className="absolute top-0 left-0 w-64 h-64 bg-neon-yellow rounded-full mix-blend-overlay filter blur-3xl opacity-10 animate-blob"></div>

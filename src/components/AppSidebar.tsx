@@ -39,7 +39,7 @@ export function AppSidebar() {
       title: "Logged out",
       description: "You have been successfully logged out"
     });
-    navigate("/login", {
+    navigate("/signin", {
       replace: true
     });
   };
@@ -135,12 +135,12 @@ export function AppSidebar() {
             </Button>
           </div> : <div className="space-y-2">
             <Button variant="outline" className="w-full flex items-center justify-center" asChild>
-              <Link to="/login">
+              <Link to="/signin">
                 <LogIn className="mr-2 h-4 w-4" /> Sign In
               </Link>
             </Button>
             <Button className="w-full flex items-center justify-center" asChild>
-              <Link to="/login?signup=true">
+              <Link to="/signup">
                 <UserPlus className="mr-2 h-4 w-4" /> Sign Up
               </Link>
             </Button>
